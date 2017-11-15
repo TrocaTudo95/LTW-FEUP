@@ -5,16 +5,16 @@
   </head>
   <body>
     <header>
-      <h1><a href="login.html">LTo-Do-List</a></h1>
+      <h1><a href="login.php">LTo-Do-List</a></h1>
       <h2>More than a To-Do-List</h2>
       <div id="register">
         <form action="action_register.php" method="post">
         <fieldset>
           <legend>Register</legend>
           <p>Username</p>
-          <input type="text" name="Username" required="required">
+          <input type="text" name="username" required="required">
           <p>Password</p>
-          <input type="password" name="Password" required="required">
+          <input type="password" name="password" required="required">
         </fieldset>
         <input type="submit" value="Register">
       </form>
