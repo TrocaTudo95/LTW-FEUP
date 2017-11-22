@@ -1,6 +1,6 @@
 <?php
 /**
- * Send debug code to the Javascript console
+ * Not working - Send debug code to the Javascript console
  */ 
 function debugToConsole($data) {
     if(is_array($data) || is_object($data))
