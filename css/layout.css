@@ -1,0 +1,27 @@
+body {
+    background-color: #edeff0;
+  
+    margin: 0 auto;
+    width: 80em;
+  
+    display: grid;
+    grid-template-columns: [start] 1fr [display] 1fr [addtodos] 1fr [end];
+    grid-template-rows: [start] 1fr [header] 3fr [content] 1fr [end];
+  }
+  
+body > header {
+    grid-column: start / end;
+    grid-row: start / header;
+  }
+#add_to_do_form {
+    grid-column: display / addtodos;
+    grid-row: header / content;
+}
+#display_lists{
+    grid-column: start / display;
+    grid-row: header / content;
+}
+body > footer{
+    grid-column: start/end;
+    grid-row: content/end;
+}

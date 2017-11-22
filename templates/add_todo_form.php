@@ -2,6 +2,7 @@
 ?>
 
 <div id="add_todo_form">
+    <h3>Create ToDo</h3>
     <form action="action_add_todo.php" method="post">
         <header>
             <input type="text" name="title" required="required" placeholder="Title">
