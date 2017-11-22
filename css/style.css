@@ -1,0 +1,32 @@
+body > header {
+  background-color: #00a2e8;
+  color: white;
+  padding-right: 2em;
+  padding-left: 2em;
+}
+
+ a {
+  text-decoration: none;
+}
+
+body > header h1 a{
+  color: white;
+  font-size: 80%;
+}
+
+
+ #login form [type=text]{
+   width: 30%;
+}
+
+#login form [type=password]{
+  width: 30%;
+}
+
+
+body > header #login{
+  width:25%;
+ float:right;
+
+
+}
