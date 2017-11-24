@@ -3,15 +3,15 @@
 
 <div id="add_todo_form">
     <h3>Create ToDo</h3>
-    <form action="action_add_todo.php" method="post">
+    <form>
         <header>
             <input type="text" name="title" required="required" placeholder="Title">
             <input type="text" name="category" required="required" placeholder="Category">
             <input type="color" name="category_color" value="#ff0000">
+            <button type="button" id="add_todo_item_button">Add ToDo Item!</button>
         </header>
-        <ol>
-        <li> <input type="text" name="list_item1" placeholder="Add your item"> </li>
+        <ol id="todo_items">
         </ol>
-        <input type="submit" value="Save">
+        <input id="submit_todo_button" type="submit" value="Save List">
     </form>
 </div>
