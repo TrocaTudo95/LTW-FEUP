@@ -7,7 +7,7 @@
 
   if (userExists($dbh, $_POST['username'])){
     if (checkPassword($dbh,$_POST['username'],$_POST['password'])){
-      header('Location: display_user_lists.php?id=' . $_POST['username']);
+      header('Location: index.php?id=' . $_POST['username']);
       $_SESSION['username'] = $_POST['username'];
       $_SESSION['is_logged'] = true;
     }

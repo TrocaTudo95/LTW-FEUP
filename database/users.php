@@ -30,5 +30,11 @@
     }
     return true;
   }
+  function getUserId($dbh,$username){
+    $stmt = $dbh->prepare('SELECT * FROM User WHERE Username = ?');
+    $stmt->execute(array($username));
+    $result = $stmt->fetch();
+    return $result['ID'];
+  }
 
  ?>
