@@ -8,10 +8,9 @@
     include_once('database/connection.php'); // connects to the database
     include_once('database/users.php');
     include_once('database/lists.php');
-    print_r($_GET['items']);
     $userId = getUserId($dbh,$_SESSION['username']);
     $categoryId = addCategory($dbh,$_GET['category'],$userId);
     $todo_list_Id = addToDoList($dbh,$_GET['title'],$_GET['color'],$userId,$categoryId);
-    $items = explode(',',$_GET['items']);
+    $items = json_decode($_GET['items'],true);
     addListItems($dbh,$items,$todo_list_Id);
 ?>

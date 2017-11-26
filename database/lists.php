@@ -1,5 +1,5 @@
 <?php
-  function addListItem($dbh,$todoref,$information,$color,$datedue,$ischecked){
+  function addListItem($dbh,$todoref,$information,$priority,$datedue,$ischecked){
     $stmt = $dbh->prepare('SELECT ID FROM ToDoItem WHERE ToDoRef = ? AND Information = ?');
     $stmt->execute(array($todoref,$information));
     $result = $stmt->fetch();
@@ -8,12 +8,12 @@
       return;
     }
     $stmt = $dbh->prepare('INSERT INTO ToDoItem VALUES (?,?,?,?,?,?)');
-    $stmt->execute(array(NULL,$todoref,$information,$color,$datedue,$ischecked));
+    $stmt->execute(array(NULL,$todoref,$information,$priority,$datedue,$ischecked));
   }
 
   function addListItems($dbh,$items,$todo_id){
     foreach($items as $item){
-      addListItem($dbh,$todo_id,$item,NULL,NULL,0);
+      addListItem($dbh,$todo_id,$item['text'],$item['priority'],$item['datedue'],0);
     }
   }
 
