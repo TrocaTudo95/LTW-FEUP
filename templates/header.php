@@ -11,7 +11,7 @@
   </head>
   <body>
     <header>
-      <h1><a href="index.php">Quick Buddy</a></h1>
+      <img src="assets/logo.png" width="177px" height="106px">
       <?php
       if(isset($_SESSION['is_logged']) && $_SESSION['is_logged'] == true){
         echo($_SESSION['username']);?>
