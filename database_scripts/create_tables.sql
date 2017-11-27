@@ -11,7 +11,7 @@ CREATE TABLE users(id INTEGER PRIMARY KEY,username TEXT UNIQUE,password TEXT, em
 CREATE TABLE projects(id INTEGER PRIMARY KEY, Name TEXT,color TEXT, creator INTEGER REFERENCES users (id), categoryRef INTEGER REFERENCES categories(id));
 CREATE TABLE tasks(id INTEGER PRIMARY KEY, projectRef INTEGER REFERENCES projects (id), information TEXT, priority INTEGER, dateDue INTEGER, isChecked INTEGER, assignedTo INTEGER REFERENCES users(id));
 CREATE TABLE categories(id INTEGER PRIMARY KEY, title TEXT, userRef INTEGER REFERENCES users (id));
-CREATE TABLE images (id INTEGER PRIMARY KEY,title VARCHAR NOT NULL);0
+CREATE TABLE images (id INTEGER PRIMARY KEY,title VARCHAR NOT NULL);
 CREATE TABLE projectUsers(projectRef INTEGER REFERENCES projects(id), userRef INTEGER REFERENCES users(id), permissions INTEGER);
 
 COMMIT;

@@ -1,23 +1,23 @@
 <?php
-  function addTask($dbh,$todoref,$information,$priority,$datedue,$ischecked, $assignedTo){
+  function addTask($dbh,$projectref,$information,$priority,$datedue,$ischecked, $assignedTo){
     $stmt = $dbh->prepare('SELECT id FROM tasks WHERE projectRef = ? AND information = ?');
-    $stmt->execute(array($todoref,$information));
+    $stmt->execute(array($projectref,$information));
     $result = $stmt->fetch();
     if ($result){
       echo('Task duplicated');
       return;
     }
     $stmt = $dbh->prepare('INSERT INTO tasks VALUES (?,?,?,?,?,?,?)');
-    $stmt->execute(array(NULL,$todoref,$information,$priority,$datedue,$ischecked,$assignedTo));
+    $stmt->execute(array(NULL,$projectref,$information,$priority,$datedue,$ischecked,$assignedTo));
   }
 
-  function addTasks($dbh,$items,$todo_id){
+  function addTasks($dbh,$items,$project_id){
     foreach($items as $item){
-      addTask($dbh,$todo_id,$item['text'],$item['priority'],$item['datedue'],0);
+      addTask($dbh,$project_id,$item['text'],$item['priority'],$item['datedue'],0);
     }
   }
 
-  function addcategories($dbh,$title,$userref){
+  function addCategories($dbh,$title,$userref){
     $stmt = $dbh->prepare('SELECT id FROM categories WHERE title = ? AND userRef = ?');
     $stmt->execute(array($title,$userref));
     $result = $stmt->fetch();
@@ -32,9 +32,9 @@
     }
   }
 /**
- * Add a todo list to the database and check if it already exists.
+ * Add a project list to the database and check if it already exists.
  */
-  function addprojects($dbh,$name, $color, $userref,$categoryref){
+  function addProjects($dbh,$name, $color, $userref,$categoryref){
     $stmt = $dbh->prepare('SELECT id from projects WHERE Name = ? AND userRef = ? AND categoryRef = ?');
     $stmt->execute(array($name,$userref,$categoryref));
     $result = $stmt->fetch();
@@ -46,19 +46,32 @@
       return $dbh->lastInsertId();
     }
   }
-  function getListsForUserId($dbh,$userid){
-    $stmt = $dbh->prepare('SELECT * from projects WHERE userRef = ?');
+  function getProjectsForCreatorId($dbh,$userid){
+    $stmt = $dbh->prepare('SELECT * from projects WHERE creator = ?');
     $stmt->execute(array($userid));
     $user_lists = $stmt->fetchAll();
   }
 
-  function getAllprojectss($dbh){
+  function getAllProjects($dbh){
     $stmt = $dbh->prepare('SELECT * from projects');
     $stmt->execute();
     return $stmt->fetchAll();
   }
-  function getprojectsItems($dbh,$todo_id){
+  function getProjectTasks($dbh,$project_id){
+    $stmt = $dbh->prepare('SELECT * from tasks WHERE projectRef = ?');
+    $stmt->execute(array($project_id));
+    return $stmt->fetchAll();
+  }
+  function getProjectUsers($dbh, $project_id){
+    $stmt = $dbh->prepare('SELECT userRef from projectUsers WHERE projectRef = ?');
+    $stmt->execute(array($project_id));
+    return $stmt->fetchAll();
+  }
 
+  function getProjectCreator($dbh, $project_id){
+    $stmt = $dbh->prepare('SELECT creator from projects WHERE id = ?');
+    $stmt->execute(array($project_id));
+    return $stmt->fetch();
   }
 
   function insertUserIntoProject($dbh, $userid, $projectid, $permissions){
