@@ -1,7 +1,6 @@
 <?php
-  include_once('debug.php');
   function userExists($dbh,$username){
-    $stmt = $dbh->prepare('SELECT * FROM User WHERE Username = ?');
+    $stmt = $dbh->prepare('SELECT * FROM users WHERE username = ?');
     $stmt->execute(array($username));
     $result = $stmt->fetchAll();
     if ($result){
@@ -11,13 +10,13 @@
 
   }
   function register($dbh, $username, $password, $email) {
-    $stmt = $dbh->prepare('INSERT INTO User (Username, Password, Email) VALUES (?,?,?)');
+    $stmt = $dbh->prepare('INSERT INTO users (username, password, email) VALUES (?,?,?)');
     $stmt->execute(array($username, hash('sha256',$password),$email));
     return true;
   }
   function checkPassword($dbh, $username, $password){
     $hashedPassword = hash('sha256',$password);
-    $stmt = $dbh->prepare('SELECT Username,Password FROM User WHERE Username = ? AND Password = ?');
+    $stmt = $dbh->prepare('SELECT username,password FROM users WHERE username = ? AND password = ?');
     $stmt->execute(array($username,$hashedPassword));
     $user = $stmt->fetchAll();
     if ($user == false){
@@ -25,8 +24,8 @@
     }
     return true;
   }
-  function getUserId($dbh,$username){
-    $stmt = $dbh->prepare('SELECT * FROM User WHERE Username = ?');
+  function getusersId($dbh,$username){
+    $stmt = $dbh->prepare('SELECT * FROM users WHERE username = ?');
     $stmt->execute(array($username));
     $result = $stmt->fetch();
     return $result['ID'];
