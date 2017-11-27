@@ -11,14 +11,17 @@
   </head>
   <body>
     <header>
-      <a href="index.php"><img src="assets/logo.png" width="177px" height="106px"></a>
+      <a id="logo_link" href="index.php"><img src="assets/logo.png" width="177px" height="106px"></a>
+      <form id="search_form">
+        <input type="search" name="searchfield" placeholder="Search">
+      </form>
       <?php
       if(isset($_SESSION['is_logged']) && $_SESSION['is_logged'] == true){
-        echo($_SESSION['username']);?>
-        <a href="action_logout.php">Logout</a>
+        echo("<section id='login'>" . $_SESSION['username']);?>
+        <a href="action_logout.php">Logout</a></section>
       <?php }else{
         ?>
-        <section id="login_or_sign_in">
+        <section id="login">
           <a href="templates/login.php">Login / Sign In<img src="assets/30_30_login.png" width="30px" height="30px"></a>
         </section>
       <?php } ?>

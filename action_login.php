@@ -10,10 +10,10 @@
       $_SESSION['username'] = $_POST['username'];
       $_SESSION['is_logged'] = true;
     }else{
-      echo('-2'); //Incorrect Password
+      die('-2'); //Incorrect Password
     }
   }else{
-    echo('-1'); //User does not exist
+    die('-1'); //User does not exist
   }
 
   

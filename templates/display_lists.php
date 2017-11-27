@@ -5,9 +5,6 @@ include_once("database/lists.php");
 
 
 <div id="display_lists">
-  <form>
-    <input type="search" name="searchfield" placeholder="Search">
-  </form>
 <!--Se tiver feito login -->
   <section id="List">
     <!--ciclo for para inserir as categorias -->

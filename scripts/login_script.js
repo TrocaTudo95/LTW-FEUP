@@ -164,6 +164,7 @@ submit_register.addEventListener('click',event =>{
 
 
 function loginComplete(event){
+    console.log(this.responseText);
     if (this.responseText == '-1'){
         alert('User does not exist');
     }else if (this.responseText == '-2'){
@@ -174,6 +175,7 @@ function loginComplete(event){
 }
 
 function registerComplete(event){
+    console.log(this.responseText);
     if (this.responseText == '-1'){
         alert('Email registered already');
     }else if (this.responseText == '-2'){

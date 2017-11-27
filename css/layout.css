@@ -12,6 +12,12 @@ body {
 body > header {
     grid-column: 1;
     grid-row: start / header;
+
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-rows: 1fr;
+    justify-items: center;
+    align-items: center;
   }
 #add_to_do_form {
     grid-column: 1;
@@ -24,4 +30,19 @@ body > header {
 body > footer{
     grid-column: 1;
     grid-row: content/end;
+}
+body > header > form{
+    grid-column: 2/3;
+}
+body > header > a{
+    grid-column: 1/2;
+    margin:1em;
+}
+body > header > section#login{
+    grid-column: 3/4;
+}
+
+body > header input[type="search"]{
+    width: 35em;
+    height: 2em;
 }
