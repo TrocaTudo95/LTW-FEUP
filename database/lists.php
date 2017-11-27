@@ -30,8 +30,6 @@
       return $dbh->lastInsertId();
       
     }
-
-    
   }
 /**
  * Add a todo list to the database and check if it already exists.
@@ -47,5 +45,10 @@
       $stmt->execute(array(NULL,$name,$color,$userref,$categoryref));
       return $dbh->lastInsertId();
     }
+  }
+  function getListsForUserId($dbh,$userid){
+    $stmt = $dbh->prepare('SELECT * from ToDoList WHERE UserRef = ?');
+    $stmt->execute(array($userid));
+    $user_lists = $stmt->fetchAll();
   }
 ?>

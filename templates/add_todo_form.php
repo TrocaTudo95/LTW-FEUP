@@ -1,6 +1,3 @@
-<?php
-?>
-
 <div id="add_todo_form">
     <h3>Create ToDo</h3>
     <form method="get" action="action_save_list.php">
