@@ -7,10 +7,13 @@
 
   if (userExists($dbh, $_POST['username'])){
     if (checkPassword($dbh,$_POST['username'],$_POST['password'])){
-      header('Location: index.php?id=' . $_POST['username']);
       $_SESSION['username'] = $_POST['username'];
       $_SESSION['is_logged'] = true;
+    }else{
+      echo('-2'); //Incorrect Password
     }
+  }else{
+    echo('-1'); //User does not exist
   }
 
   

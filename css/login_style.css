@@ -1,0 +1,37 @@
+body{
+    background-color: #eee;
+    font-family: 'Open Sans', 'arial', sans-serif;
+    color: #444;
+}
+
+body > section#login_box{
+    background-color: white;
+}
+
+nav#login_nav ul{
+    background-color: #eee;
+}
+
+nav#login_nav li{
+    border-top: 4px solid #ccc;
+    border-bottom: 2px solid #ccc;
+    border-left:1px solid #ccc;
+    border-right:1px solid #ccc;
+}
+
+nav#login_nav li#login_tab{
+    border-top: 4px solid #00a2e8;
+    background-color: white;
+    border-bottom:none;
+    border-left:none;
+}
+
+form > input[type='text'], form > input[type='password'],form > input[type="email"]{
+    background-color: #eee;
+}
+
+form > input[type="submit"]{
+    background-color: #00a2e8;
+    border-color: #0078e8;
+    color:white;
+}
