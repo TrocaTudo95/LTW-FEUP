@@ -52,9 +52,9 @@
     $user_lists = $stmt->fetchAll();
   }
 
-  function getAllProjects($dbh){
-    $stmt = $dbh->prepare('SELECT * from projects');
-    $stmt->execute();
+  function getAllProjectsForUser($dbh, $user_id){
+    $stmt = $dbh->prepare('SELECT projectRef from projectUsers WHERE userRef = ?');
+    $stmt->execute(array($user_id));
     return $stmt->fetchAll();
   }
   function getProjectTasks($dbh,$project_id){
