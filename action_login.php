@@ -6,7 +6,7 @@
   include_once('database/users.php');      // loads the functions responsible for the users table
 
   if (userExists($dbh, $_POST['username'])){
-    if (checkPassword($dbh,$_POST['username'],$_POST['password'])){
+    if (checkPassword($dbh,$_POST['username'],$_POST['password']) == 0){
       $_SESSION['username'] = $_POST['username'];
       $_SESSION['is_logged'] = true;
     }else{

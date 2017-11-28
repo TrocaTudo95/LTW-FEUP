@@ -1,6 +1,6 @@
 <?php
   function userExists($dbh,$username){
-    $stmt = $dbh->prepare('SELECT * FROM users WHERE username = ?');
+    $stmt = $dbh->prepare('SELECT id FROM users WHERE username = ?');
     $stmt->execute(array($username));
     $result = $stmt->fetchAll();
     if ($result){
@@ -9,26 +9,67 @@
     return false;
 
   }
+  /**
+   * Returns -1 if username is already registered.
+   * Returns -2 if email is already registered.
+   * Returns 0 in case of success
+   */
   function register($dbh, $username, $password, $email) {
-    $stmt = $dbh->prepare('INSERT INTO users (username, password, email) VALUES (?,?,?)');
-    $stmt->execute(array($username, hash('sha256',$password),$email));
-    return true;
+    //Check if username is already registered.
+    $stmt = $dbh->prepare('SELECT id FROM users WHERE username = ?');
+    $stmt->execute(array($username));
+    if ($stmt->fetch()){
+      return -1;
+    }
+    //Check if email is already registered
+    $stmt = $dbh->prepare('SELECT id from users WHERE email = ?');
+    $stmt->execute(array($email));
+    if ($stmt->fetch()){
+      return -2;
+    }
+    //Insert user into database
+    $apiKey = hash('sha256',strval(time()));
+    $stmt = $dbh->prepare('INSERT INTO users (username, password, email,apiKey) VALUES (?,?,?,?)');
+    $stmt->execute(array($username, hash('sha256',$password),$email,$apiKey));
+    return 0;
   }
+
+  /**
+   * Returns 0 if password is correct
+   * Returns -1 if password is incorrect
+   */
+  
   function checkPassword($dbh, $username, $password){
     $hashedPassword = hash('sha256',$password);
     $stmt = $dbh->prepare('SELECT username,password FROM users WHERE username = ? AND password = ?');
     $stmt->execute(array($username,$hashedPassword));
-    $user = $stmt->fetchAll();
-    if ($user == false){
-      return false;
+    if ($stmt->fetch()){
+      return 0;
     }
-    return true;
+    return -1;
   }
-  function getusersId($dbh,$username){
-    $stmt = $dbh->prepare('SELECT * FROM users WHERE username = ?');
+  function getUserId($dbh,$username){
+    $stmt = $dbh->prepare('SELECT id FROM users WHERE username = ?');
     $stmt->execute(array($username));
     $result = $stmt->fetch();
-    return $result['ID'];
+    if($result){
+      return $result['id'];
+    }
+    return -1;
+  }
+
+  /**
+   * Returns the api key in case of success;
+   * Returns -1 in case of incorrect credentials.
+   */
+  function getApiKey($dbh,$username,$password){
+    $stmt = $dbh->prepare('SELECT apiKey from users WHERE username = ? AND password = ?');
+    $stmt->execute(array($username,hash('sha256',$password)));
+    $result = $stmt->fetch();
+    if ($result){
+      return $result['apiKey'];
+    }
+    return -1;
   }
 
  ?>
