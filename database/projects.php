@@ -1,4 +1,6 @@
 <?php
+  include_once('database/projectUsers.php');
+
   function addTask($dbh,$projectref,$information,$priority,$datedue,$ischecked, $assignedTo){
     $stmt = $dbh->prepare('SELECT id FROM tasks WHERE projectRef = ? AND information = ?');
     $stmt->execute(array($projectref,$information));
@@ -52,18 +54,9 @@
     $user_lists = $stmt->fetchAll();
   }
 
-  function getAllProjectsForUser($dbh, $user_id){
-    $stmt = $dbh->prepare('SELECT projectRef from projectUsers WHERE userRef = ?');
-    $stmt->execute(array($user_id));
-    return $stmt->fetchAll();
-  }
+  
   function getProjectTasks($dbh,$project_id){
     $stmt = $dbh->prepare('SELECT * from tasks WHERE projectRef = ?');
-    $stmt->execute(array($project_id));
-    return $stmt->fetchAll();
-  }
-  function getProjectUsers($dbh, $project_id){
-    $stmt = $dbh->prepare('SELECT userRef from projectUsers WHERE projectRef = ?');
     $stmt->execute(array($project_id));
     return $stmt->fetchAll();
   }
@@ -73,14 +66,21 @@
     $stmt->execute(array($project_id));
     return $stmt->fetch();
   }
+  
 
-  function insertUserIntoProject($dbh, $userid, $projectid, $permissions){
-    $stmt = $dbh->prepare('INSERT INTO projectUsers (projectRef, userRef, permissions) VALUES (?,?,?)');
-    $stmt->execute(array($projectid,$userid,$permissions));
-  }
-
-  function setUserPermissions($dbh, $userid, $projectid, $permissions){
-    $stmt = $dbh->prepare('UPDATE projectUsers SET permissions = ? WHERE userRef = ? AND projectRef = ?');
-    $stmt->execute(array($permissions,$userid,$projectid));
+  /**
+   * Returns 0 if project deleted with success, -1 if creator id is incorrect or project does not exist.
+   */
+  function deleteProject($dbh,$project_id,$creator_id){
+    $stmt = $dbh->prepare('SELECT * FROM projects WHERE id = ? AND creator = ?');
+    $stmt->execute(array($project_id,$creator_id));
+    $result = $stmt->fetch();
+    if ($result){
+      removeAllProjectUsers($dbh,$project_id);
+      $stmt = $dbh->prepare('DELETE FROM projects WHERE id = ?');
+      $stmt->execute(array($project_id));
+      return 0;
+    }
+    return -1;
   }
 ?>

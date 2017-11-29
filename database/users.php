@@ -72,4 +72,17 @@
     return -1;
   }
 
+  /**
+   * Returns 0 if api key is correct, -1 otherwise.
+   */
+  function checkApiKey($dbh,$userId,$apiKey){
+    $stmt = $dbh->prepare('SELECT * from users WHERE id = ? AND apiKey = ?');
+    $stmt->execute(array($userId,$apiKey));
+    $result = $stmt->fetch();
+    if ($result){
+      return 0;
+    }
+    return -1;
+  }
+
  ?>

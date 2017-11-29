@@ -3,13 +3,14 @@
  * This is just a demo REST API that provides 4 methods. text in {} represent variables:
  * GET (Returns id and api-key of user) - api.php?username={value}password={value}
  * POST (Register user) - api.php/register?username={value}&password={value}&email={value}
- * PUT (Reset an user's password) - api.php/{api-key}/reset?user={value}&newPassword={value} //user is used to add more security
- * DELETE - (Delete project owned by an user) - api.php/{api-key}/delete/{project-title}?user={value}
+ * PUT (Reset an user's password) - api.php/update/password?apikey={value}user={value}&newPassword={value} //user is used to add more security
+ * DELETE - (Delete project owned by an user) - api.php/delete/project?apiKey={value}&user={value}&projectId={value}
  */
 
 
 include_once('database/connection.php');
 include_once('database/users.php');
+include_once('database/projects.php');
 
 $method = $_SERVER['REQUEST_METHOD'];
 $paths = NULL;
@@ -78,11 +79,31 @@ function handlePost($dbh,$paths,$parameters){
 	}
 }
 
-function handlePut($dbh,$arguments){
+function handlePut($dbh,$paths,$arguments){
 
 }
-function handleDelete($dbh,$arguments){
+function handleDelete($dbh,$paths,$arguments){
+	if(count($paths) == 2){
+		if ($paths[0] == 'delete'){
+			if ($paths[1] == 'project'){
+				if (isset($arguments['apiKey'] && isset($arguments['user'] && isset($arguments['projectId'])))){
+					if (checkApiKey($dbh,$arguments['user'],$arguments['projectId']) == 0){ //success
+						$deleteResult = deleteProject($dbh,$arguments['projectId'],$arguments['user']);
+						if ($deleteResult == 0){
+							response(200,'Success',NULL);
+							return;
+						}
+						response(418,'User is not the owner or project does not exist',NULL);
+						return;
 
+					}
+					response(418,'Incorrect key for the given user id',NULL);
+					return;
+				}
+			}
+		}
+	}
+	response(501,'Path not recognized',NULL);
 }
 function response($status,$status_message,$data)
 {
