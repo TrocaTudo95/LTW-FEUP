@@ -30,7 +30,7 @@
       $stmt = $dbh->prepare('INSERT INTO categories VALUES (?,?,?)');
       $stmt->execute(array(NULL,$title,$userref));
       return $dbh->lastInsertId();
-      
+
     }
   }
 /**
@@ -51,10 +51,17 @@
   function getProjectsForCreatorId($dbh,$userid){
     $stmt = $dbh->prepare('SELECT * from projects WHERE creator = ?');
     $stmt->execute(array($userid));
-    $user_lists = $stmt->fetchAll();
+    return $stmt->fetchAll();
   }
 
-  
+  function getAllProjects($dbh){
+      $stmt = $dbh->prepare('SELECT * from projects');
+      $stmt->execute();
+      return $stmt->fetchAll();
+
+  }
+
+
   function getProjectTasks($dbh,$project_id){
     $stmt = $dbh->prepare('SELECT * from tasks WHERE projectRef = ?');
     $stmt->execute(array($project_id));
@@ -66,7 +73,7 @@
     $stmt->execute(array($project_id));
     return $stmt->fetch();
   }
-  
+
 
   /**
    * Returns 0 if project deleted with success, -1 if creator id is incorrect or project does not exist.
