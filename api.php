@@ -7,7 +7,6 @@
  * DELETE - (Delete project owned by an user) - api.php/delete/project?apiKey={value}&user={value}&projectId={value}
  */
 
-
 include_once('database/connection.php');
 include_once('database/users.php');
 include_once('database/projects.php');

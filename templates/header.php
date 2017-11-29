@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>QuickBuddy</title>
+    <title>WebTask</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/layout.css">
     <script src="scripts/script.js" defer></script>
@@ -22,7 +23,7 @@
       <?php }else{
         ?>
         <section id="login">
-          <a href="templates/login.php">Login / Sign In<img src="assets/30_30_login.png" width="30px" height="30px"></a>
+          <a href="templates/login.php">Login / Sign In<i class="fa fa-sign-in" aria-hidden="true"></i></a>
         </section>
       <?php } ?>
       
