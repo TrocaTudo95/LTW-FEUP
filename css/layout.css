@@ -1,14 +1,14 @@
 body {
     background-color: #edeff0;
-  
+
     margin: 0 auto;
-    width: 100em;
-  
+    width: 80%;
+
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: [start] 1fr [header] 8fr [content] 1fr [end];
   }
-  
+
 body > header {
     grid-column: 1;
     grid-row: start / header;
