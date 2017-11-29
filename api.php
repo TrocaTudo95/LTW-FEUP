@@ -1,10 +1,7 @@
 <?php
 /**
  * This is just a demo REST API that provides 4 methods. text in {} represent variables:
- * GET (Returns id and api-key of user) - api.php/{username}/{password} DONE
- * POST (Register user) - api.php/{username}/{password}?email={value} DONE
- * PUT (Reset an user's password) - api.php/{apikey}/{user}/{newPassword} //user is used to add more security
- * DELETE - (Delete project owned by an user) - api.php/project/{apiKey}/{user}/{projectId}
+ * 
  */
 
 include_once('database/connection.php');
@@ -33,7 +30,11 @@ if ($method == 'POST'){
 else{
 	response(501,'Method not implemented yet',NULL);
 }
-
+/**
+ * Returns id and api-key of user - api.php/{username}/{password} DONE
+ * Returns list of all users -api.php/users DONE
+ * Return projects owned by user - api.php/projects/{username}
+ */
 function handleGet($dbh,$paths,$parameters){
 	if (count($paths) == 2){
 		$username = $paths[0];
@@ -44,15 +45,25 @@ function handleGet($dbh,$paths,$parameters){
 		$data['user-id'] = $userId;
 		if ($apiKey == -1 || $userId == -1){
 			response(418,'Incorrect Credentials',$data);
-		}else{
-			response(200,'Success',$data);
+			return;
 		}
-	}else{
-		response(501,'Path not recognized',$paths);
+		response(200,'Success',$data);
+		return;
 	}
+	if (count($paths) == 1){
+		if ($paths[0] == 'users'){
+			$users = getAllUsers($dbh);
+			response(200,'Success',$users);
+			return;
+		}
+	}
+	response(501,'Path not recognized',$paths);
+	return;
 }
 
-//With post we want to create a new user
+/**
+ * POST (Register user) - api.php/{username}/{password}?email={value} DONE
+ */
 function handlePost($dbh,$paths,$parameters){
 	if (count($paths) == 2){
 		$username = $paths[0];
@@ -78,14 +89,16 @@ function handlePost($dbh,$paths,$parameters){
 		response(501,'Use /{username}/{password}',NULL);
 	}
 }
-
+/**
+ * PUT (Reset an user's password) - api.php/{apikey}/{user}/{newPassword}
+ */
 function handlePut($dbh,$paths,$arguments){
 	if (count($paths) == 3){
 		$apiKey = $paths[0];
 		$user = $paths[1];
 		$newPass = $paths[2];
 		if (checkApiKey($dbh,$user,$apiKey) == 0){
-			updatePassword($dbh,$arguments['user'],$arguments['apiKey']);
+			updatePassword($dbh,$user,$newPass);
 			response(200,'Success',NULL);
 			return;
 		}
@@ -94,29 +107,30 @@ function handlePut($dbh,$paths,$arguments){
 	}
 	response(501,'Use /{apiKey}/{userid}/{newpass}',NULL);
 }
+
+// DELETE - (Delete project owned by an user) - api.php/project/{apiKey}/{user}/{projectId}
 function handleDelete($dbh,$paths,$arguments){
 	if(count($paths) == 2){
-		if ($paths[0] == 'delete'){
-			if ($paths[1] == 'project'){
-				if (isset($arguments['apiKey']) && isset($arguments['user']) && isset($arguments['projectId'])){
-					if (checkApiKey($dbh,$arguments['user'],$arguments['apiKey']) == 0){ //success
-						$deleteResult = deleteProject($dbh,$arguments['projectId'],$arguments['user']);
-						if ($deleteResult == 0){
-							response(200,'Success',NULL);
-							return;
-						}
-						response(418,'User is not the owner or project does not exist',NULL);
-						return;
-
-					}
-					response(418,'Incorrect key for the given user id',NULL);
+		if ($paths[0] == 'project'){
+			$apiKey = $paths[1]
+			$userId = $paths[2];
+			$projectId = $paths[3];
+			if (checkApiKey($dbh,$userId,$apiKey) == 0){ //success
+				$deleteResult = deleteProject($dbh,$projectId,$userId);
+				if ($deleteResult == 0){
+					response(200,'Success',NULL);
 					return;
 				}
+				response(418,'User is not the owner or the project does not exist',NULL);
+				return;
 			}
+			response(418,'Incorrect key for the given user id',NULL);
+			return;
 		}
 	}
 	response(501,'Path not recognized',NULL);
 }
+
 function response($status,$status_message,$data)
 {
 	header("HTTP/1.1 ".$status);

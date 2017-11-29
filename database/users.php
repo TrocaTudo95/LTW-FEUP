@@ -97,9 +97,14 @@ function getUserByUsername($dbh,$username){
   }
 
   function updatePassword($dbh,$user,$newPassword){
-    $stmt = $dbh->prepare('UPDATE users SET password = ? WHERE user = ?');
+    $stmt = $dbh->prepare('UPDATE users SET password = ? WHERE id = ?');
     $stmt->execute(array($newPassword,$user));
     return 0;
+  }
+  function getAllUsers($dbh){
+    $stmt = $dbh->prepare('SELECT id,username FROM users');
+    $stmt->execute();
+    return $stmt->fetchAll();
   }
 
  ?>
