@@ -14,12 +14,12 @@ $projects = getAllProjects($dbh);
     echo '<article>';
     echo '<header>';
     echo '<hi>' . $project['name'] . '</h1>';
-    $tasks = getAllProjectTasks($dbh,$project['id']);
+    $tasks = getProjectTasks($dbh,$project['id']);
        foreach ($tasks as $task) {
         echo'<div id=' . $task['id'] . '>';
         echo '<p>'. $task['information']. '<p>';
         echo '<i class="fa fa-trash" aria-hidden="true"></i>';
-        echo '</div>'
+        echo '</div>';
        }
    echo '</header>';
    echo '</article>';
