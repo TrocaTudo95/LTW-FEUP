@@ -18,7 +18,7 @@ $projects = getAllProjects($dbh);
        foreach ($tasks as $task) {
         echo'<div id=' . $task['id'] . '>';
         echo '<p>'. $task['information']. '<p>';
-        echo '<i class="fa fa-trash" aria-hidden="true"></i>';
+      //  echo '<i class="fa fa-trash" aria-hidden="true"></i>';
         echo '</div>';
        }
    echo '</header>';
