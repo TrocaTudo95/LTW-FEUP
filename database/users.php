@@ -48,6 +48,17 @@
     }
     return -1;
   }
+
+function getUserByUsername($dbh,$username){
+  $stmt = $dbh->prepare('SELECT * FROM users WHERE username = ?');
+  $stmt->execute(array($username));
+  $result = $stmt->fetch();
+  if ($result){
+    return $result;
+  }
+  return -1;
+}
+
   function getUserId($dbh,$username){
     $stmt = $dbh->prepare('SELECT id FROM users WHERE username = ?');
     $stmt->execute(array($username));
@@ -83,6 +94,12 @@
       return 0;
     }
     return -1;
+  }
+
+  function updatePassword($dbh,$user,$newPassword){
+    $stmt = $dbh->prepare('UPDATE users SET password = ? WHERE user = ?');
+    $stmt->execute(array($newPassword,$user));
+    return 0;
   }
 
  ?>
