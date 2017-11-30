@@ -6,25 +6,25 @@ $projects = getAllProjects($dbh);
 ?>
 
 
-<div id="Projects">
+<section id="projects">
 <!--Se tiver feito login -->
 <?php
   foreach($projects as $project){
-    echo '<section id=' . $project['id'] . '>';
-    echo '<article>';
-    echo '<header>';
-    echo '<h3>' . $project['name'] . '</h3>';
     $tasks = getProjectTasks($dbh,$project['id']);
+    $num_tasks = count($tasks);
+    echo '<article class="projects round_corners" id=' . $project['id'] .' style=background-color:'. $project['color'] .';>';
+    echo '<header id="project">';
+    echo '<h3>' . $project['name'] . '</h3></header>';
+    echo '<span class="round_corners" id="num_tasks">' . $num_tasks . ' Tasks</span>';
+    echo'<section class="tasks round_corners">';
        foreach ($tasks as $task) {
-        echo'<div id=' . $task['id'] . '>';
+        echo '<div class="task" id='. $task['id'] .'>';
         echo '<span>'. $task['information']. '</span>';
         echo '<i class="fa fa-trash" aria-hidden="true"></i>';
         echo '</div>';
        }
-   echo '</header>';
    echo '</article>';
-   echo '</section>';
   }
 ?>
 
-</div>
+</section>

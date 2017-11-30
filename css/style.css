@@ -1,8 +1,18 @@
+html body{
+  background-color: #fff;
+  font-family: 'Open Sans', 'arial', sans-serif;
+  color: #444;
+}
+
+h3{
+  font-weight: 600;
+  color: black;
+  font-size:120%;
+}
+
 body > header {
-  background-color: #00a2e8;
-  color: white;
-  padding-right: 2em;
-  padding-left: 2em;
+  background-color: white;
+  border-top: 4px solid #01ebfc
 }
 
 body > header h1 a{
@@ -11,7 +21,24 @@ body > header h1 a{
 }
 
 body > footer{
-  background-color: #00a2e8;
+  background-color: cornflowerblue;
   color: white;
   padding: 2em;
+}
+
+section.tasks{
+  background-color: white;
+}
+
+#num_tasks{
+  background-color: cornflowerblue;
+  border-radius: 2px;
+  font-size: 80%;
+  color:white;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  margin-bottom: 1em;
 }
