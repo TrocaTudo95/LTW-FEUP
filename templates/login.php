@@ -17,7 +17,7 @@
             <nav id="login_nav">
                 <ul id="tabs">
                     <li id="login_tab">Login</li>
-                    <li id="sign_in_tab">Sign In</li>
+                    <li id="register_tab">Register</li>
                 </ul>
             </nav>
             <form id="login_form" action="../action_login.php" method="post">
@@ -29,7 +29,7 @@
                 <input type="text" name="username" required="required" placeholder="Username *">
                 <input type="email" name="email" required="required" placeholder="Email *">
                 <input type="password" name="password" required="required" placeholder="Password *">
-                <input type="submit" value="Sign In">
+                <input type="submit" value="Register">
             </form>
         </section>
     </body>
