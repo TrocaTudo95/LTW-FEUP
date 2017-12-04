@@ -1,35 +1,35 @@
 body {
-    margin: 0 auto;
-    width: 80%;
-
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: [start] 1fr [header] 8fr [content] 1fr [end];
+    grid-template-rows: [start] auto [header] auto [nav] auto [content] auto [end];
+    width: 100%;
 }
 
 body > header {
     grid-column: 1;
     grid-row: start / header;
-    height: 4em;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-content: center;
-    padding: 1em 0.5em;
-    margin-left:auto;
-    margin-right:auto;
+    padding-top: 1em;
+    width: 100%;
   }
+
+#top_bar{
+    grid-column: 1;
+    grid-row: header/nav;
+}
 #add_to_do_form {
     grid-column: 1;
-    grid-row: header / content;
+    grid-row: nav / content;
 }
 #display_lists{
     grid-column: 1;
-    grid-row: header / content;
+    grid-row: nav / content;
 }
 body > footer{
     grid-column: 1;
     grid-row: content/end;
-    height: 1em;
 }
 body > header > form{
     

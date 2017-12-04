@@ -101,3 +101,7 @@ function getRGBForPriority(priority){
     }
     return "rgb(" + rComponent + "," + gComponent + ",0)";
 }
+
+function new_project_click(){
+    console.log("new project clicked");
+}
