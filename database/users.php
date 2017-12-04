@@ -58,6 +58,11 @@ function getUserByUsername($dbh,$username){
   }
   return -1;
 }
+function getUsernameById($dbh,$user_id){
+  $stmt = $dbh->prepare('SELECT username FROM users WHERE id = ?');
+  $stmt->execute(array($user_id));
+  return $stmt->fetch()['username'];
+}
 
   function getUserId($dbh,$username){
     $stmt = $dbh->prepare('SELECT id FROM users WHERE username = ?');
