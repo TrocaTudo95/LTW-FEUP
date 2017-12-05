@@ -41,12 +41,12 @@ if (add_todo_item_button != null){
             console.log("priority changed");
             newTextInput.style.backgroundColor = getRGBForPriority(priorityInput.value);
         });
-    
+
         newListItem.appendChild(newTextInput);
         newListItem.appendChild(dateDueInput);
         newListItem.appendChild(priorityInput);
         todo_items_ol.appendChild(newListItem);
-    
+
         submit_todo_button.disabled = false;
         item_counter++;
     });
@@ -79,8 +79,8 @@ if (submit_todo_button != null){
         request.open("get", "action_save_list.php?" + get_encoded ,true);
         request.send();
         console.log("submit clicked");
-    
-    
+
+
     });
 }
 
@@ -104,4 +104,52 @@ function getRGBForPriority(priority){
 
 function new_project_click(){
     console.log("new project clicked");
+}
+
+function updateProjects(){
+  let search_bar_value = document.getElementById("searchfield").value;
+  let filter_value = document.getElementById('filter').value;
+  let projects= JSON.parse(this.responseText);
+
+  console.log(search_bar_value);
+  let result = projects.filter(project =>
+    project.name.toLowerCase().startsWith(search_bar_value) );
+    clearProjectsDisplay();
+  }
+function clearProjectsDisplay(){
+  let projectsSection = document.querySelector("section#projects");
+  while(projectsSection.hasChildNodes()){
+    projectsSection.removeChild(projectsSection.lastChild);
+  }
+  createProjects(projects);
+
+}
+function handleSearch(){
+   let request = new XMLHttpRequest();
+   request.onload = updateProjects;
+   request.open("get", "action_get_user_projects.php",true);
+   request.send();
+
+}
+
+function createProjects(projects){
+
+  projects.foreach(project=> {
+      let article = document.createElement("article");
+      article.setAttribute("class","projects round_corners");
+      article.setAttribute("id",project.id);
+      article.style.backgroundColor=project.color;
+      let header = document.createElement("header");
+      header.setAttribute("id","project");
+      let h3 =document.createElement("h3");
+      h3.value=project.name;
+      let project_creator = document.createElement("span");
+      project_creator.setAttribute("id","project_creator");
+      project_creator.value= "Created By: " + project.creator;
+      let num_tasks = document.createElement("span");
+      num_tasks.setAttribute("class","round_corners");
+      num_tasks.setAttribute("id","num_tasks");
+      num_tasks.value= "Created By: " + project.creator;
+
+  });
 }

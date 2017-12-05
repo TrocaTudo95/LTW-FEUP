@@ -14,8 +14,14 @@
     <header>
       <a id="logo_link" href="index.php"><img src="assets/logo.png" width="177px" height="106px"></a>
       <form id="search_form">
-        <input type="search" name="searchfield" placeholder="Search">
+        <input type="search" id="searchfield" placeholder="Search" oninput="handleSearch()">
       </form>
+      <select id="filter">
+        <option value="name">Name</option>
+        <option value="color">Color</option>
+        <option value="category">Category</option>
+      </select>
+
       <?php
       if(isset($_SESSION['is_logged']) && $_SESSION['is_logged'] == true){
         echo("<section id='login'>" . $_SESSION['username']);?>
@@ -26,5 +32,5 @@
           <a href="templates/login.php">Login / Sign In<i class="fa fa-sign-in" aria-hidden="true"></i></a>
         </section>
       <?php } ?>
-      
+
     </header>
