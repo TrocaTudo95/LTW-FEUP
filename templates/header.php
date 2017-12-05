@@ -16,6 +16,12 @@
       <form id="search_form">
         <input type="search" name="searchfield" placeholder="Search">
       </form>
+      <select name="filter">
+        <option value="none">None</option>
+        <option value="cor">Cor</option>
+        <option value="categoria">Categoria</option>
+      </select>
+      
       <?php
       if(isset($_SESSION['is_logged']) && $_SESSION['is_logged'] == true){
         echo("<section id='login'>" . $_SESSION['username']);?>
@@ -26,5 +32,5 @@
           <a href="templates/login.php">Login / Sign In<i class="fa fa-sign-in" aria-hidden="true"></i></a>
         </section>
       <?php } ?>
-      
+
     </header>
