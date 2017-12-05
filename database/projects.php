@@ -19,16 +19,16 @@
     }
   }
 
-  function addCategories($dbh,$title,$userref){
-    $stmt = $dbh->prepare('SELECT id FROM categories WHERE title = ? AND userRef = ?');
+  function addCategories($dbh,$title){
+    $stmt = $dbh->prepare('SELECT id FROM categories WHERE title = ?');
     $stmt->execute(array($title,$userref));
     $result = $stmt->fetch();
     if ($result){
-      // category already exists for the user
+      // category already exists
       return $result['id'];
     }else{
-      $stmt = $dbh->prepare('INSERT INTO categories VALUES (?,?,?)');
-      $stmt->execute(array(NULL,$title,$userref));
+      $stmt = $dbh->prepare('INSERT INTO categories VALUES (?,?)');
+      $stmt->execute(array(NULL,$title));
       return $dbh->lastInsertId();
 
     }
@@ -36,16 +36,20 @@
 /**
  * Add a project list to the database and check if it already exists.
  */
-  function addProjects($dbh,$name, $color, $userref,$categoryref){
+  function addProject($dbh,$name, $color, $userref,$categoryref){
     $stmt = $dbh->prepare('SELECT id from projects WHERE Name = ? AND userRef = ? AND categoryRef = ?');
     $stmt->execute(array($name,$userref,$categoryref));
     $result = $stmt->fetch();
     if ($result){
       return $result['id'];
     }else{
+      
       $stmt = $dbh->prepare('INSERT INTO projects VALUES (?,?,?,?,?)');
       $stmt->execute(array(NULL,$name,$color,$userref,$categoryref));
-      return $dbh->lastInsertId();
+      $project_id = $dbh->lastInsertId();
+      $stmt = $dbh->prepare('INSERT INTO projectUsers VALUES (?,?,?)');
+      $stmt->execute(array($project_id,$userref,1));
+      return $project_id;
     }
   }
   function getProjectsForCreatorId($dbh,$userid){
@@ -54,26 +58,82 @@
     return $stmt->fetchAll();
   }
 
+  function quick_sort_projects($array,$dbh){
+      $length = count($array);
+       if($length <= 1){
+           return $array;
+          }
+           else{
+               $pivot = $array[0];
+               $taskPivot = getProjectTasks($dbh,$pivot['id'])[0];
+               $left = $right = array();
+               for($i = 1; $i < count($array); $i++)
+               {
+                 $taskProject = getProjectTasks($dbh,$array[$i]['id'])[0];
+                    if($taskProject.dateDue < $taskPivot.dateDue){
+                          $left[] = $array[$i];
+                      }
+                    else{
+                        $right[] = $array[$i];
+                        }
+               }
+
+               return array_merge(quick_sort_projects($left,$dbh), array($pivot), quick_sort_projects($right,$dbh));
+               }
+  }
+
+
   function getAllProjects($dbh){
       $stmt = $dbh->prepare('SELECT * from projects');
       $stmt->execute();
+      quick_sort_projects($stmt,$dbh);
       return $stmt->fetchAll();
 
   }
 
 
+  function quick_sort_tasks($array){
+	    $length = count($array);
+	     if($length <= 1){
+		       return $array;
+	        }
+	         else{
+		           $pivot = $array[0];
+		           $left = $right = array();
+		           for($i = 1; $i < count($array); $i++)
+		           {
+			              if($array[$i].dateDue < $pivot.dateDue){
+				                  $left[] = $array[$i];
+			                }
+			              else{
+				                $right[] = $array[$i];
+			                  }
+		           }
+
+		           return array_merge(quick_sort_tasks($left), array($pivot), quick_sort_tasks($right));
+	             }
+  }
+
   function getProjectTasks($dbh,$project_id){
     $stmt = $dbh->prepare('SELECT * from tasks WHERE projectRef = ?');
     $stmt->execute(array($project_id));
+    quick_sort_tasks($stmt);
     return $stmt->fetchAll();
   }
 
   function getProjectCreator($dbh, $project_id){
     $stmt = $dbh->prepare('SELECT creator from projects WHERE id = ?');
     $stmt->execute(array($project_id));
-    return $stmt->fetch();
+    return $stmt->fetch()['creator'];
+    
   }
 
+
+  function getAllProjectsForUser($dbh, $user_id){
+    $stmt = $dbh->prepare('SELECT id,name,color,creator,categoryRef from projects INNER JOIN projectUsers ON projects.id = projectUsers.projectRef WHERE projectUsers.userRef = ?');
+    $stmt->execute(array($user_id));
+    return $stmt->fetchAll();
+}
 
   /**
    * Returns 0 if project deleted with success, -1 if creator id is incorrect or project does not exist.
@@ -89,5 +149,15 @@
       return 0;
     }
     return -1;
+  }
+
+  function getCategoryTitle($dbh,$category_id){
+    $stmt = $dbh->prepare('SELECT title from categories WHERE id = ?');
+    $stmt->execute(array($category_id));
+    $result = $stmt->fetch();
+    if ($result){
+      return $result['title'];
+    }
+    die(-1);
   }
 ?>
