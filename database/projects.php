@@ -43,7 +43,7 @@
     if ($result){
       return $result['id'];
     }else{
-      
+
       $stmt = $dbh->prepare('INSERT INTO projects VALUES (?,?,?,?,?)');
       $stmt->execute(array(NULL,$name,$color,$userref,$categoryref));
       $project_id = $dbh->lastInsertId();
@@ -125,12 +125,12 @@
     $stmt = $dbh->prepare('SELECT creator from projects WHERE id = ?');
     $stmt->execute(array($project_id));
     return $stmt->fetch()['creator'];
-    
+
   }
 
 
   function getAllProjectsForUser($dbh, $user_id){
-    $stmt = $dbh->prepare('SELECT id,name,color,creator,categoryRef from projects INNER JOIN projectUsers ON projects.id = projectUsers.projectRef WHERE projectUsers.userRef = ?');
+    $stmt = $dbh->prepare("SELECT projects.id,name,color,users.username as 'creator',categories.title from projects INNER JOIN projectUsers ON projects.id = projectUsers.projectRef INNER JOIN categories ON categories.id = projects.categoryRef  INNER JOIN users on projects.creator= users.id WHERE projectUsers.userRef = ? ");
     $stmt->execute(array($user_id));
     return $stmt->fetchAll();
 }
@@ -160,4 +160,7 @@
     }
     die(-1);
   }
+
+
+
 ?>

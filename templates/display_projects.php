@@ -2,6 +2,7 @@
 include_once("database/connection.php");
 include_once("database/projects.php");
 include_once("database/users.php");
+
 if(isset($_SESSION['is_logged']) && isset($_SESSION['username'])){
   if($_SESSION['is_logged'] == true){
     $user_id = getUserId($dbh,$_SESSION['username']);
@@ -19,8 +20,8 @@ if(isset($_SESSION['is_logged']) && isset($_SESSION['username'])){
       $tasks = getProjectTasks($dbh,$project['id']);
       $num_tasks = count($tasks);
       $creator_id = getProjectCreator($dbh,$project['id']);
-      $creator_username = getUsernameById($dbh,$creator_id);
-      $category = getCategoryTitle($dbh,$project['categoryRef']);
+      $creator_username = $project['creator'];
+      $category = $project['title'];
       echo '<article class="projects round_corners" id=' . $project['id'] .' style=background-color:'. $project['color'] .';>';
       echo '<header id="project">';
       echo '<h3>' . $project['name'] . '</h3></header>';
