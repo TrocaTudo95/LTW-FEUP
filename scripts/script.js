@@ -144,17 +144,17 @@ function createProjects(projects){
         let header = document.createElement("header");
         header.setAttribute("id","project");
         let h3 =document.createElement("h3");
-        h3.value=project.name;
+        h3.innerHTML=project.name;
         let project_creator = document.createElement("span");
         project_creator.setAttribute("id","project_creator");
-        project_creator.value= "Created By: " + project.creator;
+        project_creator.innerHTML= "Created By: " + project.creator;
         let project_category = document.createElement("span");
         project_category.setAttribute("id","project_category");
-        project_category.value= "Category: " + project.category;
+        project_category.innerHTML= "Category: " + project.category;
         let num_tasks = document.createElement("span");
         num_tasks.setAttribute("class","round_corners");
         num_tasks.setAttribute("id","num_tasks");
-        num_tasks.value= "Created By: " + project.creator;
+        num_tasks.innerHTML= "Created By: " + project.creator;
         let tasks_section = document.createElement("section");
         tasks_section.setAttribute("class","tasks round_corners");
         let tasks = project.tasks;
@@ -163,7 +163,7 @@ function createProjects(projects){
             task_div.setAttribute("class","task");
             task_div.setAttribute("id",task.id);
             let task_span = document.createElement("span");
-            task_span.value = task.information;
+            task_span.innerHTML = task.information;
             let trash_icon = document.createElement("i");
             trash_icon.setAttribute("class","fa fa-trash");
             trash_icon.setAttribute("aria-hidden","true");
@@ -171,12 +171,13 @@ function createProjects(projects){
             tasks_section.appendChild(task_span);
             tasks_section.appendChild(trash_icon);
         });
-        header.appendChild(h3);
-        article.appendChild(tasks_section);
         article.appendChild(header);
+        header.appendChild(h3);
+        article.appendChild(project_category);
         article.appendChild(project_creator);
         article.appendChild(num_tasks);
-        article.appendChild(projectCategory);
+        article.appendChild(tasks_section);
+        
         projectsSection.appendChild(article);
     });
 }

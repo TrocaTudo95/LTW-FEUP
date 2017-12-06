@@ -21,7 +21,7 @@ if(isset($_SESSION['is_logged']) && isset($_SESSION['username'])){
       $num_tasks = count($tasks);
       $creator_id = getProjectCreator($dbh,$project['id']);
       $creator_username = $project['creator'];
-      $category = $project['title'];
+      $category = $project['category'];
       echo '<article class="projects round_corners" id=' . $project['id'] .' style=background-color:'. $project['color'] .';>';
       echo '<header id="project">';
       echo '<h3>' . $project['name'] . '</h3></header>';
