@@ -13,7 +13,6 @@ if(isset($_SESSION['is_logged']) && isset($_SESSION['username'])){
 
 
 <section id="projects">
-<!--Se tiver feito login -->
 <?php
   if (isset($projects)){
     foreach($projects as $project){
