@@ -117,7 +117,7 @@
   function getProjectTasks($dbh,$project_id){
     $stmt = $dbh->prepare('SELECT * from tasks WHERE projectRef = ?');
     $stmt->execute(array($project_id));
-    quick_sort_tasks($stmt);
+    //quick_sort_tasks($stmt);
     return $stmt->fetchAll();
   }
 
@@ -130,7 +130,7 @@
 
 
   function getAllProjectsForUser($dbh, $user_id){
-    $stmt = $dbh->prepare("SELECT projects.id,name,color,users.username as 'creator',categories.title from projects INNER JOIN projectUsers ON projects.id = projectUsers.projectRef INNER JOIN categories ON categories.id = projects.categoryRef  INNER JOIN users on projects.creator= users.id WHERE projectUsers.userRef = ? ");
+    $stmt = $dbh->prepare("SELECT projects.id,name,color,users.username as 'creator',categories.title as 'category' from projects INNER JOIN projectUsers ON projects.id = projectUsers.projectRef INNER JOIN categories ON categories.id = projects.categoryRef  INNER JOIN users on projects.creator= users.id WHERE projectUsers.userRef = ? ");
     $stmt->execute(array($user_id));
     return $stmt->fetchAll();
 }
