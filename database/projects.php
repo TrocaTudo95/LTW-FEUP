@@ -81,12 +81,12 @@
   }
 
   function getProjectTasks($dbh,$project_id){
-    $stmt = $dbh->prepare('SELECT * from tasks WHERE projectRef = ?');
+    $stmt = $dbh->prepare('SELECT * from tasks INNER JOIN users ON tasks.assignedTo = users.id WHERE projectRef = ?');
     $stmt->execute(array($project_id));
-    $arrayt = $stmt->fetchAll();
-    return quick_sort_tasks($arrayt);
+    $resultP = $stmt->fetchAll();
+    return quick_sort_tasks($resultP);
   }
-
+  
   function quick_sort_projects($array,$dbh){
       $length = count($array);
        if($length <= 1){
@@ -119,6 +119,7 @@
       return quick_sort_projects($array,$dbh);
 
   }
+
 
 
   function getProjectCreator($dbh, $project_id){
