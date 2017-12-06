@@ -145,11 +145,27 @@ function updateProjects(){
    request.send();
 }
 
+ function handleProjectClick(project){
+
+   let modal= document.createElement("div");
+   modal.setAttribute("id","modal"+project.id);
+   modal.setAttribute("class","modal");
+   let modal_content =document.createElement("div");
+   modal_content.setAttribute("class","modal-content");
+   let paragraph = document.createElement("p");
+   paragraph.innerHTML= "ola";
+   projectsSection.appendChild(modal);
+   modal.style.display = "block";
+   modal.appendChild(modal_content);
+   modal_content.appendChild(paragraph);
+ }
+
 function createProjects(projects){
     projects.forEach(project => {
         let article = document.createElement("article");
         article.setAttribute("class","projects round_corners");
         article.setAttribute("id",project.id);
+      //  article.onclick = handleProjectClick(project);
         article.style.backgroundColor=project.color;
         let header = document.createElement("header");
         header.setAttribute("id","project");
