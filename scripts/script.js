@@ -108,17 +108,24 @@ function new_project_click(){
 
 function updateProjects(){
     let search_bar_value = document.getElementById("searchfield").value;
-    let filter_value = document.getElementById('filter').value;
+    let filter = document.getElementById('filter');
+    let filter_value= filter.options[filter.selectedIndex].text;
     let projects= JSON.parse(this.responseText);
     if (search_bar_value.length > 0){
+      if(filter_value == "Name"){
         projects = projects.filter(project =>
             project.name.toLowerCase().startsWith(search_bar_value.toLowerCase()));
+          }
+          else if (filter_value == "Category"){
+            projects = projects.filter(project =>
+                project.category.toLowerCase().startsWith(search_bar_value.toLowerCase()));
+          }
     }
-    console.log(projects);
+    //console.log(projects);
     clearProjectsDisplay();
     createProjects(projects);
 }
-  
+
 function clearProjectsDisplay(){
   let projectsSection = document.querySelector("section#projects");
   while(projectsSection.hasChildNodes()){
@@ -177,7 +184,7 @@ function createProjects(projects){
         article.appendChild(project_creator);
         article.appendChild(num_tasks);
         article.appendChild(tasks_section);
-        
+
         projectsSection.appendChild(article);
     });
 }

@@ -18,7 +18,6 @@
       </form>
       <select id="filter">
         <option value="name">Name</option>
-        <option value="color">Color</option>
         <option value="category">Category</option>
       </select>
 
