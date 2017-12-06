@@ -15,7 +15,7 @@
     <header>
       <a id="logo_link" href="index.php"><img src="assets/logo.png" width="177px" height="106px"></a>
       <form id="search_form">
-        <input type="search" id="searchfield" placeholder="Search" oninput="handleSearch()">
+        <input type="search" id="searchfield" placeholder="Search" oninput="updateProjects()">
       </form>
       <select id="filter">
         <option value="name">Name</option>
