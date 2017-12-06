@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/layout.css">
     <script src="scripts/script.js" defer></script>
+    <script src="scripts/next_tasks.js" defer></script>
   </head>
   <body>
     <header>
