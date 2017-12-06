@@ -25,10 +25,10 @@ INSERT INTO projectUsers VALUES (6,3,1);
 INSERT INTO projectUsers VALUES (7,2,1);
 INSERT INTO projectUsers VALUES (8,1,1);
 
-INSERT INTO tasks (id,projectRef,information,priority,dateDue,isChecked,assignedTo) VALUES (1,1,"Ipsum Corp.",1,1,1,1);
-INSERT INTO tasks (id,projectRef,information,priority,dateDue,isChecked,assignedTo) VALUES (2,2,"Metus Aenean Sed Corporation",1,2,1,1);
-INSERT INTO tasks (id,projectRef,information,priority,dateDue,isChecked,assignedTo) VALUES (3,3,"Magna Et Associates",1,3,1,1);
-INSERT INTO tasks (id,projectRef,information,priority,dateDue,isChecked,assignedTo) VALUES (4,4,"Neque Et Nunc Inc.",1,4,1,1);
+INSERT INTO tasks (id,projectRef,information,priority,dateDue,isChecked,assignedTo) VALUES (1,1,"Ipsum Corp.",1,25,1,2);
+INSERT INTO tasks (id,projectRef,information,priority,dateDue,isChecked,assignedTo) VALUES (2,2,"Metus Aenean Sed Corporation",1,23,1,2);
+INSERT INTO tasks (id,projectRef,information,priority,dateDue,isChecked,assignedTo) VALUES (3,3,"Magna Et Associates",1,31,1,2);
+INSERT INTO tasks (id,projectRef,information,priority,dateDue,isChecked,assignedTo) VALUES (4,4,"Neque Et Nunc Inc.",1,4,1,2);
 INSERT INTO tasks (id,projectRef,information,priority,dateDue,isChecked,assignedTo) VALUES (5,5,"Nunc Sit Foundation",1,5,1,1);
 INSERT INTO tasks (id,projectRef,information,priority,dateDue,isChecked,assignedTo) VALUES (6,6,"Sem Industries",1,6,1,1);
 INSERT INTO tasks (id,projectRef,information,priority,dateDue,isChecked,assignedTo) VALUES (7,7,"Tellus Suspendisse Sed Consulting",1,7,1,1);
