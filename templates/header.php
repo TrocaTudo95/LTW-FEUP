@@ -23,12 +23,18 @@
 
       <?php
       if(isset($_SESSION['is_logged']) && $_SESSION['is_logged'] == true){
-        echo("<section id='login'>" . $_SESSION['username']);?>
-        <a href="action_logout.php">Logout</a></section>
+        echo("<section class= 'dropdown' id='login'>");
+        echo("<button class='dropbtn'>" . $_SESSION['username'] . "</button>");
+        ?>
+          <div class="dropdown-content">
+            <a href="account.php">Account</a>
+            <a href="action_logout.php">Logout</a>
+          </div>
+        </section>
       <?php }else{
         ?>
         <section id="login">
-          <a href="templates/login.php">Login / Sign In<i class="fa fa-sign-in" aria-hidden="true"></i></a>
+          <a href="templates/login.php">Login / Register<i class="fa fa-sign-in" aria-hidden="true"></i></a>
         </section>
       <?php } ?>
 
