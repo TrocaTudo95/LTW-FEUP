@@ -1,6 +1,3 @@
 @echo off
-sqlite3 webtask.db
-timeout 1
-echo .read create_tables.sql
-echo .read test_insert.sql
-echo .exit
+del ".\webtask.db"
+sqlite3 webtask.db -init create_database.sql ""

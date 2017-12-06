@@ -1,3 +1,22 @@
+PRAGMA foreign_keys = on;
+BEGIN TRANSACTION;
+
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS projects;
+DROP TABLE IF EXISTS tasks;
+DROP TABLE IF EXISTS categories;
+DROP TABLE IF EXISTS images;
+DROP TABLE IF EXISTS projectUsers;
+CREATE TABLE users(id INTEGER PRIMARY KEY,username TEXT UNIQUE,password TEXT, email TEXT UNIQUE, apiKey TEXT);
+CREATE TABLE projects(id INTEGER PRIMARY KEY, name TEXT,color TEXT, creator INTEGER REFERENCES users (id), categoryRef INTEGER REFERENCES categories(id));
+CREATE TABLE tasks(id INTEGER PRIMARY KEY, projectRef INTEGER REFERENCES projects (id), information TEXT, priority INTEGER, dateDue INTEGER, isChecked INTEGER, assignedTo INTEGER REFERENCES users(id));
+CREATE TABLE categories(id INTEGER PRIMARY KEY, title TEXT UNIQUE);
+CREATE TABLE images (id INTEGER PRIMARY KEY,title VARCHAR NOT NULL);
+CREATE TABLE projectUsers(projectRef INTEGER REFERENCES projects(id), userRef INTEGER REFERENCES users(id), permissions INTEGER);
+
+COMMIT;
+
+BEGIN TRANSACTION;
 /** Password is 'admin'*/
 INSERT INTO users (id,username,password,email,apiKey) VALUES (1,"JoaoM","8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918","p@gmail.com","aasda");
 INSERT INTO users (id,username,password,email,apiKey) VALUES (2,"root","8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918","pa@gmail.com","aasdassdf");
@@ -65,3 +84,7 @@ INSERT INTO tasks (id,projectRef,information,priority,dateDue,isChecked,assigned
 INSERT INTO tasks (id,projectRef,information,priority,dateDue,isChecked,assignedTo) VALUES (38,6,"Dapibus Foundation",1,38,1,1);
 INSERT INTO tasks (id,projectRef,information,priority,dateDue,isChecked,assignedTo) VALUES (39,7,"Euismod Foundation",1,39,1,1);
 INSERT INTO tasks (id,projectRef,information,priority,dateDue,isChecked,assignedTo) VALUES (40,8,"Orci Lacus Vestibulum Limited",1,40,1,1);
+
+COMMIT;
+
+.exit
