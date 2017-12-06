@@ -58,6 +58,35 @@
     return $stmt->fetchAll();
   }
 
+  function quick_sort_tasks($array){
+	    $length = count($array);
+	     if($length <= 1){
+		       return $array;
+	        }
+	         else{
+		           $pivot = $array[0];
+		           $left = $right = array();
+		           for($i = 1; $i < count($array); $i++)
+		           {
+			              if($array[$i]['dateDue'] < $pivot['dateDue']){
+				                  $left[] = $array[$i];
+			                }
+			              else{
+				                $right[] = $array[$i];
+			                  }
+		           }
+
+		           return array_merge(quick_sort_tasks($left), array($pivot), quick_sort_tasks($right));
+	             }
+  }
+
+  function getProjectTasks($dbh,$project_id){
+    $stmt = $dbh->prepare('SELECT * from tasks WHERE projectRef = ?');
+    $stmt->execute(array($project_id));
+    $arrayt = $stmt->fetchAll();
+    return quick_sort_tasks($arrayt);
+  }
+
   function quick_sort_projects($array,$dbh){
       $length = count($array);
        if($length <= 1){
@@ -70,7 +99,7 @@
                for($i = 1; $i < count($array); $i++)
                {
                  $taskProject = getProjectTasks($dbh,$array[$i]['id'])[0];
-                    if($taskProject.dateDue < $taskPivot.dateDue){
+                    if($taskProject['dateDue'] < $taskPivot['dateDue']){
                           $left[] = $array[$i];
                       }
                     else{
@@ -86,40 +115,11 @@
   function getAllProjects($dbh){
       $stmt = $dbh->prepare('SELECT * from projects');
       $stmt->execute();
-      quick_sort_projects($stmt,$dbh);
-      return $stmt->fetchAll();
+      $array = $stmt->fetchAll();
+      return quick_sort_projects($array,$dbh);
 
   }
 
-
-  function quick_sort_tasks($array){
-	    $length = count($array);
-	     if($length <= 1){
-		       return $array;
-	        }
-	         else{
-		           $pivot = $array[0];
-		           $left = $right = array();
-		           for($i = 1; $i < count($array); $i++)
-		           {
-			              if($array[$i].dateDue < $pivot.dateDue){
-				                  $left[] = $array[$i];
-			                }
-			              else{
-				                $right[] = $array[$i];
-			                  }
-		           }
-
-		           return array_merge(quick_sort_tasks($left), array($pivot), quick_sort_tasks($right));
-	             }
-  }
-
-  function getProjectTasks($dbh,$project_id){
-    $stmt = $dbh->prepare('SELECT * from tasks WHERE projectRef = ?');
-    $stmt->execute(array($project_id));
-    quick_sort_tasks($stmt);
-    return $stmt->fetchAll();
-  }
 
   function getProjectCreator($dbh, $project_id){
     $stmt = $dbh->prepare('SELECT creator from projects WHERE id = ?');
