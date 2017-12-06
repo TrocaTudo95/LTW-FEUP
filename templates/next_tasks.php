@@ -18,7 +18,9 @@ if(isset($_SESSION['is_logged']) && isset($_SESSION['username'])){
          foreach ($tasks as $task) {
           echo '<div class="task" id='. $task['id'] .'>';
           echo '<span>'. $task['information']. '</span>';
+          echo '...In ';
           echo '<span>'. $task['dateDue']. '</span>';
+          echo ' Days.';
           echo '</div>';
          }
     }
