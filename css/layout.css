@@ -31,15 +31,6 @@ body > footer{
     grid-column: 1;
     grid-row: content/end;
 }
-body > header > form{
-    
-}
-body > header > a{
-    
-}
-body > header > section#login{
-    
-}
 
 body > header input[type="search"]{
     background: #eee url('../assets/search-icon.png') 0 no-repeat;
