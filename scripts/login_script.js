@@ -123,7 +123,7 @@ submit_login.addEventListener('click',event =>{
     event.preventDefault();
     let request = new XMLHttpRequest();
     request.addEventListener("load", loginComplete);
-    request.open("post","../action_login.php",false);
+    request.open("post","../action_login.php",true);
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     request.send(encodeForAjax({username: username_login.value, password: password_login.value}));
 });

@@ -107,23 +107,25 @@ function new_project_click(){
 }
 
 function updateProjects(){
-  let search_bar_value = document.getElementById("searchfield").value;
-  let filter_value = document.getElementById('filter').value;
-  let projects= JSON.parse(this.responseText);
-
-  console.log(search_bar_value);
-  let result = projects.filter(project =>
-    project.name.toLowerCase().startsWith(search_bar_value) );
+    let search_bar_value = document.getElementById("searchfield").value;
+    let filter_value = document.getElementById('filter').value;
+    let projects= JSON.parse(this.responseText);
+    if (search_bar_value.length > 0){
+        projects = projects.filter(project =>
+            project.name.toLowerCase().startsWith(search_bar_value.toLowerCase()));
+    }
+    console.log(projects);
     clearProjectsDisplay();
-  }
+    createProjects(projects);
+}
+  
 function clearProjectsDisplay(){
   let projectsSection = document.querySelector("section#projects");
   while(projectsSection.hasChildNodes()){
     projectsSection.removeChild(projectsSection.lastChild);
   }
-  createProjects(projects);
-
 }
+
 function handleSearch(){
    let request = new XMLHttpRequest();
    request.onload = updateProjects;
@@ -133,23 +135,48 @@ function handleSearch(){
 }
 
 function createProjects(projects){
-
-  projects.foreach(project=> {
-      let article = document.createElement("article");
-      article.setAttribute("class","projects round_corners");
-      article.setAttribute("id",project.id);
-      article.style.backgroundColor=project.color;
-      let header = document.createElement("header");
-      header.setAttribute("id","project");
-      let h3 =document.createElement("h3");
-      h3.value=project.name;
-      let project_creator = document.createElement("span");
-      project_creator.setAttribute("id","project_creator");
-      project_creator.value= "Created By: " + project.creator;
-      let num_tasks = document.createElement("span");
-      num_tasks.setAttribute("class","round_corners");
-      num_tasks.setAttribute("id","num_tasks");
-      num_tasks.value= "Created By: " + project.creator;
-
-  });
+    let projectsSection = document.querySelector("section#projects");
+    projects.forEach(project => {
+        let article = document.createElement("article");
+        article.setAttribute("class","projects round_corners");
+        article.setAttribute("id",project.id);
+        article.style.backgroundColor=project.color;
+        let header = document.createElement("header");
+        header.setAttribute("id","project");
+        let h3 =document.createElement("h3");
+        h3.value=project.name;
+        let project_creator = document.createElement("span");
+        project_creator.setAttribute("id","project_creator");
+        project_creator.value= "Created By: " + project.creator;
+        let project_category = document.createElement("span");
+        project_category.setAttribute("id","project_category");
+        project_category.value= "Category: " + project.category;
+        let num_tasks = document.createElement("span");
+        num_tasks.setAttribute("class","round_corners");
+        num_tasks.setAttribute("id","num_tasks");
+        num_tasks.value= "Created By: " + project.creator;
+        let tasks_section = document.createElement("section");
+        tasks_section.setAttribute("class","tasks round_corners");
+        let tasks = project.tasks;
+        tasks.forEach(task =>{
+            let task_div = document.createElement("div");
+            task_div.setAttribute("class","task");
+            task_div.setAttribute("id",task.id);
+            let task_span = document.createElement("span");
+            task_span.value = task.information;
+            let trash_icon = document.createElement("i");
+            trash_icon.setAttribute("class","fa fa-trash");
+            trash_icon.setAttribute("aria-hidden","true");
+            tasks_section.appendChild(task_div);
+            tasks_section.appendChild(task_span);
+            tasks_section.appendChild(trash_icon);
+        });
+        header.appendChild(h3);
+        article.appendChild(tasks_section);
+        article.appendChild(header);
+        article.appendChild(project_creator);
+        article.appendChild(num_tasks);
+        article.appendChild(projectCategory);
+        projectsSection.appendChild(article);
+    });
 }
