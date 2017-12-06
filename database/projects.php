@@ -115,7 +115,7 @@
   }
 
   function getProjectTasks($dbh,$project_id){
-    $stmt = $dbh->prepare('SELECT * from tasks WHERE projectRef = ?');
+    $stmt = $dbh->prepare('SELECT * from tasks INNER JOIN users ON tasks.assignedTo = users.id WHERE projectRef = ?');
     $stmt->execute(array($project_id));
     //quick_sort_tasks($stmt);
     return $stmt->fetchAll();
