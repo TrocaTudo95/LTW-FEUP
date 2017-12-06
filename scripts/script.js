@@ -14,6 +14,12 @@ let todo_color = document.getElementById("todo_color");
 
 let item_counter = 0;
 
+let projectsSection = document.querySelector('section#projects');
+
+if (projectsSection != null){
+    updateProjects();
+}
+
 function encodeForAjax(data) {
     return Object.keys(data).map(function(k){
       return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
@@ -106,7 +112,7 @@ function new_project_click(){
     console.log("new project clicked");
 }
 
-function updateProjects(){
+function onProjectsLoaded(){
     let search_bar_value = document.getElementById("searchfield").value;
     let filter_value = document.getElementById('filter').value;
     let projects= JSON.parse(this.responseText);
@@ -120,22 +126,19 @@ function updateProjects(){
 }
   
 function clearProjectsDisplay(){
-  let projectsSection = document.querySelector("section#projects");
   while(projectsSection.hasChildNodes()){
     projectsSection.removeChild(projectsSection.lastChild);
   }
 }
 
-function handleSearch(){
+function updateProjects(){
    let request = new XMLHttpRequest();
-   request.onload = updateProjects;
+   request.onload = onProjectsLoaded;
    request.open("get", "action_get_user_projects.php",true);
    request.send();
-
 }
 
 function createProjects(projects){
-    let projectsSection = document.querySelector("section#projects");
     projects.forEach(project => {
         let article = document.createElement("article");
         article.setAttribute("class","projects round_corners");
