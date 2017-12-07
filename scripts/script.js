@@ -146,7 +146,6 @@ function updateProjects(){
 }
 
  function handleProjectClick(event,project){
-    console.log(project);
    let modal= document.createElement("div");
    modal.setAttribute("id","modal"+project.id);
    modal.setAttribute("class","modal");
@@ -168,44 +167,42 @@ function createProjects(projects){
         article.onclick = function(event){
             handleProjectClick(event,project);
         };
-        article.style.backgroundColor=project.color;
+        //article.style.backgroundColor=project.color;
         let header = document.createElement("header");
         header.setAttribute("id","project");
-        let h3 =document.createElement("h3");
-        h3.innerHTML=project.name;
-        let project_creator = document.createElement("span");
-        project_creator.setAttribute("id","project_creator");
-        project_creator.innerHTML= "Created By: " + project.creator;
-        let project_category = document.createElement("span");
-        project_category.setAttribute("id","project_category");
-        project_category.innerHTML= "Category: " + project.category;
+        let project_title =document.createElement("span");
+        project_title.setAttribute("class","project_title");
+        project_title.innerHTML=project.name;
         let num_tasks = document.createElement("span");
-        num_tasks.setAttribute("class","round_corners");
-        num_tasks.setAttribute("id","num_tasks");
-        num_tasks.innerHTML= "Created By: " + project.creator;
+        num_tasks.setAttribute("class","num_tasks");
+        num_tasks.innerHTML= project.tasks.length;
+        let project_category = document.createElement("p");
+        project_category.setAttribute("class","project_category");
+        project_category.innerHTML= project.category;
         let tasks_section = document.createElement("section");
         tasks_section.setAttribute("class","tasks round_corners");
         let tasks = project.tasks;
         tasks.forEach(task =>{
             let task_div = document.createElement("div");
-            task_div.setAttribute("class","task");
-            task_div.setAttribute("id",task.id);
+            task_div.setAttribute("class","task");           
             let task_span = document.createElement("span");
+            task_span.setAttribute("class","task_info");
             task_span.innerHTML = task.information;
-            let trash_icon = document.createElement("i");
-            trash_icon.setAttribute("class","fa fa-trash");
-            trash_icon.setAttribute("aria-hidden","true");
+            task_div.appendChild(task_span);
             tasks_section.appendChild(task_div);
-            tasks_section.appendChild(task_span);
-            tasks_section.appendChild(trash_icon);
         });
+        header.appendChild(project_title);
+        header.appendChild(num_tasks);
+        header.appendChild(project_category);
         article.appendChild(header);
-        header.appendChild(h3);
-        article.appendChild(project_category);
-        article.appendChild(project_creator);
-        article.appendChild(num_tasks);
         article.appendChild(tasks_section);
 
         projectsSection.appendChild(article);
     });
+}
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target.className == "modal") {
+        event.target.style.display = "none";
+    }
 }

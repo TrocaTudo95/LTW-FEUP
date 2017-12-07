@@ -83,14 +83,10 @@ section#projects{
 
 article.projects{
     width:25%;
-    height: 10em;
-    padding: 1em;
+    height: 20em;
     margin: 1em;
     display: flex;
     flex-direction: column;
-}
-article.projects:hover{
-    box-shadow: 5px 5px 10px black;
 }
 
 section.tasks{
