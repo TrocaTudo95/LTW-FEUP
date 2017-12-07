@@ -127,7 +127,7 @@ function onProjectsLoaded(){
                 project.category.toLowerCase().startsWith(search_bar_value.toLowerCase()));
           }
     }
-    console.log(projects);
+    //console.log(projects);
     clearProjectsDisplay();
     createProjects(projects);
 }
