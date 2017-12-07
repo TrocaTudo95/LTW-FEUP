@@ -151,12 +151,47 @@ function updateProjects(){
    modal.setAttribute("class","modal");
    let modal_content =document.createElement("div");
    modal_content.setAttribute("class","modal-content");
-   let paragraph = document.createElement("p");
-   paragraph.innerHTML= "ola";
+
+
+   let header = document.createElement("header");
+   header.setAttribute("id","project");
+   let project_title =document.createElement("span");
+   project_title.setAttribute("class","project_title");
+   project_title.innerHTML=project.name;
+   let num_tasks = document.createElement("span");
+   num_tasks.setAttribute("class","num_tasks");
+   num_tasks.innerHTML= project.tasks.length;
+   let project_category = document.createElement("p");
+   project_category.setAttribute("class","project_category");
+   project_category.innerHTML= project.category;
+   let tasks_section = document.createElement("section");
+   tasks_section.setAttribute("class","tasks round_corners");
+   let tasks = project.tasks;
+   tasks.forEach(task =>{
+       let task_div = document.createElement("div");
+       task_div.setAttribute("class","task");
+       let task_span = document.createElement("span");
+       task_span.setAttribute("class","task_info");
+       task_span.innerHTML = task.information;
+       task_div.appendChild(task_span);
+       tasks_section.appendChild(task_div);
+   });
    projectsSection.appendChild(modal);
    modal.style.display = "block";
    modal.appendChild(modal_content);
-   modal_content.appendChild(paragraph);
+   header.appendChild(project_title);
+   header.appendChild(num_tasks);
+   header.appendChild(project_category);
+   modal_content.appendChild(header);
+   modal_content.appendChild(tasks_section);
+
+
+
+   //paragraph.innerHTML= "ola";
+   //projectsSection.appendChild(modal);
+
+
+   //modal_content.appendChild(paragraph);
  }
 
 function createProjects(projects){
@@ -184,7 +219,7 @@ function createProjects(projects){
         let tasks = project.tasks;
         tasks.forEach(task =>{
             let task_div = document.createElement("div");
-            task_div.setAttribute("class","task");           
+            task_div.setAttribute("class","task");
             let task_span = document.createElement("span");
             task_span.setAttribute("class","task_info");
             task_span.innerHTML = task.information;
