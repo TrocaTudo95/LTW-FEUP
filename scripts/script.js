@@ -145,8 +145,8 @@ function updateProjects(){
    request.send();
 }
 
- function handleProjectClick(project){
-   console.log("ola");
+ function handleProjectClick(event,project){
+    console.log(project);
    let modal= document.createElement("div");
    modal.setAttribute("id","modal"+project.id);
    modal.setAttribute("class","modal");
@@ -165,7 +165,9 @@ function createProjects(projects){
         let article = document.createElement("article");
         article.setAttribute("class","projects round_corners");
         article.setAttribute("id",project.id);
-      //  article.addEventListener('click',handleProjectClick(project));
+        article.onclick = function(event){
+            handleProjectClick(event,project);
+        };
         article.style.backgroundColor=project.color;
         let header = document.createElement("header");
         header.setAttribute("id","project");
