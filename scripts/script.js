@@ -127,7 +127,6 @@ function onProjectsLoaded(){
                 project.category.toLowerCase().startsWith(search_bar_value.toLowerCase()));
           }
     }
-    //console.log(projects);
     clearProjectsDisplay();
     createProjects(projects);
 }
@@ -155,6 +154,12 @@ function updateProjects(){
 
    let header = document.createElement("header");
    header.setAttribute("id","project");
+   let close = document.createElement("span");
+   close.setAttribute("class","close");
+   close.innerHTML="&times;";
+   close.onclick=function() {
+     modal.style.display = "none";
+   }
    let project_title =document.createElement("span");
    project_title.setAttribute("class","project_title");
    project_title.innerHTML=project.name;
@@ -167,13 +172,17 @@ function updateProjects(){
    let tasks_section = document.createElement("section");
    tasks_section.setAttribute("class","tasks round_corners");
    let tasks = project.tasks;
-   console.log(tasks);
+   console.log(project);
    tasks.forEach(task =>{
        let task_div = document.createElement("div");
        task_div.setAttribute("class","task");
        let task_span = document.createElement("span");
        task_span.setAttribute("class","modal_task_info");
-       task_span.innerHTML = task.information;
+       let date= new Date(task.dateDue*1000);
+       let day=date.getDay();
+       let month= date.getMonth();
+       let year= date.getYear();
+       task_span.innerHTML = task.information + "   "+"priority:" + task.priority + "  Date:"+year+"/"+month+"/"+day;
        task_div.appendChild(task_span);
        tasks_section.appendChild(task_div);
    });
@@ -183,6 +192,7 @@ function updateProjects(){
    header.appendChild(project_title);
    header.appendChild(num_tasks);
    header.appendChild(project_category);
+   header.appendChild(close);
    modal_content.appendChild(header);
    modal_content.appendChild(tasks_section);
 
