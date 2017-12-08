@@ -167,11 +167,12 @@ function updateProjects(){
    let tasks_section = document.createElement("section");
    tasks_section.setAttribute("class","tasks round_corners");
    let tasks = project.tasks;
+   console.log(tasks);
    tasks.forEach(task =>{
        let task_div = document.createElement("div");
        task_div.setAttribute("class","task");
        let task_span = document.createElement("span");
-       task_span.setAttribute("class","task_info");
+       task_span.setAttribute("class","modal_task_info");
        task_span.innerHTML = task.information;
        task_div.appendChild(task_span);
        tasks_section.appendChild(task_div);
