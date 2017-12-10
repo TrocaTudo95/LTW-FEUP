@@ -19,9 +19,9 @@
     }
   }
 
-  function addCategories($dbh,$title){
+  function addCategory($dbh,$title){
     $stmt = $dbh->prepare('SELECT id FROM categories WHERE title = ?');
-    $stmt->execute(array($title,$userref));
+    $stmt->execute(array($title));
     $result = $stmt->fetch();
     if ($result){
       // category already exists
@@ -37,13 +37,12 @@
  * Add a project list to the database and check if it already exists.
  */
   function addProject($dbh,$name, $color, $userref,$categoryref){
-    $stmt = $dbh->prepare('SELECT id from projects WHERE Name = ? AND userRef = ? AND categoryRef = ?');
+    $stmt = $dbh->prepare('SELECT id from projects WHERE Name = ? AND creator = ? AND categoryRef = ?');
     $stmt->execute(array($name,$userref,$categoryref));
     $result = $stmt->fetch();
     if ($result){
       return $result['id'];
     }else{
-
       $stmt = $dbh->prepare('INSERT INTO projects VALUES (?,?,?,?,?)');
       $stmt->execute(array(NULL,$name,$color,$userref,$categoryref));
       $project_id = $dbh->lastInsertId();

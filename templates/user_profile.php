@@ -1,11 +1,16 @@
 
 
 <?php
+session_start();
 include_once('../database/connection.php');
 include_once('../database/users.php');
-session_start();
 if (!isset($_SESSION['username'])) die('No username');
-$userId = getUserId($dbh,$_SESSION['username']);
+try{
+	$userId = getUserId($dbh,$_SESSION['username']);
+}catch(PDOException $e){
+	echo($e);
+}
+
 ?>
 <html>
 <link rel="stylesheet" href="../css/profile_style.css">

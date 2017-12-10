@@ -170,3 +170,22 @@ header#project{
   border-bottom: 1px #e1e4e8 solid;
   padding: 1em;
 }
+
+.flex-column{
+  display: flex;
+  flex-direction: column;
+}
+
+#top_bar{
+  padding-left: 2em;
+  margin-top: 1em;
+}
+
+#new_project{
+  border-radius: 5px;
+  background-color: cornflowerblue;
+  padding: 10px;
+  color: white;
+  font-weight: bold;
+  margin-top: 10em;
+}
