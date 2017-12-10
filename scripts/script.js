@@ -112,6 +112,15 @@ function new_project_click(){
     console.log("new project clicked");
 }
 
+function exist_task_in_project(project,search_value){
+    for (let i=0; i< project.tasks.length;i++){
+      let task=project.tasks[i].information;
+      if(task.toLowerCase().startsWith(search_value.toLowerCase()))
+          return true;
+    }
+    return false
+}
+
 function onProjectsLoaded(){
     let search_bar_value = document.getElementById("searchfield").value;
     let filter = document.getElementById('filter');
@@ -125,6 +134,10 @@ function onProjectsLoaded(){
           else if (filter_value == "Category"){
             projects = projects.filter(project =>
                 project.category.toLowerCase().startsWith(search_bar_value.toLowerCase()));
+          }
+          else if (filter_value == "Task"){
+            projects = projects.filter(project =>
+              exist_task_in_project(project,search_bar_value));
           }
     }
     clearProjectsDisplay();
