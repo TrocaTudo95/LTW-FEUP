@@ -1,5 +1,5 @@
 <?php
-    session_start();  
+    session_start();
     if (!isset($_SESSION['username'])) die('No username');
     if (!isset($_GET['title'])) die('No title');
     if (!isset($_GET['category'])) die('No category');
