@@ -1,19 +1,13 @@
-
-
 <?php
+include_once('database/connection.php');
+include_once('database/users.php');
 session_start();
-include_once('../database/connection.php');
-include_once('../database/users.php');
 if (!isset($_SESSION['username'])) die('No username');
-try{
-	$userId = getUserId($dbh,$_SESSION['username']);
-}catch(PDOException $e){
-	echo($e);
-}
-
+$userId = getUserId($dbh,$_SESSION['username']);
+$username =$_SESSION['username'];
 ?>
 <html>
-<link rel="stylesheet" href="../css/profile_style.css">
+<link rel="stylesheet" href="css/profile_style.css">
 <div class="container">
     <div class="row profile">
 		<div class="col-md-3">
@@ -25,17 +19,12 @@ try{
 				<!-- END SIDEBAR USERPIC -->
 				<!-- SIDEBAR USER TITLE -->
 				<div class="profile-usertitle">
+            <?php echo $username;?>
 					<div class="profile-usertitle-name">
 					</div>
 					<div class="profile-usertitle-job">
 						Developer
 					</div>
-				</div>
-				<!-- END SIDEBAR USER TITLE -->
-				<!-- SIDEBAR BUTTONS -->
-				<div class="profile-userbuttons">
-					<button type="button" class="btn btn-success btn-sm">Follow</button>
-					<button type="button" class="btn btn-danger btn-sm">Message</button>
 				</div>
 				<!-- END SIDEBAR BUTTONS -->
 				<!-- SIDEBAR MENU -->
