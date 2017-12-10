@@ -20,6 +20,7 @@
       <select id="filter">
         <option value="name">Name</option>
         <option value="category">Category</option>
+        <option value="task">Task</option>
       </select>
 
       <?php

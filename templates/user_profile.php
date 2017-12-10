@@ -1,3 +1,12 @@
+
+
+<?php
+include_once('../database/connection.php');
+include_once('../database/users.php');
+session_start();
+if (!isset($_SESSION['username'])) die('No username');
+$userId = getUserId($dbh,$_SESSION['username']);
+?>
 <html>
 <link rel="stylesheet" href="../css/profile_style.css">
 <div class="container">
@@ -12,7 +21,6 @@
 				<!-- SIDEBAR USER TITLE -->
 				<div class="profile-usertitle">
 					<div class="profile-usertitle-name">
-						Marcus Doe
 					</div>
 					<div class="profile-usertitle-job">
 						Developer
