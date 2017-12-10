@@ -16,6 +16,8 @@ let item_counter = 0;
 
 let projectsSection = document.querySelector('section#projects');
 
+let newProjectForm;
+
 if (projectsSection != null){
     updateProjects();
 }
@@ -109,7 +111,47 @@ function getRGBForPriority(priority){
 }
 
 function new_project_click(){
-    console.log("new project clicked");
+    if (newProjectForm == null){
+        newProjectForm = getNewProjectForm();
+    }
+    newProjectForm.style.display = "block";
+}
+
+function getNewProjectForm(){
+    let wrapper = document.createElement("section");
+    let header = document.createElement("header");
+    let header_title = document.createElement("h2");
+    let form = document.createElement("form");
+    let input_description = document.createElement("p");
+    let title_input = document.createElement("input");
+    let submit_button = document.createElement("input");
+    header_title.innerHTML = "Create Project";
+    form.setAttribute("method","get");
+    input_description.innerHTML = "Project title";
+    title_input.setAttribute("required","required");
+    title_input.setAttribute("maxlength","140");
+    title_input.setAttribute("placeholder","Enter a project title");
+    submit_button.setAttribute("type","submit");
+    submit_button.onclick = function(event){
+        createNewProject(event);
+        wrapper.style.display = "none";
+        title_input.innerHTML = "";
+    }
+    wrapper.setAttribute("class","modal");
+    form.appendChild(input_description);
+    form.appendChild(title_input);
+    form.appendChild(submit_button);
+    header.appendChild(header_title);
+    wrapper.appendChild(header);
+    wrapper.appendChild(form);
+    return wrapper;
+}
+
+
+function createNewProject(event){
+    event.preventDefault();
+    console.log("Creating new Project on DataBase");
+    console.log(event);
 }
 
 function onProjectsLoaded(){
