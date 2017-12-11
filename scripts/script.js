@@ -243,80 +243,80 @@ function updateProjects(){
 
  function displayCurrentProject(){
     let project = currentDisplayingProject;
-   let modal= document.createElement("div");
-   modal.setAttribute("id","modal"+project.id);
-   modal.setAttribute("class","modal");
-   let modal_content =document.createElement("div");
-   modal_content.setAttribute("class","modal-content");
-   let header = document.createElement("header");
-   header.setAttribute("id","project");
-   let close = document.createElement("span");
-   close.setAttribute("class","close");
-   close.innerHTML="&times;";
-   close.onclick=function() {
-     modal.style.display = "none";
-     updateProjects();
-   }
-   let project_title =document.createElement("span");
-   project_title.setAttribute("class","project_title");
-   project_title.innerHTML=project.name;
-   let num_tasks = document.createElement("span");
-   num_tasks.setAttribute("class","num_tasks");
-   num_tasks.innerHTML= project.tasks.length;
-   let project_category = document.createElement("p");
-   project_category.setAttribute("class","project_category");
-   project_category.innerHTML= project.category;
-   let tasks_section = document.createElement("section");
-   tasks_section.setAttribute("class","tasks round_corners");
-   let tasks = project.tasks;
-   console.log(project);
-   tasks.forEach(task =>{
-    let date= new Date(task.dateDue*1000);
-    let day=date.getDay();
-    let month= date.getMonth();
-    let year= date.getYear();
-    let task_div = document.createElement("div");
-    task_div.setAttribute("class","task");
-    let task_info = document.createElement("input");
-    task_info.value = task.information + "   "+"priority:" + task.priority + "  Date:"+year+"/"+month+"/"+day;
-    let checkbox = document.createElement("input");
-    checkbox.setAttribute("type","checkbox");
-    if (task.isChecked == "1"){
-        checkbox.checked = true;
-        task_info.setAttribute("class","line-through");
-    }else{
-        checkbox.checked = false;
-        task_info.setAttribute("class","noDecoration");
+    let modal= document.createElement("div");
+    modal.setAttribute("id","modal"+project.id);
+    modal.setAttribute("class","modal");
+    let modal_content =document.createElement("div");
+    modal_content.setAttribute("class","modal-content");
+    let header = document.createElement("header");
+    header.setAttribute("id","project");
+    let close = document.createElement("span");
+    close.setAttribute("class","close");
+    close.innerHTML="&times;";
+    close.onclick=function() {
+        modal.style.display = "none";
+        updateProjects();
     }
-    checkbox.onclick = function(event){
-        handleCheckboxClick(event,task.id);
-        if (task_info.className == "noDecoration"){
-            task_info.className = "line-through";
+    let project_title =document.createElement("span");
+    project_title.setAttribute("class","project_title");
+    project_title.innerHTML=project.name;
+    let num_tasks = document.createElement("span");
+    num_tasks.setAttribute("class","num_tasks");
+    num_tasks.innerHTML= project.tasks.length;
+    let project_category = document.createElement("p");
+    project_category.setAttribute("class","project_category");
+    project_category.innerHTML= project.category;
+    let tasks_section = document.createElement("section");
+    tasks_section.setAttribute("class","tasks round_corners");
+    let tasks = project.tasks;
+    console.log(project);
+    tasks.forEach(task =>{
+        let timestampMiliseconds = parseInt(task.dateDue) * 1000;
+        let date= new Date(timestampMiliseconds);
+        let day=date.getDate();
+        let month= date.getMonth() + 1;
+        let year= date.getFullYear();
+        let task_div = document.createElement("div");
+        let task_info = document.createElement("textarea");
+        task_info.value = task.information + "   "+"priority:" + task.priority + "  Date:"+year+"/"+month+"/"+day;
+        let checkbox = document.createElement("input");
+        checkbox.setAttribute("type","checkbox");
+        if (task.isChecked == "1"){
+            checkbox.checked = true;
+            task_info.className = "task-item line-through";
         }else{
-            task_info.className = "noDecoration";
+            checkbox.checked = false;
+            task_info.className = "task-item noDecoration";
         }
+        checkbox.onclick = function(event){
+            handleCheckboxClick(event,task.id);
+            if (task_info.classList[1] == "noDecoration"){
+                task_info.className = "task-item line-through";
+            }else{
+                task_info.className = "task-item noDecoration";
+            }
+        }
+        task_div.appendChild(checkbox);
+        task_div.appendChild(task_info);
+        tasks_section.appendChild(task_div);
+    });
+    let button = document.createElement("i");
+    button.setAttribute("class","fa fa-plus");
+    button.setAttribute("aria-hidden","true");
+    button.onclick = function(){
+        addTask(header,project.id);
     }
-    task_div.appendChild(checkbox);
-    task_div.appendChild(task_info);
-    tasks_section.appendChild(task_div);
-   });
-   let button = document.createElement("i");
-   button.setAttribute("class","fa fa-plus");
-   button.setAttribute("aria-hidden","true");
-   button.onclick = function(){
-     addTask(header,project.id);
-   }
-   projectsSection.appendChild(modal);
-   modal.style.display = "block";
-   modal.appendChild(modal_content);
-   header.appendChild(project_title);
-   header.appendChild(num_tasks);
-   header.appendChild(project_category);
-   header.appendChild(close);
-   header.appendChild(button);
-   modal_content.appendChild(header);
-   modal_content.appendChild(tasks_section);
- }
+    projectsSection.appendChild(modal);
+    modal.style.display = "block";
+    modal.appendChild(modal_content);
+    header.appendChild(project_title);
+    header.appendChild(num_tasks);
+    header.appendChild(project_category);
+    header.appendChild(close);
+    header.appendChild(button);
+    modal_content.appendChild(header);
+    modal_content.appendChild(tasks_section);
+}
 
 function createProjectsPreview(projects){
     projects.forEach(project => {

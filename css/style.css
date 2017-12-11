@@ -195,3 +195,7 @@ header#project{
 .noDecoration{
   text-decoration: none;
 }
+.task-item{
+  width: 200px; 
+  resize:vertical;
+}
