@@ -16,6 +16,8 @@ let item_counter = 0;
 
 let projectsSection = document.querySelector('section#projects');
 
+let newProjectForm;
+
 if (projectsSection != null){
     updateProjects();
 }
@@ -109,26 +111,115 @@ function getRGBForPriority(priority){
 }
 
 function new_project_click(){
-    console.log("new project clicked");
+    console.log("click");
+    if (newProjectForm == null){
+        newProjectForm = getNewProjectForm();
+        projectsSection.appendChild(newProjectForm);
+    }
+    newProjectForm.style.display = "block";
+}
+
+function getNewProjectForm(){
+    let wrapper = document.createElement("section");
+    let content = document.createElement("div");
+    let header = document.createElement("header");
+    let header_title = document.createElement("h2");
+    let form = document.createElement("form");
+    let title_description = document.createElement("p");
+    let title_input = document.createElement("input");
+    let category_description = document.createElement("p");
+    let category_input = document.createElement("input");
+    let submit_button = document.createElement("input");
+    header_title.innerHTML = "Create Project";
+    form.setAttribute("method","get");
+    form.setAttribute("class","flex-column");
+    title_description.innerHTML = "Project title";
+    title_input.setAttribute("placeholder","Enter a project title");
+    title_input.setAttribute("id","new-project-title");
+    category_description.innerHTML = "Project category";
+    category_input.setAttribute("placeholder","Enter a project category");
+    category_input.setAttribute("id","new-project-category");
+    submit_button.setAttribute("type","submit");
+    submit_button.onclick = function(event){
+        let value = createNewProject(event);
+        if (value == -1){
+            alert("Wrong Inputs");
+        }else{
+            wrapper.style.display = "none";
+            title_input.value = "";
+            category_input.value = "";
+        }
+        
+    }
+    content.setAttribute("class","modal-content");
+    wrapper.setAttribute("class","modal");
+    form.appendChild(title_description);
+    form.appendChild(title_input);
+    form.appendChild(category_description);
+    form.appendChild(category_input);
+    form.appendChild(submit_button);
+    header.appendChild(header_title);
+    content.appendChild(header);
+    content.appendChild(form);
+    wrapper.appendChild(content);
+    return wrapper;
+}
+
+
+function createNewProject(event){
+    event.preventDefault();
+    let newTitle = document.getElementById("new-project-title").value;
+    let newCategory = document.getElementById("new-project-category").value;
+    if (newTitle.length == 0 || newTitle.length > 140 || newCategory.length == 0 || newCategory.length > 140){
+        return -1;
+    }
+    let queryString = "/?project_title=" + newTitle + "&project_category=" + newCategory;
+    let request = new XMLHttpRequest();
+    request.onload = handleProjectCreated;
+    request.open("get", "action_create_new_project.php" + queryString,true);
+    request.send();
+}
+
+function handleProjectCreated(){
+    updateProjects();
+}
+
+function exist_task_in_project(project,search_value){
+    for (let i=0; i< project.tasks.length;i++){
+      let task=project.tasks[i].information;
+      if(task.toLowerCase().startsWith(search_value.toLowerCase()))
+          return true;
+    }
+    return false
 }
 
 function onProjectsLoaded(){
-    let search_bar_value = document.getElementById("searchfield").value;
-    let filter = document.getElementById('filter');
-    let filter_value= filter.options[filter.selectedIndex].text;
-    let projects= JSON.parse(this.responseText);
-    if (search_bar_value.length > 0){
-      if(filter_value == "Name"){
-        projects = projects.filter(project =>
-            project.name.toLowerCase().startsWith(search_bar_value.toLowerCase()));
-          }
-          else if (filter_value == "Category"){
+    if (this.responseText != null && this.responseText.length > 0){
+        let search_bar_value = document.getElementById("searchfield").value;
+        let filter = document.getElementById('filter');
+        let filter_value= filter.options[filter.selectedIndex].text;
+        let projects= JSON.parse(this.responseText);
+        if (search_bar_value.length > 0){
+          if(filter_value == "Name"){
             projects = projects.filter(project =>
-                project.category.toLowerCase().startsWith(search_bar_value.toLowerCase()));
-          }
+                project.name.toLowerCase().startsWith(search_bar_value.toLowerCase()));
+              }
+              else if (filter_value == "Category"){
+                projects = projects.filter(project =>
+                    project.category.toLowerCase().startsWith(search_bar_value.toLowerCase()));
+              }
+              else if (filter_value == "Task"){
+                projects = projects.filter(project =>
+                  exist_task_in_project(project,search_bar_value));
+              }
+        }
+        clearProjectsDisplay();
+        createProjects(projects);
+        if (newProjectForm == null){
+            newProjectForm = getNewProjectForm();
+        }
+        projectsSection.appendChild(newProjectForm);
     }
-    clearProjectsDisplay();
-    createProjects(projects);
 }
 
 function clearProjectsDisplay(){

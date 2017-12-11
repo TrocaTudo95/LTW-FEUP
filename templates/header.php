@@ -20,6 +20,7 @@
       <select id="filter">
         <option value="name">Name</option>
         <option value="category">Category</option>
+        <option value="task">Task</option>
       </select>
 
       <?php
@@ -28,7 +29,7 @@
         echo("<button class='dropbtn'>" . $_SESSION['username'] . "</button>");
         ?>
           <div class="dropdown-content">
-            <a href="account.php">Account</a>
+            <a href="user_profile.php">Account</a>
             <a href="action_logout.php">Logout</a>
           </div>
         </section>
