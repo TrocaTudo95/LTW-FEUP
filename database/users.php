@@ -114,10 +114,9 @@ function getUsernameById($dbh,$user_id){
   }
 
   function getImageFromUser($dbh,$user){
-      $stmt = $dbh->prepare('SELECT images.id FROM users,images WHERE users.id=? AND users.imageRef = images.id');
+      $stmt = $dbh->prepare('SELECT imageRef FROM users WHERE users.id=?');
       $stmt->execute(array($user));
-      return $stmt->fetch()['id'];
-      $dbh->prepare('SELECT imagesRef FROM users WHERE users.id = ?');
+      return $stmt->fetch()['imageRef'];
   }
 
  ?>

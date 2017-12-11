@@ -5,22 +5,20 @@ DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS projects;
 DROP TABLE IF EXISTS tasks;
 DROP TABLE IF EXISTS categories;
-DROP TABLE IF EXISTS images;
 DROP TABLE IF EXISTS projectUsers;
-CREATE TABLE users(id INTEGER PRIMARY KEY,username TEXT UNIQUE,password TEXT, email TEXT UNIQUE, apiKey TEXT, imageRef INTEGER REFERENCES images(id));
+CREATE TABLE users(id INTEGER PRIMARY KEY,username TEXT UNIQUE,password TEXT, email TEXT UNIQUE, apiKey TEXT, imageRef INTEGER AUTO_INCREMENT);
 CREATE TABLE projects(id INTEGER PRIMARY KEY, name TEXT,color TEXT, creator INTEGER REFERENCES users (id), categoryRef INTEGER REFERENCES categories(id));
 CREATE TABLE tasks(id INTEGER PRIMARY KEY, projectRef INTEGER REFERENCES projects (id), information TEXT, priority INTEGER, dateDue INTEGER, isChecked INTEGER, assignedTo INTEGER REFERENCES users(id));
 CREATE TABLE categories(id INTEGER PRIMARY KEY, title TEXT UNIQUE);
-CREATE TABLE images (id INTEGER PRIMARY KEY,title VARCHAR NOT NULL);
 CREATE TABLE projectUsers(projectRef INTEGER REFERENCES projects(id), userRef INTEGER REFERENCES users(id), permissions INTEGER);
 
 COMMIT;
 
 BEGIN TRANSACTION;
 /** Password is 'admin'*/
-INSERT INTO users (id,username,password,email,apiKey) VALUES (1,"JoaoM","8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918","p@gmail.com","aasda");
-INSERT INTO users (id,username,password,email,apiKey) VALUES (2,"root","8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918","pa@gmail.com","aasdassdf");
-INSERT INTO users (id,username,password,email,apiKey) VALUES (3,"noob","8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918","pe@gmail.com","asddsadf");
+INSERT INTO users (id,username,password,email,apiKey,imageRef) VALUES (1,"JoaoM","8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918","p@gmail.com","aasda",0);
+INSERT INTO users (id,username,password,email,apiKey,imageRef) VALUES (2,"root","8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918","pa@gmail.com","aasdassdf",0);
+INSERT INTO users (id,username,password,email,apiKey,imageRef) VALUES (3,"noob","8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918","pe@gmail.com","asddsadf",0);
 
 INSERT INTO categories (id,title) VALUES (1,"SuperMarket");
 INSERT INTO categories (id,title) VALUES (2,"Business");
