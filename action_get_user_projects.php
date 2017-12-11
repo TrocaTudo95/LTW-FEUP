@@ -9,7 +9,12 @@ if(isset($_SESSION['is_logged']) && isset($_SESSION['username'])){
     $user_id = getUserId($dbh,$_SESSION['username']);
     $projects = getAllProjectsForUser($dbh,$user_id);
     foreach($projects as &$project){
-      $tasks = getProjectTasks($dbh,$project['id']);
+      try{
+        $tasks = getProjectTasks($dbh,$project['id']);
+      }catch(PDOException $e){
+        die('Error Getting tasks');
+      }
+      
       $project['tasks'] = $tasks;
     }
     echo json_encode($projects);

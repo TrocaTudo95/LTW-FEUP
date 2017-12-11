@@ -199,6 +199,8 @@ function onProjectsLoaded(){
         let filter = document.getElementById('filter');
         let filter_value= filter.options[filter.selectedIndex].text;
         let projects= JSON.parse(this.responseText);
+        console.log("projects loaded");
+        console.log(projects);
         if (search_bar_value.length > 0){
           if(filter_value == "Name"){
             projects = projects.filter(project =>
@@ -214,7 +216,7 @@ function onProjectsLoaded(){
               }
         }
         clearProjectsDisplay();
-        createProjects(projects);
+        createProjectsPreview(projects);
         if (newProjectForm == null){
             newProjectForm = getNewProjectForm();
         }
@@ -241,8 +243,6 @@ function updateProjects(){
    modal.setAttribute("class","modal");
    let modal_content =document.createElement("div");
    modal_content.setAttribute("class","modal-content");
-
-
    let header = document.createElement("header");
    header.setAttribute("id","project");
    let close = document.createElement("span");
@@ -266,23 +266,34 @@ function updateProjects(){
    let tasks = project.tasks;
    console.log(project);
    tasks.forEach(task =>{
-       let task_div = document.createElement("div");
-       task_div.setAttribute("class","task");
-       let checkbox = document.createElement("input");
-       checkbox.setAttribute("type","checkbox");
-       checkbox.onclick = function(event){
-           handleCheckboxClick(event,task.id);
-       }
-       let task_span = document.createElement("span");
-       task_span.setAttribute("class","modal_task_info");
-       let date= new Date(task.dateDue*1000);
-       let day=date.getDay();
-       let month= date.getMonth();
-       let year= date.getYear();
-       task_span.innerHTML = task.information + "   "+"priority:" + task.priority + "  Date:"+year+"/"+month+"/"+day;
-       task_div.appendChild(checkbox);
-       task_div.appendChild(task_span);
-       tasks_section.appendChild(task_div);
+    let date= new Date(task.dateDue*1000);
+    let day=date.getDay();
+    let month= date.getMonth();
+    let year= date.getYear();
+    let task_div = document.createElement("div");
+    task_div.setAttribute("class","task");
+    let task_info = document.createElement("input");
+    task_info.value = task.information + "   "+"priority:" + task.priority + "  Date:"+year+"/"+month+"/"+day;
+    let checkbox = document.createElement("input");
+    checkbox.setAttribute("type","checkbox");
+    if (task.isChecked == "1"){
+        checkbox.checked = true;
+        task_info.setAttribute("class","line-through");
+    }else{
+        checkbox.checked = false;
+        task_info.setAttribute("class","noDecoration");
+    }
+    checkbox.onclick = function(event){
+        handleCheckboxClick(event,task.id);
+        if (task_info.className == "noDecoration"){
+            task_info.className = "line-through";
+        }else{
+            task_info.className = "noDecoration";
+        }
+    }
+    task_div.appendChild(checkbox);
+    task_div.appendChild(task_info);
+    tasks_section.appendChild(task_div);
    });
    let button = document.createElement("i");
    button.setAttribute("class","fa fa-plus");
@@ -302,7 +313,7 @@ function updateProjects(){
    modal_content.appendChild(tasks_section);
  }
 
-function createProjects(projects){
+function createProjectsPreview(projects){
     projects.forEach(project => {
         let article = document.createElement("article");
         article.setAttribute("class","projects round_corners");
@@ -327,14 +338,14 @@ function createProjects(projects){
         tasks.forEach(task =>{
             let task_div = document.createElement("div");
             task_div.setAttribute("class","task");
-            let task_span = document.createElement("span");
-            task_span.innerHTML = task.information;
-            if (task.isChecked == 1){
-                task_span.setAttribute("class","task_info overline");
+            let task_info = document.createElement("span");
+            task_info.innerHTML = task.information;
+            if (task.isChecked == "1"){
+                task_info.setAttribute("class","line-through");
             }else{
-                task_span.setAttribute("class","task_info");
+                task_info.setAttribute("class","noDecoration");
             }
-            task_div.appendChild(task_span);
+            task_div.appendChild(task_info);
             tasks_section.appendChild(task_div);
         });
         header.appendChild(project_title);

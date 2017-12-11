@@ -189,6 +189,9 @@ header#project{
   font-weight: bold;
   margin-top: 10em;
 }
-.overline{
-  text-decoration: overline;
+.line-through{
+  text-decoration: line-through;
+}
+.noDecoration{
+  text-decoration: none;
 }
