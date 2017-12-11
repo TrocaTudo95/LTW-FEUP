@@ -206,11 +206,11 @@ function onProjectsLoaded(){
         if (search_bar_value.length > 0){
           if(filter_value == "Name"){
             projects = projects.filter(project =>
-                project.name.toLowerCase().startsWith(search_bar_value.toLowerCase()));
+                project.name.toLowerCase().indexOf(search_bar_value.toLowerCase()) > 0);
               }
               else if (filter_value == "Category"){
                 projects = projects.filter(project =>
-                    project.category.toLowerCase().startsWith(search_bar_value.toLowerCase()));
+                    project.category.toLowerCase().indexOf(search_bar_value.toLowerCase()) > 0);
               }
               else if (filter_value == "Task"){
                 projects = projects.filter(project =>
@@ -233,10 +233,10 @@ function clearProjectsDisplay(){
 }
 
 function updateProjects(){
-   let request = new XMLHttpRequest();
-   request.onload = onProjectsLoaded;
-   request.open("get", "action_get_user_projects.php",true);
-   request.send();
+    let request = new XMLHttpRequest();
+    request.onload = onProjectsLoaded;
+    request.open("get", "action_get_user_projects.php",true);
+    request.send();
 }
 
  function handleProjectClick(event,project){
