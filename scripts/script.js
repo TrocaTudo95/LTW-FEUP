@@ -273,10 +273,16 @@ function updateProjects(){
        let day=date.getDay();
        let month= date.getMonth();
        let year= date.getYear();
-       task_span.innerHTML = task.information + "   "+"priority:" + task.priority + "  Date:"+year+"/"+month+"/"+day;
+       task_span.innerHTML = task.information + "   "+" Priority:" + task.priority + "  Date:"+year+"/"+month+"/"+day;
        task_div.appendChild(task_span);
        tasks_section.appendChild(task_div);
    });
+   let button = document.createElement("i");
+   button.setAttribute("class","fa fa-plus");
+   button.setAttribute("aria-hidden","true");
+   button.onclick = function(){
+     addTask(project);
+   }
    projectsSection.appendChild(modal);
    modal.style.display = "block";
    modal.appendChild(modal_content);
@@ -284,6 +290,7 @@ function updateProjects(){
    header.appendChild(num_tasks);
    header.appendChild(project_category);
    header.appendChild(close);
+   header.appendChild(button);
    modal_content.appendChild(header);
    modal_content.appendChild(tasks_section);
 
@@ -337,6 +344,13 @@ function createProjects(projects){
         projectsSection.appendChild(article);
     });
 }
+
+function addTask(project){
+  // função a adicionar
+
+}
+
+
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
     if (event.target.className == "modal") {
