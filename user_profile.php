@@ -28,10 +28,9 @@ $imageName= getImageFromUser($dbh,$userId);
 
         <nav>
       <form action="upload_image.php" method="post" enctype="multipart/form-data">
-        <label>Title:
-          <input type="text" name="title" required>
-        </label>
+        <label>Choose a file to upload:
         <input type="text" name="username" style="display: none" value=<?=$username?>>
+      </label>
         <input type="file" name="image" required>
         <input type="submit" value="Upload">
       </form>

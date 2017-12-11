@@ -4,14 +4,11 @@
 
   // Insert image data into database
     if (!isset($_POST['username'])) die('No username');
-    if (!isset($_POST['title'])) die('No title');
     session_start();
-  $stmt = $dbh->prepare("INSERT INTO images VALUES(NULL, ?)");
-  $stmt->execute(array($_POST['title']));
-  $image_id = $dbh->lastInsertId();
+
   $userId = getUserId($dbh,$_SESSION['username']);
-  $stmt = $dbh->prepare("UPDATE users SET imageRef=? WHERE id=?");
-  $stmt->execute(array($image_id,$userId));
+  $stmt = $dbh->prepare("UPDATE users SET imageRef=NULL WHERE id=?");
+  $stmt->execute(array($userId));
 
 
   // Get image ID
