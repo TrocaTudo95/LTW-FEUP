@@ -18,6 +18,8 @@ let projectsSection = document.querySelector('section#projects');
 
 let newProjectForm;
 
+let newTaskDiv;
+
 if (projectsSection != null){
     updateProjects();
 }
@@ -204,11 +206,11 @@ function onProjectsLoaded(){
         if (search_bar_value.length > 0){
           if(filter_value == "Name"){
             projects = projects.filter(project =>
-                project.name.toLowerCase().startsWith(search_bar_value.toLowerCase()));
+                project.name.toLowerCase().indexOf(search_bar_value.toLowerCase()) > 0);
               }
               else if (filter_value == "Category"){
                 projects = projects.filter(project =>
-                    project.category.toLowerCase().startsWith(search_bar_value.toLowerCase()));
+                    project.category.toLowerCase().indexOf(search_bar_value.toLowerCase()) > 0);
               }
               else if (filter_value == "Task"){
                 projects = projects.filter(project =>
@@ -231,10 +233,10 @@ function clearProjectsDisplay(){
 }
 
 function updateProjects(){
-   let request = new XMLHttpRequest();
-   request.onload = onProjectsLoaded;
-   request.open("get", "action_get_user_projects.php",true);
-   request.send();
+    let request = new XMLHttpRequest();
+    request.onload = onProjectsLoaded;
+    request.open("get", "action_get_user_projects.php",true);
+    request.send();
 }
 
  function handleProjectClick(event,project){
@@ -299,7 +301,7 @@ function updateProjects(){
    button.setAttribute("class","fa fa-plus");
    button.setAttribute("aria-hidden","true");
    button.onclick = function(){
-     addTask(project);
+     addTask(header,project.id);
    }
    projectsSection.appendChild(modal);
    modal.style.display = "block";
@@ -358,8 +360,76 @@ function createProjectsPreview(projects){
     });
 }
 
-function addTask(project){
-  // função a adicionar
+function projectAddTask(projectID,information,priority,data){
+  let date = data.getTime()/1000;
+  let request = new XMLHttpRequest();
+  request.open("get", "action_add_task.php/?projectID=projectID&information=information&priority=priority&date=date",true);
+  request.send();
+
+}
+
+function createOptions(options){
+  let returnArray = [];
+  options.forEach(value =>{
+    let optionHTML = document.createElement('option');
+    optionHTML.setAttribute('value',value);
+    returnArray.push(optionHTML);
+
+  });
+
+  return returnArray;
+
+}
+
+function createTaskWindow(projectID){
+  let wrapperDiv = document.createElement('div');
+  let addForm = document.createElement("form");
+  let inputInformation = document.createElement('textarea');
+  let inputPriority = document.createElement('input');
+  inputPriority.setAttribute('type','range');
+  inputPriority.setAttribute('list','tickmarks');
+  let tickmarks = document.createElement('datalist');
+  tickmarks.id = "tickmarks";
+  let arrayValues = [1,2,3,4];
+  let options = createOptions(arrayValues);
+  options.forEach(option => {
+    tickmarks.appendChild(option);
+  });
+  options[0].setAttribute('label','low');
+  options[1].setAttribute('label','high');
+  let inputDate = document.createElement('input');
+  inputDate.setAttribute('type','date');
+  addForm.appendChild(inputInformation);
+  addForm.appendChild(inputPriority);
+  addForm.appendChild(tickmarks);
+  addForm.appendChild(inputDate);
+  let submit = document.createElement('input');
+  submit.setAttribute('type','submit');
+  submit.onclick = function(){
+    let information = inputInformation.value();
+    let priority = inputPriority.value();
+    let date = inputDate.value();
+    projectAddTask(projectID,information,priority,date);
+  }
+  let cancel = document.createElement('input');
+  cancel.setAttribute('type','button');
+  cancel.setAttribute('value','Cancel');
+  cancel.onclick = function(){
+    newTaskDiv.style.display="none";
+  }
+  wrapperDiv.appendChild(addForm);
+  wrapperDiv.appendChild(submit);
+  wrapperDiv.appendChild(cancel);
+  return wrapperDiv;
+
+}
+
+function addTask(header,projectID){
+  if(newTaskDiv == null){
+    newTaskDiv = createTaskWindow(projectID);
+    header.appendChild(newTaskDiv);
+  }
+  newTaskDiv.style.display = "block";
 
 }
 
