@@ -11,6 +11,7 @@
     }
     $stmt = $dbh->prepare('INSERT INTO tasks VALUES (?,?,?,?,?,?,?)');
     $stmt->execute(array(NULL,$projectref,$information,$priority,$datedue,$ischecked,$assignedTo));
+    return $dbh->lastInsertId();
   }
 
   function addTasks($dbh,$items,$project_id){
@@ -104,6 +105,12 @@
     $stmt = $dbh->prepare('SELECT tasks.id, projectRef,dateDue,information,isChecked from tasks INNER JOIN users ON tasks.assignedTo = users.id WHERE projectRef = ?');
     $stmt->execute(array($project_id));
     return $stmt->fetchAll();
+  }
+
+  function getTask($dbh,$task_id){
+    $stmt = $dbh->prepare('SELECT id, projectRef,dateDue,information,isChecked from tasks WHERE id = ?');
+    $stmt->execute(array($task_id));
+    return $stmt->fetch();
   }
 
 

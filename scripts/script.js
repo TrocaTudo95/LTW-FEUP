@@ -20,6 +20,8 @@ let newProjectForm;
 
 let newTaskDiv;
 
+let currentDisplayingProject = null;
+
 if (projectsSection != null){
     updateProjects();
 }
@@ -239,7 +241,8 @@ function updateProjects(){
     request.send();
 }
 
- function handleProjectClick(event,project){
+ function displayCurrentProject(){
+    let project = currentDisplayingProject;
    let modal= document.createElement("div");
    modal.setAttribute("id","modal"+project.id);
    modal.setAttribute("class","modal");
@@ -321,7 +324,8 @@ function createProjectsPreview(projects){
         article.setAttribute("class","projects round_corners");
         article.setAttribute("id",project.id);
         article.onclick = function(event){
-            handleProjectClick(event,project);
+            currentDisplayingProject = project;
+            displayCurrentProject();
         };
         let header = document.createElement("header");
         header.setAttribute("id","project");
@@ -360,10 +364,30 @@ function createProjectsPreview(projects){
     });
 }
 
-function projectAddTask(projectID,information,priority,data){
-  let date = data.getTime()/1000;
+function reloadCurrentProject(){
+    
+    if (this.responseText != null){
+        console.log(this.responseText);
+        let new_task = JSON.parse(this.responseText);
+        if (new_task != null){
+            let modalDiv = document.getElementById("modal"+currentDisplayingProject.id);
+            modalDiv.parentNode.removeChild(modalDiv);
+            currentDisplayingProject.tasks.push(new_task);
+            displayCurrentProject();
+        }
+    }
+}
+
+function projectAddTask(projectID,information,priority,date){
   let request = new XMLHttpRequest();
-  request.open("get", "action_add_task.php/?projectID=projectID&information=information&priority=priority&date=date",true);
+  let queryObject = {
+      projectId: projectID,
+      information: information,
+      priority: priority,
+      date: date
+  };
+  request.onload = reloadCurrentProject;
+  request.open("get", "action_add_task.php/?" + encodeForAjax(queryObject) ,true);
   request.send();
 
 }
@@ -405,12 +429,12 @@ function createTaskWindow(projectID){
   addForm.appendChild(inputDate);
   let submit = document.createElement('input');
   submit.setAttribute('type','submit');
-  submit.onclick = function(){
-    let information = inputInformation.value();
-    let priority = inputPriority.value();
-    let date = inputDate.value();
+  submit.addEventListener('click', event =>{
+    let information = inputInformation.value;
+    let priority = inputPriority.value;
+    let date = inputDate.value;
     projectAddTask(projectID,information,priority,date);
-  }
+  })
   let cancel = document.createElement('input');
   cancel.setAttribute('type','button');
   cancel.setAttribute('value','Cancel');
@@ -425,10 +449,11 @@ function createTaskWindow(projectID){
 }
 
 function addTask(header,projectID){
+    console.log("addtask clicked");
   if(newTaskDiv == null){
     newTaskDiv = createTaskWindow(projectID);
-    header.appendChild(newTaskDiv);
   }
+  header.appendChild(newTaskDiv);
   newTaskDiv.style.display = "block";
 
 }
