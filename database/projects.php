@@ -70,7 +70,7 @@
     $result = $stmt->fetch();
     if ($result){
       $isChecked = $result['isChecked'];
-      $newValue = !$isChecked;
+      $newValue = $isChecked ? 0 : 1;
       $stmt = $dbh->prepare('UPDATE tasks SET isChecked = ? WHERE id = ?');
       $stmt->execute(array($newValue,$taskid));
       return $newValue;
@@ -101,7 +101,7 @@
   }
 
   function getProjectTasks($dbh,$project_id){
-    $stmt = $dbh->prepare('SELECT * from tasks INNER JOIN users ON tasks.assignedTo = users.id WHERE projectRef = ?');
+    $stmt = $dbh->prepare('SELECT tasks.id, projectRef,dateDue,information,isChecked from tasks INNER JOIN users ON tasks.assignedTo = users.id WHERE projectRef = ?');
     $stmt->execute(array($project_id));
     return $stmt->fetchAll();
   }
