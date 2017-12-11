@@ -15,7 +15,7 @@
     }
   }else{
     die("-2"); //user does not exist
-  }      
+  }
   $_SESSION['username'] = $_POST['username'];
   $_SESSION['is_logged'] = true;
 ?>

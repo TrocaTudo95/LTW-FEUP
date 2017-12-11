@@ -5,6 +5,7 @@ session_start();
 if (!isset($_SESSION['username'])) die('No username');
 $userId = getUserId($dbh,$_SESSION['username']);
 $username =$_SESSION['username'];
+$imageName= getImageFromUser($dbh,$userId);
 ?>
 <html>
 <link rel="stylesheet" href="css/profile_style.css">
@@ -14,18 +15,27 @@ $username =$_SESSION['username'];
 			<div class="profile-sidebar">
 				<!-- SIDEBAR USERPIC -->
 				<div class="profile-userpic">
-					<!-- <img src="http://keenthemes.com/preview/metronic/theme/assets/admin/pages/media/profile/profile_user.jpg" class="img-responsive" alt=""> -->
+				<img src=<?="assets/users/originals/$imageName.jpg"?> class="img-responsive" alt="">
 				</div>
+
 				<!-- END SIDEBAR USERPIC -->
 				<!-- SIDEBAR USER TITLE -->
 				<div class="profile-usertitle">
             <?php echo $username;?>
 					<div class="profile-usertitle-name">
 					</div>
-					<div class="profile-usertitle-job">
-						Developer
-					</div>
 				</div>
+
+        <nav>
+      <form action="upload_image.php" method="post" enctype="multipart/form-data">
+        <label>Title:
+          <input type="text" name="title" required>
+        </label>
+        <input type="text" name="username" style="display: none" value=<?=$username?>>
+        <input type="file" name="image" required>
+        <input type="submit" value="Upload">
+      </form>
+    </nav>
 				<!-- END SIDEBAR BUTTONS -->
 				<!-- SIDEBAR MENU -->
 				<div class="profile-usermenu">
