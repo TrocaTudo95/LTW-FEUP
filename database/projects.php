@@ -64,6 +64,20 @@
 
   }
 
+  function taskChangeIsChecked($dbh,$taskid){
+    $stmt = $dbh->prepare('SELECT isChecked from tasks WHERE id = ?');
+    $stmt->execute(array($taskid));
+    $result = $stmt->fetch();
+    if ($result){
+      $isChecked = $result['isChecked'];
+      $newValue = !$isChecked;
+      $stmt = $dbh->prepare('UPDATE tasks SET isChecked = ? WHERE id = ?');
+      $stmt->execute(array($newValue,$taskid));
+      return $newValue;
+    }
+    return -1;
+  }
+
   function quick_sort_tasks($array){
 	    $length = count($array);
 	     if($length <= 1){

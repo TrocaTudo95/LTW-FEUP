@@ -250,6 +250,7 @@ function updateProjects(){
    close.innerHTML="&times;";
    close.onclick=function() {
      modal.style.display = "none";
+     updateProjects();
    }
    let project_title =document.createElement("span");
    project_title.setAttribute("class","project_title");
@@ -267,6 +268,11 @@ function updateProjects(){
    tasks.forEach(task =>{
        let task_div = document.createElement("div");
        task_div.setAttribute("class","task");
+       let checkbox = document.createElement("input");
+       checkbox.setAttribute("type","checkbox");
+       checkbox.onclick = function(event){
+           handleCheckboxClick(event,task.id);
+       }
        let task_span = document.createElement("span");
        task_span.setAttribute("class","modal_task_info");
        let date= new Date(task.dateDue*1000);
@@ -274,6 +280,7 @@ function updateProjects(){
        let month= date.getMonth();
        let year= date.getYear();
        task_span.innerHTML = task.information + "   "+"priority:" + task.priority + "  Date:"+year+"/"+month+"/"+day;
+       task_div.appendChild(checkbox);
        task_div.appendChild(task_span);
        tasks_section.appendChild(task_div);
    });
@@ -286,14 +293,6 @@ function updateProjects(){
    header.appendChild(close);
    modal_content.appendChild(header);
    modal_content.appendChild(tasks_section);
-
-
-
-   //paragraph.innerHTML= "ola";
-   //projectsSection.appendChild(modal);
-
-
-   //modal_content.appendChild(paragraph);
  }
 
 function createProjects(projects){
@@ -304,7 +303,6 @@ function createProjects(projects){
         article.onclick = function(event){
             handleProjectClick(event,project);
         };
-        //article.style.backgroundColor=project.color;
         let header = document.createElement("header");
         header.setAttribute("id","project");
         let project_title =document.createElement("span");
@@ -323,8 +321,12 @@ function createProjects(projects){
             let task_div = document.createElement("div");
             task_div.setAttribute("class","task");
             let task_span = document.createElement("span");
-            task_span.setAttribute("class","task_info");
             task_span.innerHTML = task.information;
+            if (task.isChecked == 1){
+                task_span.setAttribute("class","task_info overline");
+            }else{
+                task_span.setAttribute("class","task_info");
+            }
             task_div.appendChild(task_span);
             tasks_section.appendChild(task_div);
         });
@@ -341,5 +343,14 @@ function createProjects(projects){
 window.onclick = function(event) {
     if (event.target.className == "modal") {
         event.target.style.display = "none";
+        updateProjects();
     }
+}
+
+function handleCheckboxClick(event,taskid){
+    let request = new XMLHttpRequest();
+    let queryString = "/?taskid="+taskid;
+    request.onload = requestListener;
+    request.open("get", "action_check_task.php"+queryString,true);
+    request.send();
 }
