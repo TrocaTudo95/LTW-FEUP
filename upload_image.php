@@ -7,17 +7,18 @@
     session_start();
 
   $userId = getUserId($dbh,$_SESSION['username']);
-  $stmt = $dbh->prepare("UPDATE users SET imageRef=NULL WHERE id=?");
-  $stmt->execute(array($userId));
-
+  $stmt = $dbh->prepare("UPDATE users SET imageRef=? WHERE id=?");
+  $stmt->execute(array($userId,$userId));
+  $prev_image = getImageFromUser($dbh,$userId);
+  if($prev_image!=0)
+      unlink("assets/users/originals/$prev_image.jpg");
 
   // Get image ID
-  $id = $dbh->lastInsertId();
 
   // Generate filenames for original, small and medium files
-  $originalFileName = "assets/users/originals/$id.jpg";
-  $smallFileName = "assets/users/thumbs_small/$id.jpg";
-  $mediumFileName = "assets/users/thumbs_medium/$id.jpg";
+  $originalFileName = "assets/users/originals/$userId.jpg";
+  $smallFileName = "assets/users/thumbs_small/$userId.jpg";
+  $mediumFileName = "assets/users/thumbs_medium/$userId.jpg";
 
   // Move the uploaded file to its final destination
   move_uploaded_file($_FILES['image']['tmp_name'], $originalFileName);
