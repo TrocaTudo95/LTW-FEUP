@@ -149,7 +149,7 @@ function getNewProjectForm(){
             title_input.value = "";
             category_input.value = "";
         }
-        
+
     }
     content.setAttribute("class","modal-content");
     wrapper.setAttribute("class","modal");

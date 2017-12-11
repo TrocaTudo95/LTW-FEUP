@@ -27,10 +27,11 @@
     if ($stmt->fetch()){
       return -2;
     }
+    $image=0;
     //Insert user into database
     $apiKey = hash('sha256',strval(time()));
-    $stmt = $dbh->prepare('INSERT INTO users (username, password, email,apiKey) VALUES (?,?,?,?)');
-    $stmt->execute(array($username, hash('sha256',$password),$email,$apiKey));
+    $stmt = $dbh->prepare('INSERT INTO users (username, password, email,apiKey,imageRef) VALUES (?,?,?,?,?)');
+    $stmt->execute(array($username, hash('sha256',$password),$email,$apiKey,$image));
     return 0;
   }
 
@@ -38,7 +39,7 @@
    * Returns 0 if password is correct
    * Returns -1 if password is incorrect
    */
-  
+
   function checkPassword($dbh, $username, $password){
     $hashedPassword = hash('sha256',$password);
     $stmt = $dbh->prepare('SELECT username,password FROM users WHERE username = ? AND password = ?');
@@ -110,6 +111,12 @@ function getUsernameById($dbh,$user_id){
     $stmt = $dbh->prepare('SELECT id,username FROM users');
     $stmt->execute();
     return $stmt->fetchAll();
+  }
+
+  function getImageFromUser($dbh,$user){
+      $stmt = $dbh->prepare('SELECT images.id FROM users,images WHERE users.id=? AND users.imageRef = images.id');
+      $stmt->execute(array($user));
+      return $stmt->fetch()['id'];
   }
 
  ?>
