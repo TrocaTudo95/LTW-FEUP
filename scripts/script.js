@@ -280,16 +280,28 @@ function updateProjects(){
         deleteTaskSymbol.addEventListener('click',event =>{
             event.stopPropagation();
             deleteTask(task.id);
-        })
+        });
         let timestampMiliseconds = parseInt(task.dateDue) * 1000;
         let date= new Date(timestampMiliseconds);
         let day=date.getDate();
         let month= date.getMonth() + 1;
         let year= date.getFullYear();
         let task_div = document.createElement("div");
+        task_div.setAttribute("class","task_div_lay");
         let task_info = document.createElement("textarea");
-        task_info.value = task.information + "   "+"priority:" + task.priority + "  Date:"+year+"/"+month+"/"+day;
+        task_info.value = task.information;
+        let task_date =document.createElement("input");
+        task_date.setAttribute("class","date");
+        task_date.setAttribute("type","date");
+        task_date.value = year+"-"+month+"-"+day;
+        let task_priority = document.createElement("input");
+        task_priority.setAttribute("class","priority");
+        task_priority.setAttribute("type","number");
+        task_priority.setAttribute("min",0);
+        task_priority.setAttribute("max",1000);
+        task_priority.value = task.priority;
         let checkbox = document.createElement("input");
+        checkbox.setAttribute("class","checkbox");
         checkbox.setAttribute("type","checkbox");
         if (task.isChecked == "1"){
             checkbox.checked = true;
@@ -308,6 +320,8 @@ function updateProjects(){
         }
         task_div.appendChild(checkbox);
         task_div.appendChild(task_info);
+        task_div.appendChild(task_date);
+        task_div.appendChild(task_priority);
         tasks_section.appendChild(task_div);
     });
     let button = document.createElement("i");
@@ -418,7 +432,7 @@ function createProjectsPreview(projects){
 }
 
 function reloadCurrentProject(){
-    
+
     if (this.responseText != null){
         console.log(this.responseText);
         let new_task = JSON.parse(this.responseText);
