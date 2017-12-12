@@ -45,7 +45,7 @@ body > header input[type="search"]{
 
 section#content_wrap{
   display:grid;
-  grid-template-columns:3fr 1fr;
+  grid-template-columns:3fr 1.1fr;
   grid-template-rows: 1fr 1fr;
   width: 100%;
 
@@ -58,8 +58,36 @@ section#next_tasks_display{
   flex-flow: row wrap;
   justify-content: flex-start;
   width:100%;
-  margin: 1em;
 }
+section#next_tasks_display > header.next_task_header{
+  width: 100%;
+  text-align: center;
+}
+section#next_tasks_display > header.next_task_header > h2.title_next_tasks{
+  font-weight:bold;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: cornflowerblue;
+  color: white;
+  font-size: 130%;
+}
+
+section#next_tasks_display > .tasks > .information{
+  font-weight:bold;
+  flex-grow: 3;
+}
+
+section#next_tasks_display > .tasks {
+  width: 100%;
+  display: flex;
+}
+
+section#next_tasks_display > .tasks > .timeleft{
+  float: right;
+  display: inline-table;
+  margin-right: 1em;
+}
+
 
 section#friends_display{
   grid-column: 2/3;
@@ -68,7 +96,6 @@ section#friends_display{
   flex-flow: row wrap;
   justify-content: flex-start;
   width:100%;
-  margin: 1em;
 }
 
 section#projects{
