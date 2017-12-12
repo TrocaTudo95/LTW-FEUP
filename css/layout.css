@@ -48,7 +48,6 @@ section#content_wrap{
   grid-template-columns:3fr 1fr;
   grid-template-rows: 1fr 1fr;
   width: 100%;
-
 }
 
 section#next_tasks_display{

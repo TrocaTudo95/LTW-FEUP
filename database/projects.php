@@ -141,8 +141,8 @@
    * Returns 0 if project deleted with success, -1 if creator id is incorrect or project does not exist.
    */
   function deleteProject($dbh,$project_id,$user_id){
-    $stmt = $dbh->prepare('SELECT id FROM project WHERE id = ? AND creator = ?');
-    $stmt->execute(array($project_id,$creator_id));
+    $stmt = $dbh->prepare('SELECT id FROM projects WHERE id = ? AND creator = ?');
+    $stmt->execute(array($project_id,$user_id));
     $result = $stmt->fetch();
     if ($result){
       //removeAllProjectUsers($dbh,$project_id);
