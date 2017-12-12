@@ -40,12 +40,11 @@ function processTasks(){
   next_tasks_section.appendChild(header);
   if (this.responseText.length > 0){
   const tasks = JSON.parse(this.responseText);
-  let new_tasks= tasks.filter(task =>{
-    let timeLeft = time_left(task.dateDue);
-    return timeLeft != null;
-  })
-  new_tasks.forEach(task => {
+  tasks.forEach(task => {
     let taskDiv = getTaskDiv(task);
+    if (task.isChecked == "1" || time_left(task.dateDue) == null){
+      taskDiv.style.display = "none";
+    }
     next_tasks_section.appendChild(taskDiv);
   });
   }else{
