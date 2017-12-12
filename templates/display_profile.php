@@ -1,12 +1,8 @@
 <?php
-include_once('database/connection.php');
-include_once('database/users.php');
-include_once('templates/header.php');
 $userId = getUserId($dbh,$_GET['username']);
-$username =$_GET['username'];
+$username = $_GET['username'];
 $imageName= getImageFromUser($dbh,$userId);
 ?>
-<link rel="stylesheet" href="css/profile_style.css">
 <div class="container">
 			<div class="profile-sidebar">
 				<div class="profile-userpic">
@@ -18,5 +14,3 @@ $imageName= getImageFromUser($dbh,$userId);
 			</div>
 
 </div>
-
-<?php include_once ('templates/footer.php'); ?>

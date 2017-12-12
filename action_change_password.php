@@ -9,5 +9,5 @@ include_once("database/users.php");
   $pass =$_GET['pass'];
   $stmt = $dbh->prepare("UPDATE users SET password=? WHERE id=?");
   $stmt->execute(array(hash('sha256',$pass),$user_id));
-  header('Location: templates/edit_profile.php');
+  header('Location: user_profile.php');
 ?>

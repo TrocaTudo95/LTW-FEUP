@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/font-awesome.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/profile_style.css">
     <script src="scripts/script.js" defer></script>
     <script src="scripts/next_tasks.js" defer></script>
   </head>
@@ -29,7 +30,7 @@
         echo("<button class='dropbtn'>" . $_SESSION['username'] . "</button>");
         ?>
           <div class="dropdown-content">
-            <a href="templates/edit_profile.php">Account</a>
+            <a href="user_profile.php">Account</a>
             <a href="action_logout.php">Logout</a>
           </div>
         </section>
