@@ -259,7 +259,7 @@ function updateProjects(){
     close.setAttribute("class","close");
     close.innerHTML="&times;";
     close.onclick=function() {
-        modal.style.display = "none";
+        modal.parentNode.removeChild(modal);
         updateProjects();
     }
     let project_title =document.createElement("span");
@@ -288,7 +288,7 @@ function updateProjects(){
         let year= date.getFullYear();
         let task_div = document.createElement("div");
         let task_info = document.createElement("textarea");
-        task_info.value = task.information + "   "+"priority:" + task.priority + "  Date:"+year+"/"+month+"/"+day;
+        task_info.value = task.information + "   "+" Priority:" + task.priority + "  Date:"+year+"/"+month+"/"+day;
         let checkbox = document.createElement("input");
         checkbox.setAttribute("type","checkbox");
         if (task.isChecked == "1"){
@@ -308,6 +308,7 @@ function updateProjects(){
         }
         task_div.appendChild(checkbox);
         task_div.appendChild(task_info);
+        task_div.appendChild(deleteTaskSymbol);
         tasks_section.appendChild(task_div);
     });
     let button = document.createElement("i");
@@ -358,7 +359,7 @@ function deleteTask(taskid){
         if (this.responseText == "0"){
             reloadCurrentProject();
         }else{
-            alert("You don't have access to the tasks");
+            alert(this.responseText);
         }
     }
     request.open("get","action_delete_task.php/?taskid="+taskid,true);
@@ -418,7 +419,6 @@ function createProjectsPreview(projects){
 }
 
 function reloadCurrentProject(){
-    
     if (this.responseText != null){
         console.log(this.responseText);
         let new_task = JSON.parse(this.responseText);
@@ -516,7 +516,7 @@ function addTask(header,projectID){
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
     if (event.target.className == "modal") {
-        event.target.style.display = "none";
+        modal.parentNode.removeChild(modal);
         updateProjects();
     }
 }
