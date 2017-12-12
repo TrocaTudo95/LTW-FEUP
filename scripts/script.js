@@ -433,10 +433,6 @@ function createProjectsPreview(projects){
 }
 
 function reloadCurrentProject(){
-<<<<<<< HEAD
-
-=======
->>>>>>> 68967c5bf90227620637f69c123d53bc4217fd47
     if (this.responseText != null){
         console.log(this.responseText);
         let new_task = JSON.parse(this.responseText);
