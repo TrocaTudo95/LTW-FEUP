@@ -42,7 +42,7 @@ function processTasks(){
   const tasks = JSON.parse(this.responseText);
   let new_tasks= tasks.filter(task =>{
     let timeLeft = time_left(task.dateDue);
-    return timeLeft != null;
+    return timeLeft != null && task.isChecked == 0;
   })
   new_tasks.forEach(task => {
     let taskDiv = getTaskDiv(task);
