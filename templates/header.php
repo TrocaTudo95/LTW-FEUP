@@ -15,14 +15,7 @@
   <body>
     <header>
       <a id="logo_link" href="index.php"><img src="assets/logo.png" width="177px" height="106px"></a>
-      <form id="search_form">
-        <input type="search" id="searchfield" placeholder="Search" oninput="updateProjects()">
-      </form>
-      <select id="filter">
-        <option value="name">Name</option>
-        <option value="category">Category</option>
-        <option value="task">Task</option>
-      </select>
+      
 
       <?php
       if(isset($_SESSION['is_logged']) && $_SESSION['is_logged'] == true){
