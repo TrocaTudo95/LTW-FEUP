@@ -204,23 +204,27 @@ function onProjectsLoaded(){
         let filter_value= filter.options[filter.selectedIndex].text;
         let projects= JSON.parse(this.responseText);
         console.log("projects loaded");
-        console.log(projects);
+        let projects_parsed;
         if (search_bar_value.length > 0){
-          if(filter_value == "Name"){
-            projects = projects.filter(project =>
-                project.name.toLowerCase().indexOf(search_bar_value.toLowerCase()) > 0);
-              }
-              else if (filter_value == "Category"){
-                projects = projects.filter(project =>
-                    project.category.toLowerCase().indexOf(search_bar_value.toLowerCase()) > 0);
-              }
+            if(filter_value == "Name"){
+                projects_parsed = projects.filter(project =>{
+                    return project.name.toLowerCase().indexOf(search_bar_value.toLowerCase()) >= 0;
+                });
+            }
+            else if (filter_value == "Category"){
+                projects_parsed = projects.filter(project =>{
+                    return project.category.toLowerCase().indexOf(search_bar_value.toLowerCase()) >= 0
+                });
+            }
               else if (filter_value == "Task"){
-                projects = projects.filter(project =>
-                  exist_task_in_project(project,search_bar_value));
+                projects_parsed = projects.filter(project =>{
+                    return exist_task_in_project(project,search_bar_value)
+                });
               }
         }
+        projects_parsed = projects_parsed || projects;
         clearProjectsDisplay();
-        createProjectsPreview(projects);
+        createProjectsPreview(projects_parsed);
         if (newProjectForm == null){
             newProjectForm = getNewProjectForm();
         }
@@ -536,4 +540,10 @@ function handleCheckboxClick(event,taskid){
     request.onload = requestListener;
     request.open("get", "action_check_task.php"+queryString,true);
     request.send();
+    let next_deliveries_task = document.getElementById("task"+taskid);
+    if (next_deliveries_task.style.display == "none"){
+        next_deliveries_task.style.display = "block";
+    }else{
+        next_deliveries_task.style.display = "none";
+    }
 }
