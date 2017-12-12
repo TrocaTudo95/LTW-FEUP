@@ -251,7 +251,7 @@ function updateProjects(){
     let header = document.createElement("header");
     header.setAttribute("id","project");
     let deleteProjectSymbol = getDeleteSymbol();
-    deleteSymbol.addEventListener('click',function(event){
+    deleteProjectSymbol.addEventListener('click',function(event){
         event.stopPropagation();
         deleteProject(project.id);
     })
@@ -276,6 +276,11 @@ function updateProjects(){
     let tasks = project.tasks;
     console.log(project);
     tasks.forEach(task =>{
+        let deleteTaskSymbol = getDeleteSymbol();
+        deleteTaskSymbol.addEventListener('click',event =>{
+            event.stopPropagation();
+            deleteTask(task.id);
+        })
         let timestampMiliseconds = parseInt(task.dateDue) * 1000;
         let date= new Date(timestampMiliseconds);
         let day=date.getDate();
@@ -317,7 +322,7 @@ function updateProjects(){
     header.appendChild(project_title);
     header.appendChild(num_tasks);
     header.appendChild(project_category);
-    header.appendChild(deleteSymbol);
+    header.appendChild(deleteProjectSymbol);
     header.appendChild(close);
     header.appendChild(button);
     modal_content.appendChild(header);
@@ -351,12 +356,12 @@ function deleteTask(taskid){
     let request = new XMLHttpRequest();
     request.onload = function(){
         if (this.responseText == "0"){
-            updateProjects();
+            reloadCurrentProject();
         }else{
-            alert("You do not own the project");
+            alert("You don't have access to the tasks");
         }
     }
-    request.open("get","action_delete_project.php/?projectid="+projectid,true);
+    request.open("get","action_delete_task.php/?taskid="+taskid,true);
     request.send();
 }
 
@@ -482,6 +487,7 @@ function createTaskWindow(projectID){
     let priority = inputPriority.value;
     let date = inputDate.value;
     projectAddTask(projectID,information,priority,date);
+    addForm.reset();
   })
   let cancel = document.createElement('input');
   cancel.setAttribute('type','button');
