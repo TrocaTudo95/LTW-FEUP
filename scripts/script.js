@@ -289,7 +289,6 @@ function updateProjects(){
         let task_div = document.createElement("div");
         task_div.setAttribute("class","task_div_lay");
         let task_info = document.createElement("textarea");
-<<<<<<< HEAD
         task_info.value = task.information;
         let task_date =document.createElement("input");
         task_date.setAttribute("class","date");
@@ -301,9 +300,6 @@ function updateProjects(){
         task_priority.setAttribute("min",0);
         task_priority.setAttribute("max",1000);
         task_priority.value = task.priority;
-=======
-        task_info.value = task.information + "   "+" Priority:" + task.priority + "  Date:"+year+"/"+month+"/"+day;
->>>>>>> 68967c5bf90227620637f69c123d53bc4217fd47
         let checkbox = document.createElement("input");
         checkbox.setAttribute("class","checkbox");
         checkbox.setAttribute("type","checkbox");
@@ -324,12 +320,9 @@ function updateProjects(){
         }
         task_div.appendChild(checkbox);
         task_div.appendChild(task_info);
-<<<<<<< HEAD
         task_div.appendChild(task_date);
         task_div.appendChild(task_priority);
-=======
         task_div.appendChild(deleteTaskSymbol);
->>>>>>> 68967c5bf90227620637f69c123d53bc4217fd47
         tasks_section.appendChild(task_div);
     });
     let button = document.createElement("i");
