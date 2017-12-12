@@ -6,11 +6,11 @@ DROP TABLE IF EXISTS projects;
 DROP TABLE IF EXISTS tasks;
 DROP TABLE IF EXISTS categories;
 DROP TABLE IF EXISTS projectUsers;
-CREATE TABLE users(id INTEGER PRIMARY KEY,username TEXT UNIQUE,password TEXT, email TEXT UNIQUE, apiKey TEXT, imageRef INTEGER);
-CREATE TABLE projects(id INTEGER PRIMARY KEY, name TEXT,color TEXT, creator INTEGER REFERENCES users (id), categoryRef INTEGER REFERENCES categories(id));
+CREATE TABLE users(id INTEGER PRIMARY KEY ON DELETE CASCADE,username TEXT UNIQUE,password TEXT, email TEXT UNIQUE, apiKey TEXT, imageRef INTEGER);
+CREATE TABLE projects(id INTEGER PRIMARY KEY ON DELETE CASCADE, name TEXT,color TEXT, creator INTEGER REFERENCES users (id), categoryRef INTEGER REFERENCES categories(id));
 CREATE TABLE tasks(id INTEGER PRIMARY KEY, projectRef INTEGER REFERENCES projects (id), information TEXT, priority INTEGER, dateDue INTEGER, isChecked INTEGER, assignedTo INTEGER REFERENCES users(id));
 CREATE TABLE categories(id INTEGER PRIMARY KEY, title TEXT UNIQUE);
-CREATE TABLE projectUsers(projectRef INTEGER REFERENCES projects(id), userRef INTEGER REFERENCES users(id), permissions INTEGER);
+CREATE TABLE projectUsers(projectRef INTEGER REFERENCES projects(id), userRef INTEGER REFERENCES users(id), permissions INTEGER, PRIMARY KEY(projectRef,userRef));
 
 COMMIT;
 

@@ -140,12 +140,24 @@
   /**
    * Returns 0 if project deleted with success, -1 if creator id is incorrect or project does not exist.
    */
-  function deleteProject($dbh,$project_id,$creator_id){
-    $stmt = $dbh->prepare('SELECT * FROM projects WHERE id = ? AND creator = ?');
+  function deleteProject($dbh,$project_id,$user_id){
+    $stmt = $dbh->prepare('SELECT id FROM projects WHERE id = ? AND creator = ?');
     $stmt->execute(array($project_id,$creator_id));
     $result = $stmt->fetch();
     if ($result){
-      removeAllProjectUsers($dbh,$project_id);
+      //removeAllProjectUsers($dbh,$project_id);
+      $stmt = $dbh->prepare('DELETE FROM projects WHERE id = ?');
+      $stmt->execute(array($project_id));
+      return 0;
+    }
+    return -1;
+  }
+  function deleteTask($dbh,$task_id,$creator_id){
+    $stmt = $dbh->prepare('SELECT id FROM tasks WHERE id = ? AND creator = ?');
+    $stmt->execute(array($project_id,$creator_id));
+    $result = $stmt->fetch();
+    if ($result){
+      //removeAllProjectUsers($dbh,$project_id);
       $stmt = $dbh->prepare('DELETE FROM projects WHERE id = ?');
       $stmt->execute(array($project_id));
       return 0;
