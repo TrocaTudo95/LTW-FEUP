@@ -50,5 +50,4 @@ $imageName= getImageFromUser($dbh,$userId);
 	</div>
 </div>
 </html>
-<<?php
-include_once ('templates/footer.php'); ?>
+<?php include_once ('templates/footer.php'); ?>

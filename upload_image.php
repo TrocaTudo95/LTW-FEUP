@@ -22,9 +22,9 @@
   // Get image ID
 
   // Generate filenames for original, small and medium files
-  $originalFileName = "assets/users/originals/$userId";
-  $smallFileName = "assets/users/thumbs_small/$userId;
-  $mediumFileName = "assets/users/thumbs_medium/$userId";
+  $originalFileName = "assets/users/originals/$userId.jpg";
+  $smallFileName = "assets/users/thumbs_small/$userId.jpg";
+  $mediumFileName = "assets/users/thumbs_medium/$userId.jpg";
 
   // Move the uploaded file to its final destination
   move_uploaded_file($_FILES['image']['tmp_name'], $originalFileName);
