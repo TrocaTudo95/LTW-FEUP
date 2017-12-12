@@ -259,7 +259,7 @@ function updateProjects(){
     close.setAttribute("class","close");
     close.innerHTML="&times;";
     close.onclick=function() {
-        modal.style.display = "none";
+        modal.parentNode.removeChild(modal);
         updateProjects();
     }
     let project_title =document.createElement("span");
@@ -289,6 +289,7 @@ function updateProjects(){
         let task_div = document.createElement("div");
         task_div.setAttribute("class","task_div_lay");
         let task_info = document.createElement("textarea");
+<<<<<<< HEAD
         task_info.value = task.information;
         let task_date =document.createElement("input");
         task_date.setAttribute("class","date");
@@ -300,6 +301,9 @@ function updateProjects(){
         task_priority.setAttribute("min",0);
         task_priority.setAttribute("max",1000);
         task_priority.value = task.priority;
+=======
+        task_info.value = task.information + "   "+" Priority:" + task.priority + "  Date:"+year+"/"+month+"/"+day;
+>>>>>>> 68967c5bf90227620637f69c123d53bc4217fd47
         let checkbox = document.createElement("input");
         checkbox.setAttribute("class","checkbox");
         checkbox.setAttribute("type","checkbox");
@@ -320,8 +324,12 @@ function updateProjects(){
         }
         task_div.appendChild(checkbox);
         task_div.appendChild(task_info);
+<<<<<<< HEAD
         task_div.appendChild(task_date);
         task_div.appendChild(task_priority);
+=======
+        task_div.appendChild(deleteTaskSymbol);
+>>>>>>> 68967c5bf90227620637f69c123d53bc4217fd47
         tasks_section.appendChild(task_div);
     });
     let button = document.createElement("i");
@@ -372,7 +380,7 @@ function deleteTask(taskid){
         if (this.responseText == "0"){
             reloadCurrentProject();
         }else{
-            alert("You don't have access to the tasks");
+            alert(this.responseText);
         }
     }
     request.open("get","action_delete_task.php/?taskid="+taskid,true);
@@ -432,7 +440,10 @@ function createProjectsPreview(projects){
 }
 
 function reloadCurrentProject(){
+<<<<<<< HEAD
 
+=======
+>>>>>>> 68967c5bf90227620637f69c123d53bc4217fd47
     if (this.responseText != null){
         console.log(this.responseText);
         let new_task = JSON.parse(this.responseText);
@@ -530,7 +541,7 @@ function addTask(header,projectID){
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
     if (event.target.className == "modal") {
-        event.target.style.display = "none";
+        modal.parentNode.removeChild(modal);
         updateProjects();
     }
 }
