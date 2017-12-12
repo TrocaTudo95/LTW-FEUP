@@ -1,6 +1,7 @@
 <?php
 include_once('database/connection.php');
 include_once('database/users.php');
+include_once('templates/header.php');
 session_start();
 if (!isset($_SESSION['username'])) die('No username');
 $userId = getUserId($dbh,$_SESSION['username']);
@@ -37,7 +38,7 @@ $imageName= getImageFromUser($dbh,$userId);
     </nav>
 				<!-- END SIDEBAR BUTTONS -->
 				<!-- SIDEBAR MENU -->
-			
+
 				<!-- END MENU -->
 			</div>
 		</div>
@@ -49,3 +50,4 @@ $imageName= getImageFromUser($dbh,$userId);
 	</div>
 </div>
 </html>
+<?php include_once ('templates/footer.php'); ?>
