@@ -72,7 +72,7 @@ INSERT INTO projectUsers VALUES (8,3,1);
 INSERT INTO projectUsers VALUES (8,2,1);
 
 
-INSERT INTO tasks (id,projectRef,information,priority,dateDue,isChecked,assignedTo) VALUES (1,1,"Ipsum Corp",1,1512908400,0,2);
+INSERT INTO tasks (id,projectRef,information,priority,dateDue,isChecked,assignedTo) VALUES (1,1,"Ipsum Corp",1,1514149200,0,2);
 INSERT INTO tasks (id,projectRef,information,priority,dateDue,isChecked,assignedTo) VALUES (2,2,"Metus Aenean Sed Corporation",1,1513188000,0,2);
 INSERT INTO tasks (id,projectRef,information,priority,dateDue,isChecked,assignedTo) VALUES (3,3,"Magna Et Associates",1,1513191600,0,5);
 INSERT INTO tasks (id,projectRef,information,priority,dateDue,isChecked,assignedTo) VALUES (4,4,"Neque Et Nunc Inc",1,1513195200,0,2);

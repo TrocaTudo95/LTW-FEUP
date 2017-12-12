@@ -250,6 +250,11 @@ function updateProjects(){
     modal_content.setAttribute("class","modal-content");
     let header = document.createElement("header");
     header.setAttribute("id","project");
+    let deleteProjectSymbol = getDeleteSymbol();
+    deleteProjectSymbol.addEventListener('click',function(event){
+        event.stopPropagation();
+        deleteProject(project.id);
+    })
     let close = document.createElement("span");
     close.setAttribute("class","close");
     close.innerHTML="&times;";
@@ -271,6 +276,11 @@ function updateProjects(){
     let tasks = project.tasks;
     console.log(project);
     tasks.forEach(task =>{
+        let deleteTaskSymbol = getDeleteSymbol();
+        deleteTaskSymbol.addEventListener('click',event =>{
+            event.stopPropagation();
+            deleteTask(task.id);
+        })
         let timestampMiliseconds = parseInt(task.dateDue) * 1000;
         let date= new Date(timestampMiliseconds);
         let day=date.getDate();
@@ -312,10 +322,47 @@ function updateProjects(){
     header.appendChild(project_title);
     header.appendChild(num_tasks);
     header.appendChild(project_category);
+    header.appendChild(deleteProjectSymbol);
     header.appendChild(close);
     header.appendChild(button);
     modal_content.appendChild(header);
     modal_content.appendChild(tasks_section);
+}
+
+function getDeleteSymbol(){
+    let deleteSymbol = document.createElement("i");
+    deleteSymbol.className = "fa fa-minus";
+    deleteSymbol.setAttribute("aria-hidden","true");
+    deleteSymbol.style.zIndex = 1;
+    deleteSymbol.style.cssFloat = "right";
+    deleteSymbol.style.padding = " 10px";
+    return deleteSymbol;
+}
+
+function deleteProject(projectid){
+    let request = new XMLHttpRequest();
+    request.onload = function(){
+        if (this.responseText == "0"){
+            updateProjects();
+        }else{
+            alert("You do not own the project");
+        }
+    }
+    request.open("get","action_delete_project.php/?projectid="+projectid,true);
+    request.send();
+}
+
+function deleteTask(taskid){
+    let request = new XMLHttpRequest();
+    request.onload = function(){
+        if (this.responseText == "0"){
+            reloadCurrentProject();
+        }else{
+            alert("You don't have access to the tasks");
+        }
+    }
+    request.open("get","action_delete_task.php/?taskid="+taskid,true);
+    request.send();
 }
 
 function createProjectsPreview(projects){
@@ -327,6 +374,11 @@ function createProjectsPreview(projects){
             currentDisplayingProject = project;
             displayCurrentProject();
         };
+        let deleteSymbol = getDeleteSymbol();
+        deleteSymbol.addEventListener("click",event =>{
+            event.stopPropagation();
+            deleteProject(project.id);
+        })
         let header = document.createElement("header");
         header.setAttribute("id","project");
         let project_title =document.createElement("span");
@@ -354,6 +406,7 @@ function createProjectsPreview(projects){
             task_div.appendChild(task_info);
             tasks_section.appendChild(task_div);
         });
+        header.appendChild(deleteSymbol);
         header.appendChild(project_title);
         header.appendChild(num_tasks);
         header.appendChild(project_category);
@@ -434,6 +487,7 @@ function createTaskWindow(projectID){
     let priority = inputPriority.value;
     let date = inputDate.value;
     projectAddTask(projectID,information,priority,date);
+    addForm.reset();
   })
   let cancel = document.createElement('input');
   cancel.setAttribute('type','button');

@@ -9,7 +9,8 @@ include_once('database/users.php');
 $userid = getUserId($_SESSION['username']);
 if ($userid != -1){
     if (is_numeric($_GET['taskid'])){
-        deleteTask($_GET['taskid']);
+        $return = deleteTask($_GET['taskid']);
+        echo $return;
     }else{
         die('task parse error');
     }
