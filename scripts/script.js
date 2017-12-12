@@ -531,7 +531,7 @@ function addTask(header,projectID){
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
     if (event.target.className == "modal") {
-        event.target.parentNode.removeChild(modal);
+        event.target.parentNode.removeChild(event.target);
         updateProjects();
     }
 }
