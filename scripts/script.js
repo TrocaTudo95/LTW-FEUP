@@ -150,8 +150,7 @@ function getNewProjectForm(){
             alert("Wrong Inputs");
         }else{
             wrapper.style.display = "none";
-            title_input.value = "";
-            category_input.value = "";
+            form.reset();
         }
 
     }
@@ -166,6 +165,7 @@ function getNewProjectForm(){
     content.appendChild(header);
     content.appendChild(form);
     wrapper.appendChild(content);
+    wrapper.style.display = "none";
     return wrapper;
 }
 
@@ -529,6 +529,7 @@ function addTask(header,projectID){
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
     if (event.target.className == "modal") {
+        event.target.style.display = "none";
         event.target.parentNode.removeChild(event.target);
         updateProjects();
     }
