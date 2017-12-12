@@ -275,17 +275,8 @@ function displayCurrentProject(){
     tasks_section.setAttribute("class","tasks round_corners");
     let tasks = project.tasks;
     console.log(project);
-<<<<<<< HEAD
     for (let i = 0; i < tasks.length; i++){
         let task = tasks[i];
-=======
-    tasks.forEach(task =>{
-        let deleteTaskSymbol = getDeleteSymbol();
-        deleteTaskSymbol.addEventListener('click',event =>{
-            event.stopPropagation();
-            deleteTask(task.id);
-        });
->>>>>>> ca47d118912b1d244bdf0f664370f8479f9325d9
         let timestampMiliseconds = parseInt(task.dateDue) * 1000;
         let date= new Date(timestampMiliseconds);
         let day=date.getDate();
