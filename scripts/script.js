@@ -265,6 +265,9 @@ function displayCurrentProject(){
     let project_title =document.createElement("span");
     project_title.setAttribute("class","project_title");
     project_title.innerHTML=project.name;
+    let creator_project = document.createElement("span");
+    creator_project.setAttribute("class","project_creator");
+    creator_project.innerHTML="Creator: " + project.creator;
     let num_tasks = document.createElement("span");
     num_tasks.setAttribute("class","num_tasks");
     num_tasks.innerHTML= project.tasks.length;
@@ -340,6 +343,7 @@ function displayCurrentProject(){
     header.appendChild(project_title);
     header.appendChild(num_tasks);
     header.appendChild(project_category);
+    header.appendChild(creator_project);
     header.appendChild(deleteProjectSymbol);
     header.appendChild(close);
     header.appendChild(button);
@@ -400,6 +404,9 @@ function createProjectsPreview(projects){
         let project_title =document.createElement("span");
         project_title.setAttribute("class","project_title");
         project_title.innerHTML=project.name;
+        let creator_project = document.createElement("span");
+        creator_project.setAttribute("class","project_creator");
+        creator_project.innerHTML="Creator: " + project.creator;
         let num_tasks = document.createElement("span");
         num_tasks.setAttribute("class","num_tasks");
         num_tasks.innerHTML= project.tasks.length;
@@ -412,6 +419,11 @@ function createProjectsPreview(projects){
         tasks.forEach(task =>{
             let task_div = document.createElement("div");
             task_div.setAttribute("class","task");
+            let task_layout = document.createElement("div");
+            task_layout.setAttribute("class","task_layout");
+            let task_pri =document.createElement("div");
+            task_pri.setAttribute("class","task_priority_display");
+            task_pri.innerHTML=task.priority;
             let task_info = document.createElement("span");
             task_info.innerHTML = task.information;
             if (task.isChecked == "1"){
@@ -419,13 +431,16 @@ function createProjectsPreview(projects){
             }else{
                 task_info.setAttribute("class","noDecoration");
             }
-            task_div.appendChild(task_info);
+            task_layout.appendChild(task_info);
+            task_layout.appendChild(task_pri);
+            task_div.appendChild(task_layout);
             tasks_section.appendChild(task_div);
         });
         header.appendChild(deleteSymbol);
         header.appendChild(project_title);
         header.appendChild(num_tasks);
         header.appendChild(project_category);
+        header.appendChild(creator_project);
         article.appendChild(header);
         article.appendChild(tasks_section);
 
@@ -460,40 +475,19 @@ function projectAddTask(projectID,information,priority,date){
 
 }
 
-function createOptions(options){
-  let returnArray = [];
-  options.forEach(value =>{
-    let optionHTML = document.createElement('option');
-    optionHTML.setAttribute('value',value);
-    returnArray.push(optionHTML);
-
-  });
-
-  return returnArray;
-
-}
 
 function createTaskWindow(projectID){
   let wrapperDiv = document.createElement('div');
   let addForm = document.createElement("form");
   let inputInformation = document.createElement('textarea');
   let inputPriority = document.createElement('input');
-  inputPriority.setAttribute('type','range');
-  inputPriority.setAttribute('list','tickmarks');
-  let tickmarks = document.createElement('datalist');
-  tickmarks.id = "tickmarks";
-  let arrayValues = [1,2,3,4];
-  let options = createOptions(arrayValues);
-  options.forEach(option => {
-    tickmarks.appendChild(option);
-  });
-  options[0].setAttribute('label','low');
-  options[1].setAttribute('label','high');
+  inputPriority.setAttribute('type','number');
+  inputPriority.setAttribute('min','0');
+  inputPriority.setAttribute('max','1000');
   let inputDate = document.createElement('input');
   inputDate.setAttribute('type','date');
   addForm.appendChild(inputInformation);
   addForm.appendChild(inputPriority);
-  addForm.appendChild(tickmarks);
   addForm.appendChild(inputDate);
   let submit = document.createElement('input');
   submit.setAttribute('type','submit');
