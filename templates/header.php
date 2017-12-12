@@ -29,7 +29,7 @@
         echo("<button class='dropbtn'>" . $_SESSION['username'] . "</button>");
         ?>
           <div class="dropdown-content">
-            <a href="user_profile.php">Account</a>
+            <a href="templates/edit_profile.php">Account</a>
             <a href="action_logout.php">Logout</a>
           </div>
         </section>
