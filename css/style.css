@@ -88,7 +88,7 @@ body > footer{
     margin: auto;
     padding: 0;
     border: 3px solid #003399;
-    width: 30%;
+    width: 50%;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
     -webkit-animation-name: animatetop;
     -webkit-animation-duration: 0.7s;
@@ -169,9 +169,12 @@ article.projects:hover{
   background-color: #fff;
   border: 1px solid #e1e4e8;
 }
-header#project{
-  border-bottom: 1px #e1e4e8 solid;
+.padding1{
   padding: 1em;
+}
+
+.border1white{
+  border-bottom: 1px #e1e4e8 solid;
 }
 
 .flex-column{

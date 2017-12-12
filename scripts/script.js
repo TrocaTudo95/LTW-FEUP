@@ -253,8 +253,10 @@ function displayCurrentProject(){
     let modal_content =document.createElement("div");
     modal_content.setAttribute("class","modal-content");
     let header = document.createElement("header");
-    header.setAttribute("id","project");
+    header.setAttribute("id","current_project_header");
+    header.className = "padding1 border1white";
     let deleteProjectSymbol = getDeleteSymbol();
+    deleteProjectSymbol.className += " auto_margin";
     deleteProjectSymbol.addEventListener('click',function(event){
         event.stopPropagation();
         deleteProject(project.id);
@@ -267,17 +269,17 @@ function displayCurrentProject(){
         updateProjects();
     }
     let project_title =document.createElement("span");
-    project_title.setAttribute("class","project_title");
+    project_title.className = "project_title header_left";
     project_title.innerHTML=project.name;
     let creator_project = document.createElement("span");
-    creator_project.setAttribute("class","project_creator");
+    creator_project.className = "project_creator auto_margin";
     creator_project.innerHTML="Creator: " + project.creator;
     let num_tasks = document.createElement("span");
-    num_tasks.setAttribute("class","num_tasks");
+    num_tasks.className = "num_tasks header_left";
     num_tasks.innerHTML= project.tasks.length;
-    let project_category = document.createElement("p");
-    project_category.setAttribute("class","project_category");
-    project_category.innerHTML= project.category;
+    let project_category = document.createElement("span");
+    project_category.className = "project_category header_left";
+    project_category.innerHTML= project.category + ":";
     let tasks_section = document.createElement("section");
     tasks_section.setAttribute("class","tasks round_corners");
     let tasks = project.tasks;
@@ -335,33 +337,31 @@ function displayCurrentProject(){
         task_div.appendChild(deleteTaskSymbol);
         tasks_section.appendChild(task_div);
     }
-    let button = document.createElement("i");
-    button.setAttribute("class","fa fa-plus");
-    button.setAttribute("aria-hidden","true");
-    button.onclick = function(){
+    let add_task_button = document.createElement("i");
+    add_task_button.setAttribute("class","fa fa-plus auto_margin");
+    add_task_button.setAttribute("aria-hidden","true");
+    add_task_button.onclick = function(){
         addTask(header,project.id);
     }
     projectsSection.appendChild(modal);
     modal.style.display = "block";
     modal.appendChild(modal_content);
+    header.appendChild(project_category);
     header.appendChild(project_title);
     header.appendChild(num_tasks);
-    header.appendChild(project_category);
     header.appendChild(creator_project);
+    header.appendChild(add_task_button);
     header.appendChild(deleteProjectSymbol);
     header.appendChild(close);
-    header.appendChild(button);
     modal_content.appendChild(header);
     modal_content.appendChild(tasks_section);
 }
 
 function getDeleteSymbol(){
     let deleteSymbol = document.createElement("i");
-    deleteSymbol.className = "fa fa-minus";
+    deleteSymbol.setAttribute('class',"fa fa-minus");
     deleteSymbol.setAttribute("aria-hidden","true");
     deleteSymbol.style.zIndex = 1;
-    deleteSymbol.style.cssFloat = "right";
-    deleteSymbol.style.padding = " 10px";
     return deleteSymbol;
 }
 
@@ -399,12 +399,14 @@ function createProjectsPreview(projects){
             displayCurrentProject();
         };
         let deleteSymbol = getDeleteSymbol();
+        deleteSymbol.style.padding = "10px";
+        deleteSymbol.style.cssFloat = "right";
         deleteSymbol.addEventListener("click",event =>{
             event.stopPropagation();
             deleteProject(project.id);
-        })
+        });
         let header = document.createElement("header");
-        header.setAttribute("id","project");
+        header.className = "padding1 border1white";
         let project_title =document.createElement("span");
         project_title.setAttribute("class","project_title");
         project_title.innerHTML=project.name;
