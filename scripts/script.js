@@ -496,18 +496,24 @@ function projectAddTask(projectID,information,priority,date){
 
 function createTaskWindow(projectID){
   let wrapperDiv = document.createElement('div');
+  wrapperDiv.setAttribute("class","add_task_wrapper");
   let addForm = document.createElement("form");
+  addForm.setAttribute("class","add_Form");
   let inputInformation = document.createElement('textarea');
+  inputInformation.setAttribute("class","info_add_task");
   let inputPriority = document.createElement('input');
+  inputPriority.setAttribute("class","priority_add_task");
   inputPriority.setAttribute('type','number');
   inputPriority.setAttribute('min','0');
   inputPriority.setAttribute('max','1000');
   let inputDate = document.createElement('input');
+  inputDate.setAttribute("class","date_add_task");
   inputDate.setAttribute('type','date');
   addForm.appendChild(inputInformation);
   addForm.appendChild(inputPriority);
   addForm.appendChild(inputDate);
   let submit = document.createElement('input');
+  submit.setAttribute("class","submit_add_task");
   submit.setAttribute('type','submit');
   submit.addEventListener('click', event =>{
     let information = inputInformation.value;
@@ -517,6 +523,7 @@ function createTaskWindow(projectID){
     addForm.reset();
   })
   let cancel = document.createElement('input');
+  cancel.setAttribute("class","cancel_add_task");
   cancel.setAttribute('type','button');
   cancel.setAttribute('value','Cancel');
   cancel.onclick = function(){
