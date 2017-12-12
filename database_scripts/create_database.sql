@@ -25,6 +25,7 @@ INSERT INTO users (id,username,password,email,apiKey,imageRef) VALUES (5,"miguel
 INSERT INTO categories (id,title) VALUES (1,"SuperMarket");
 INSERT INTO categories (id,title) VALUES (2,"Business");
 INSERT INTO categories (id,title) VALUES (3,"School");
+INSERT INTO categories (id,title) VALUES (4,"LTW");
 
 INSERT INTO projects (id,name,color,creator,categoryRef) VALUES (1,"Gordon","#ff0000",1,1);
 INSERT INTO projects (id,name,color,creator,categoryRef) VALUES (2,"Moreno","#00ff00",2,1);
@@ -34,6 +35,7 @@ INSERT INTO projects (id,name,color,creator,categoryRef) VALUES (5,"Morales","#0
 INSERT INTO projects (id,name,color,creator,categoryRef) VALUES (6,"Fowler","#0000ff",5,3);
 INSERT INTO projects (id,name,color,creator,categoryRef) VALUES (7,"Ferguson","#ff0000",3,2);
 INSERT INTO projects (id,name,color,creator,categoryRef) VALUES (8,"Navarro","#00ff00",1,1);
+INSERT INTO projects (id,name,color,creator,categoryRef) VALUES (9,"ToDo","#00ff00",2,4);
 
 /** project 1  */
 INSERT INTO projectUsers VALUES (1,1,1);
@@ -70,6 +72,12 @@ INSERT INTO projectUsers VALUES (8,1,1);
 INSERT INTO projectUsers VALUES (8,5,1);
 INSERT INTO projectUsers VALUES (8,3,1);
 INSERT INTO projectUsers VALUES (8,2,1);
+/** project 9  */
+INSERT INTO projectUsers VALUES (9,1,1);
+INSERT INTO projectUsers VALUES (9,2,1);
+INSERT INTO projectUsers VALUES (9,3,1);
+INSERT INTO projectUsers VALUES (9,4,1);
+INSERT INTO projectUsers VALUES (9,5,1);
 
 
 INSERT INTO tasks (id,projectRef,information,priority,dateDue,isChecked,assignedTo) VALUES (1,1,"Ipsum Corp",1,1514149200,0,2);
@@ -112,6 +120,17 @@ INSERT INTO tasks (id,projectRef,information,priority,dateDue,isChecked,assigned
 INSERT INTO tasks (id,projectRef,information,priority,dateDue,isChecked,assignedTo) VALUES (38,6,"Dapibus Foundation",1,1513692000,0,4);
 INSERT INTO tasks (id,projectRef,information,priority,dateDue,isChecked,assignedTo) VALUES (39,7,"Euismod Foundation",1,1513699200,0,3);
 INSERT INTO tasks (id,projectRef,information,priority,dateDue,isChecked,assignedTo) VALUES (40,8,"Orci Lacus Vestibulum Limited",1,1513717200,0,2);
+INSERT INTO tasks (id,projectRef,information,priority,dateDue,isChecked,assignedTo) VALUES (41,9,"Add Prioridade na preview",1,1513717200,0,2);
+INSERT INTO tasks (id,projectRef,information,priority,dateDue,isChecked,assignedTo) VALUES (42,9,"Add <a> para creador do projeto na preview",1,1513717200,0,2);
+INSERT INTO tasks (id,projectRef,information,priority,dateDue,isChecked,assignedTo) VALUES (43,9,"Meter a search bar e a dropdown no lugar correto.Compor os css delas",1,1513717200,0,2);
+INSERT INTO tasks (id,projectRef,information,priority,dateDue,isChecked,assignedTo) VALUES (44,9,"Pagina de login responsive",1,1513717200,0,2);
+INSERT INTO tasks (id,projectRef,information,priority,dateDue,isChecked,assignedTo) VALUES (45,9,"Index responsive",1,1513717200,0,2);
+INSERT INTO tasks (id,projectRef,information,priority,dateDue,isChecked,assignedTo) VALUES (46,9,"Perfil user responsive",1,1513717200,0,2);
+INSERT INTO tasks (id,projectRef,information,priority,dateDue,isChecked,assignedTo) VALUES (47,9,"Proteger contra XSS",1,1513717200,0,2);
+INSERT INTO tasks (id,projectRef,information,priority,dateDue,isChecked,assignedTo) VALUES (48,9,"Proteger contra CSRF",1,1513717200,0,2);
+INSERT INTO tasks (id,projectRef,information,priority,dateDue,isChecked,assignedTo) VALUES (49,9,"Acabar delete task",1,1513717200,0,2);
+INSERT INTO tasks (id,projectRef,information,priority,dateDue,isChecked,assignedTo) VALUES (50,9,"Utilizar retornos do servidor para dar informação útil",1,1513717200,0,2);
+INSERT INTO tasks (id,projectRef,information,priority,dateDue,isChecked,assignedTo) VALUES (51,9,"Guardar alterações feitas às tasks",1,1513717200,0,2);
 
 COMMIT;
 

@@ -241,7 +241,7 @@ function updateProjects(){
     request.send();
 }
 
- function displayCurrentProject(){
+function displayCurrentProject(){
     let project = currentDisplayingProject;
     let modal= document.createElement("div");
     modal.setAttribute("id","modal"+project.id);
@@ -275,12 +275,8 @@ function updateProjects(){
     tasks_section.setAttribute("class","tasks round_corners");
     let tasks = project.tasks;
     console.log(project);
-    tasks.forEach(task =>{
-        let deleteTaskSymbol = getDeleteSymbol();
-        deleteTaskSymbol.addEventListener('click',event =>{
-            event.stopPropagation();
-            deleteTask(task.id);
-        })
+    for (let i = 0; i < tasks.length; i++){
+        let task = tasks[i];
         let timestampMiliseconds = parseInt(task.dateDue) * 1000;
         let date= new Date(timestampMiliseconds);
         let day=date.getDate();
@@ -306,11 +302,18 @@ function updateProjects(){
                 task_info.className = "task-item noDecoration";
             }
         }
+        let deleteTaskSymbol = getDeleteSymbol();
+        deleteTaskSymbol.addEventListener('click',event =>{
+            event.stopPropagation();
+            deleteTask(task.id);
+            tasks_section.removeChild(task_div);
+            tasks.splice(i,1);
+        })
         task_div.appendChild(checkbox);
         task_div.appendChild(task_info);
         task_div.appendChild(deleteTaskSymbol);
         tasks_section.appendChild(task_div);
-    });
+    }
     let button = document.createElement("i");
     button.setAttribute("class","fa fa-plus");
     button.setAttribute("aria-hidden","true");
@@ -356,9 +359,7 @@ function deleteProject(projectid){
 function deleteTask(taskid){
     let request = new XMLHttpRequest();
     request.onload = function(){
-        if (this.responseText == "0"){
-            reloadCurrentProject();
-        }else{
+        if (this.responseText != "0"){
             alert(this.responseText);
         }
     }
