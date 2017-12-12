@@ -245,6 +245,14 @@ function updateProjects(){
     request.send();
 }
 
+
+function getCreatorLink(username){
+    let creatorLink = document.createElement("a");
+    creatorLink.setAttribute("href","user_profile.php?username=" + username);
+    creatorLink.innerHTML = username;
+    return creatorLink;
+}
+
 function displayCurrentProject(){
     let project = currentDisplayingProject;
     let modal= document.createElement("div");
@@ -271,9 +279,12 @@ function displayCurrentProject(){
     let project_title =document.createElement("span");
     project_title.className = "project_title header_left";
     project_title.innerHTML=project.name;
-    let creator_project = document.createElement("span");
-    creator_project.className = "project_creator auto_margin";
-    creator_project.innerHTML="Creator: " + project.creator;
+    let creator_string = document.createElement("span");
+    creator_string.className = "project_creator";
+    creator_string.style.margin = "auto 0 auto auto";
+    creator_string.innerHTML="Creator: ";
+    let creator_link = getCreatorLink(project.creator);
+    creator_link.className = "header_left";
     let num_tasks = document.createElement("span");
     num_tasks.className = "num_tasks header_left";
     num_tasks.innerHTML= project.tasks.length;
@@ -349,7 +360,8 @@ function displayCurrentProject(){
     header.appendChild(project_category);
     header.appendChild(project_title);
     header.appendChild(num_tasks);
-    header.appendChild(creator_project);
+    header.appendChild(creator_string);
+    header.appendChild(creator_link);
     header.appendChild(add_task_button);
     header.appendChild(deleteProjectSymbol);
     header.appendChild(close);
@@ -410,9 +422,9 @@ function createProjectsPreview(projects){
         let project_title =document.createElement("span");
         project_title.setAttribute("class","project_title");
         project_title.innerHTML=project.name;
-        let creator_project = document.createElement("span");
-        creator_project.setAttribute("class","project_creator");
-        creator_project.innerHTML="Creator: " + project.creator;
+        let creator_string = document.createElement("span");
+        creator_string.setAttribute("class","project_creator");
+        creator_string.innerHTML="Creator: " + project.creator;
         let num_tasks = document.createElement("span");
         num_tasks.setAttribute("class","num_tasks");
         num_tasks.innerHTML= project.tasks.length;
@@ -446,7 +458,7 @@ function createProjectsPreview(projects){
         header.appendChild(project_title);
         header.appendChild(num_tasks);
         header.appendChild(project_category);
-        header.appendChild(creator_project);
+        header.appendChild(creator_string);
         article.appendChild(header);
         article.appendChild(tasks_section);
 
