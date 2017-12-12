@@ -275,17 +275,38 @@ function displayCurrentProject(){
     tasks_section.setAttribute("class","tasks round_corners");
     let tasks = project.tasks;
     console.log(project);
+<<<<<<< HEAD
     for (let i = 0; i < tasks.length; i++){
         let task = tasks[i];
+=======
+    tasks.forEach(task =>{
+        let deleteTaskSymbol = getDeleteSymbol();
+        deleteTaskSymbol.addEventListener('click',event =>{
+            event.stopPropagation();
+            deleteTask(task.id);
+        });
+>>>>>>> ca47d118912b1d244bdf0f664370f8479f9325d9
         let timestampMiliseconds = parseInt(task.dateDue) * 1000;
         let date= new Date(timestampMiliseconds);
         let day=date.getDate();
         let month= date.getMonth() + 1;
         let year= date.getFullYear();
         let task_div = document.createElement("div");
+        task_div.setAttribute("class","task_div_lay");
         let task_info = document.createElement("textarea");
-        task_info.value = task.information + "   "+" Priority:" + task.priority + "  Date:"+year+"/"+month+"/"+day;
+        task_info.value = task.information;
+        let task_date =document.createElement("input");
+        task_date.setAttribute("class","date");
+        task_date.setAttribute("type","date");
+        task_date.value = year+"-"+month+"-"+day;
+        let task_priority = document.createElement("input");
+        task_priority.setAttribute("class","priority");
+        task_priority.setAttribute("type","number");
+        task_priority.setAttribute("min",0);
+        task_priority.setAttribute("max",1000);
+        task_priority.value = task.priority;
         let checkbox = document.createElement("input");
+        checkbox.setAttribute("class","checkbox");
         checkbox.setAttribute("type","checkbox");
         if (task.isChecked == "1"){
             checkbox.checked = true;
@@ -311,6 +332,8 @@ function displayCurrentProject(){
         })
         task_div.appendChild(checkbox);
         task_div.appendChild(task_info);
+        task_div.appendChild(task_date);
+        task_div.appendChild(task_priority);
         task_div.appendChild(deleteTaskSymbol);
         tasks_section.appendChild(task_div);
     }
