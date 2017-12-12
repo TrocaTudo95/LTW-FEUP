@@ -16,8 +16,15 @@ body > header {
   }
 
 #top_bar{
-    grid-column: 1;
-    grid-row: header/nav;
+  margin-top: none;
+  padding-top: none;
+  grid-column: 1;
+  display: flex;
+  justify-content: space-around;
+  align-content: center;
+  width: 100%;
+  height:60%;
+
 }
 #add_to_do_form {
     grid-column: 1;
@@ -32,10 +39,10 @@ body > footer{
     grid-row: content/end;
 }
 
-body > header input[type="search"]{
+#search_form >input[type="search"]{
     background: #eee url('../assets/search-icon.png') 0 no-repeat;
     width: 100%;
-    height: 3.38462rem;
+    height: 2em;
     margin: 0 auto;
     padding-left: 3.38462rem;
     font-size: 1.15385rem;
@@ -46,7 +53,7 @@ body > header input[type="search"]{
 section#content_wrap{
   display:grid;
   grid-template-columns:3fr 1.1fr;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 0.5fr 1.5fr;
   width: 100%;
 }
 

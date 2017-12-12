@@ -189,7 +189,6 @@ header#project{
   padding: 10px;
   color: white;
   font-weight: bold;
-  margin-top: 10em;
 }
 .line-through{
   text-decoration: line-through;
@@ -200,4 +199,13 @@ header#project{
 .task-item{
   width: 200px;
   resize:vertical;
+}
+
+#filter{
+  border-radius: 5px;
+  background-color: cornflowerblue;
+  padding: 10px;
+  color: white;
+  font-weight: bolder;
+  height: 110%;
 }
