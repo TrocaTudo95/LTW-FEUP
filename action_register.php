@@ -10,7 +10,6 @@
   if (!userExists($dbh,$_POST['username'])){  // test if user exists
     try{
       register($dbh,$_POST['username'], $_POST['password'], $_POST['email']);
-      sendMail();
     }catch (PDOException $e) {
       die('-1'); //email repeated
     }
@@ -20,8 +19,4 @@
   $_SESSION['username'] = $_POST['username'];
   $_SESSION['is_logged'] = true;
 
-  function sendMail(){
-    document.location="mailto:renatoineeve@gmail.com?"+
-    "subject=This%20is%20the%20subject&body=User%20registered";
-  }
 ?>

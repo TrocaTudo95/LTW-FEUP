@@ -7,11 +7,17 @@
     session_start();
 
   $userId = getUserId($dbh,$_SESSION['username']);
+  $prev_image = getImageFromUser($dbh,$userId);
   $stmt = $dbh->prepare("UPDATE users SET imageRef=? WHERE id=?");
   $stmt->execute(array($userId,$userId));
-  $prev_image = getImageFromUser($dbh,$userId);
-  if($prev_image!=0)
+  if($prev_image!="0"){
+    try{
       unlink("assets/users/originals/$prev_image.jpg");
+    }
+    catch(E_WARNING $e){
+      die($e);
+    }
+    }
 
   // Get image ID
 
