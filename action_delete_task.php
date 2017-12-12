@@ -8,7 +8,11 @@ include_once('database/users.php');
 
 $userid = getUserId($_SESSION['username']);
 if ($userid != -1){
-    $delete_result = 
+    if (is_numeric($_GET['taskid'])){
+        deleteTask($_GET['taskid']);
+    }else{
+        die('task parse error');
+    }
 }else{
     die('user not registered');
 }
