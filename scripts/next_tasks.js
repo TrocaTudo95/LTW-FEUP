@@ -12,11 +12,14 @@ function time_left(dateDue){
     return null;
   }
   if(days == 0){
-    return " To dilever today"
+    return "< 24h"
   }
-  else{
+  else if (days == 1){
+    return  days +" Day";
+  }else {
     return  days +" Days";
-}
+  }
+
 }
 
 function onload(){
