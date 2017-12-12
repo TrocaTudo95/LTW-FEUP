@@ -34,6 +34,7 @@ body > footer{
 }
 
 .dropdown {
+  margin: auto 0;
   position: relative;
   display: inline-block;
 }
@@ -189,11 +190,6 @@ article.projects:hover{
 .flex-column{
   display: flex;
   flex-direction: column;
-}
-
-#top_bar{
-  padding-left: 2em;
-  margin-top: 1em;
 }
 
 #new_project{
