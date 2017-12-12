@@ -16,13 +16,11 @@ body > header {
   }
 
 #top_bar{
-  margin-top: none;
-  padding-top: none;
+  margin-top: 1em;
   grid-column: 1;
   display: flex;
   justify-content: space-around;
   align-content: center;
-  width: 100%;
   height:60%;
 
 }
