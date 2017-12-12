@@ -8,7 +8,9 @@ function time_left(dateDue){
 
   var timeLeft = dateDue - n;
   var days = Math.floor(timeLeft/86400);
-
+  if (days < 0){
+    return null;
+  }
   if(days == 0){
     return " To dilever today"
   }
@@ -35,7 +37,11 @@ function processTasks(){
   next_tasks_section.appendChild(header);
   if (this.responseText.length > 0){
   const tasks = JSON.parse(this.responseText);
-  tasks.forEach(task => {
+  let new_tasks= tasks.filter(task =>{
+    let timeLeft = time_left(task.dateDue);
+    return timeLeft != null;
+  })
+  new_tasks.forEach(task => {
     let taskDiv = getTaskDiv(task);
     next_tasks_section.appendChild(taskDiv);
   });
