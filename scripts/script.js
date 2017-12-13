@@ -293,16 +293,28 @@ function displayCurrentProject(){
         task_div.setAttribute("class","task_div_lay");
         let task_info = document.createElement("textarea");
         task_info.value = task.information;
+        task_info.onchange = function(event){
+          task.information=task_info.value;
+          change_task(event,task,project.id);
+        }
         let task_date =document.createElement("input");
         task_date.setAttribute("class","date");
         task_date.setAttribute("type","date");
         task_date.value = year+"-"+month+"-"+day;
+        task_date.onchange = function(event){
+          task.dateDue=task_date.value;
+        change_task(event,task,project.id);
+        }
         let task_priority = document.createElement("input");
         task_priority.setAttribute("class","priority");
         task_priority.setAttribute("type","number");
         task_priority.setAttribute("min",0);
-        task_priority.setAttribute("max",1000);
+        task_priority.setAttribute("max",999);
         task_priority.value = task.priority;
+        task_priority.onchange = function(event){
+        task.priority=task_priority.value;
+          change_task(event,task,project.id);
+        }
         let checkbox = document.createElement("input");
         checkbox.setAttribute("class","checkbox");
         checkbox.setAttribute("type","checkbox");
@@ -499,6 +511,8 @@ function createTaskWindow(projectID){
     let information = inputInformation.value;
     let priority = inputPriority.value;
     let date = inputDate.value;
+    console.log(date);
+    console.log(typeof date);
     projectAddTask(projectID,information,priority,date);
     addForm.reset();
   })
@@ -547,4 +561,10 @@ function handleCheckboxClick(event,taskid){
     }else{
         next_deliveries_task.style.display = "none";
     }
+}
+
+function change_task(event,task,project_id){
+  console.log(task);
+deleteTask(task.id);
+projectAddTask(project_id,task.information,task.priority,task.dateDue);
 }
