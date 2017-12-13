@@ -279,9 +279,8 @@ function updateTask(taskId,projectId,newValue,columnName){
 }
 
 function handleTaskUpdate(){
-    if (this.responseText != null){
+    if (this.responseText != null && this.responseText.length > 0){
         console.log(this.responseText);
-        console.log("task updated");
     }
 }
 

@@ -40,7 +40,7 @@
             }
         }
     }catch(PDOException $e){
-        die($e);
+        die('Nice try');
     }
 
 ?>
