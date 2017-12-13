@@ -15,7 +15,7 @@ $imageName= getImageFromUser($dbh,$userId);
 
         <form class="centered_form"  action="action_change_password.php">
         Change Password:
-        <input type="password" name="pass" value="">
+        <input type="password" name="pass" value="" required>
         <input type="submit" class="profile_button" value="Change">
         </form>
         <nav>
