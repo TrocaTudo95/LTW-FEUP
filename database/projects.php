@@ -1,6 +1,15 @@
 <?php
   include_once('database/projectUsers.php');
 
+  function checkTaskBelongsToProject($dbh,$task_id,$project_id){
+    $stmt = $dbh->prepare('SELECT id FROM tasks WHERE id = ? AND projectRef = ?');
+    $stmt->execute(array($task_id,$project_id));
+    if ($stmt->fetch()){
+      return 0;
+    }
+    return -1;
+  }
+
   function addTask($dbh,$projectref,$information,$priority,$datedue,$ischecked, $assignedTo){
     $stmt = $dbh->prepare('INSERT INTO tasks VALUES (?,?,?,?,?,?,?)');
     $stmt->execute(array(NULL,$projectref,$information,$priority,$datedue,$ischecked,$assignedTo));
@@ -55,7 +64,6 @@
     $stmt = $dbh->prepare('SELECT * from tasks WHERE assignedTo = ?');
     $stmt->execute(array($userid));
     return $stmt->fetchAll();
-
   }
 
   function taskChangeIsChecked($dbh,$taskid){
@@ -159,6 +167,11 @@
       return $result['title'];
     }
     die(-1);
+  }
+  function updateTask($dbh,$task_id,$new_value,$column_name){
+    $stmt = $dbh->prepare('UPDATE tasks SET ' . $column_name .' = ? WHERE id = ?');
+    $stmt->execute(array($new_value,$task_id));
+    return 0;
   }
 
 
