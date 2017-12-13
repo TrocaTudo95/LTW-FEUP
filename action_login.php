@@ -4,11 +4,10 @@
   session_start();                         // starts the session
   include_once('database/connection.php'); // connects to the database
   include_once('database/users.php');      // loads the functions responsible for the users table
-  include_once('script/login_script.js');
 
-  if (!isset($_SESSION['csrf'])) {
-  $_SESSION['csrf']) = generate_random_token();
-}
+  if ($_SESSION['csrf'] !== $_POST['csrf']) {
+    die('Request is not legitimate');
+  }
   if (userExists($dbh, $_POST['username'])){
     if (checkPassword($dbh,$_POST['username'],$_POST['password']) == 0){
       $_SESSION['username'] = $_POST['username'];

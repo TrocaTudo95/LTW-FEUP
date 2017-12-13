@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (!isset($_SESSION['csrf'])) {
+    $_SESSION['csrf'] = bin2hex(openssl_random_pseudo_bytes(32));
+}
+?>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -12,6 +19,7 @@
     <body>
         <header>
             <a href="../index.php"><img src="../assets/logo.png" width="177px" height="106px"></a>
+            <input type="hidden" id="csrf" value=<?=$_SESSION['csrf']?>>
         </header>
         <section id="login_box">
             <nav id="login_nav">
@@ -20,22 +28,16 @@
                     <li id="register_tab">Register</li>
                 </ul>
             </nav>
-            <form id="login_form" action="../action_login.php" method="post">
+            <form id="login_form" method="post">
                 <input type="text" name="username" required="required" placeholder="Username *">
                 <input type="password" name="password" required="required" placeholder="Password *">
                 <input type="submit" value="Login">
             </form>
-            <form id="register_form" action="../action_register.php" method="post">
+            <form id="register_form" method="post">
                 <input type="text" name="username" required="required" placeholder="Username *">
                 <input type="email" name="email" required="required" placeholder="Email *">
                 <input type="password" name="password" required="required" placeholder="Password *">
                 <input type="submit" value="Register">
-            </form>
-            <form action="action_login.php">
-              <input type="hidden" id="csrf" value="<?=$_SESSION['csrf'])?>">
-            </form>
-            <form action="register_login.php">
-              <input type="hidden" id="csrf" value="<?=$_SESSION['csrf'])?>">
             </form>
         </section>
     </body>

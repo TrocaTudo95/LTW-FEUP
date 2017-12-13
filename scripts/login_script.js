@@ -120,12 +120,16 @@ password_login.addEventListener("blur",event =>{
 });
 
 submit_login.addEventListener('click',event =>{
-    event.preventDefault();
     let request = new XMLHttpRequest();
+    let csrfValue = document.getElementById('csrf').value;
     request.addEventListener("load", loginComplete);
     request.open("post","../action_login.php",true);
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    request.send(encodeForAjax({username: username_login.value, password: password_login.value}));
+    request.send(encodeForAjax({
+        username: username_login.value,
+        password: password_login.value,
+        csrf: csrfValue
+    }));
 });
 
 
@@ -155,12 +159,17 @@ email_register.addEventListener("blue",event =>{
 });
 
 submit_register.addEventListener('click',event =>{
-    event.preventDefault();
+    let csrfValue = document.getElementById('csrf').value;
     let request = new XMLHttpRequest();
     request.addEventListener("load", registerComplete);
     request.open("post","../action_register.php",false);
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    request.send(encodeForAjax({username: username_register.value, email: email_register.value ,password: password_register.value}));
+    request.send(encodeForAjax({
+        username: username_register.value,
+        email: email_register.value ,
+        password: password_register.value,
+        csrf: csrfValue
+    }));
 });
 
 
