@@ -31,5 +31,11 @@
                 <input type="password" name="password" required="required" placeholder="Password *">
                 <input type="submit" value="Register">
             </form>
+            <form action="action_login.php">
+              <input type="hidden" id="csrf" value="<?=$_SESSION['csrf'])?>">
+            </form>
+            <form action="register_login.php">
+              <input type="hidden" id="csrf" value="<?=$_SESSION['csrf'])?>">
+            </form>
         </section>
     </body>

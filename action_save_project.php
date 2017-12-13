@@ -1,5 +1,8 @@
 <?php
     session_start();
+    if ($_SESSION['csrf'] !== $_POST['csrf']) {
+      die('-3');
+    }
     if (!isset($_SESSION['username'])) die('No username');
     if (!isset($_GET['title'])) die('No title');
     if (!isset($_GET['category'])) die('No category');

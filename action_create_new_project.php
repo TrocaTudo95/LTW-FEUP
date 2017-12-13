@@ -1,6 +1,9 @@
 <?php
 session_start();
 if(!isset($_SESSION['username'])) die('Login required');
+if ($_SESSION['csrf'] !== $_POST['csrf']) {
+  die('-3');
+}
 if(!isset($_GET['project_title'])) die('Project title undefined');
 if(!isset($_GET['project_category'])) die('Project category undefined');
 include_once("database/connection.php");

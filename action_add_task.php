@@ -1,6 +1,9 @@
 <?php
 session_start();
 if(!isset($_SESSION['username'])) die('Login required');
+if ($_SESSION['csrf'] !== $_POST['csrf']) {
+  die('-3');
+}
 if(!isset($_GET['projectId'])) die('project id not set');
 if(!isset($_GET['information'])) die('Task information undefined');
 if(!isset($_GET['priority'])) die('Priority undefined');
@@ -16,7 +19,7 @@ try{
     $ischecked = 0;
     $user_id = getUserId($dbh,$_SESSION['username']);
     $assignedTo = $user_id;
-    
+
     $date =  strtotime($_GET['date']);
     $taskid = addTask($dbh,$projectref,$information,$priority,$date,$ischecked, $assignedTo);
     $task = getTask($dbh,$taskid);
