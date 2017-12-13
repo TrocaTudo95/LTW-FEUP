@@ -29,14 +29,14 @@ if (!isset($_SESSION['csrf'])) {
                 </ul>
             </nav>
             <form id="login_form" method="post">
-                <input type="text" name="username" required="required" placeholder="Username *">
-                <input type="password" name="password" required="required" placeholder="Password *">
+                <input type="text" name="username" required placeholder="Username *">
+                <input type="password" name="password" required placeholder="Password *">
                 <input type="submit" value="Login">
             </form>
             <form id="register_form" method="post">
-                <input type="text" name="username" required="required" placeholder="Username *">
-                <input type="email" name="email" required="required" placeholder="Email *">
-                <input type="password" name="password" required="required" placeholder="Password *">
+                <input type="text" name="username" required placeholder="Username *">
+                <input type="email" name="email" required placeholder="Email *">
+                <input type="password" name="password" required placeholder="Password *">
                 <input type="submit" value="Register">
             </form>
         </section>

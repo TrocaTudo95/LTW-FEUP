@@ -120,6 +120,18 @@ password_login.addEventListener("blur",event =>{
 });
 
 submit_login.addEventListener('click',event =>{
+    let invalidFlag = 0;
+    if (username_login.value.length == 0){
+        username_login.style.backgroundColor = "#ff3333";
+        invalidFlag = 1;
+    }
+    if (password_login.value.length == 0){
+        password_login.style.backgroundColor = "#ff3333";
+        invalidFlag = 1;
+    }
+    if (invalidFlag){
+        return;
+    }
     let request = new XMLHttpRequest();
     let csrfValue = document.getElementById('csrf').value;
     request.addEventListener("load", loginComplete);
@@ -154,11 +166,27 @@ password_register.addEventListener("blur",event =>{
     password_register.style.backgroundColor = "#eee";
 });
 
-email_register.addEventListener("blue",event =>{
+email_register.addEventListener("blur",event =>{
     email_register.style.backgroundColor = "#eee";
 });
 
 submit_register.addEventListener('click',event =>{
+    let invalidFlag = 0;
+    if (username_register.value.length == 0){
+        username_register.style.backgroundColor = "#ff3333";
+        invalidFlag = 1;
+    }
+    if (email_register.value.length == 0 || email_register.value.indexOf('@') < 0){
+        email_register.style.backgroundColor = "#ff3333";
+        invalidFlag = 1;
+    }
+    if (password_register.value.length == 0){
+        password_register.style.backgroundColor = "#ff3333";
+        invalidFlag = 1;
+    }
+    if (invalidFlag){
+        return;
+    }
     let csrfValue = document.getElementById('csrf').value;
     let request = new XMLHttpRequest();
     request.addEventListener("load", registerComplete);
@@ -193,8 +221,4 @@ function registerComplete(event){
     }else{
        document.location.href = '../index.php';
     }
-}
-
-function generate_random_token() {
-  return bin2hex(openssl_random_pseudo_bytes(32));
 }
