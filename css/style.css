@@ -142,12 +142,11 @@ body > footer{
 }
 
 .task_priority_display{
-  color:#333;
-  background-color: rgba(27,31,35,0.08);
+  color:white;
+  background-color: cornflowerblue;
   font-size: 12px;
-  border-radius: 20px;
-  padding: 2px 5px;
-  margin-left: 4px;
+  padding: 1px 5px;
+  margin-right: 5px;
 }
 .project_category{
   color: #333;
@@ -174,7 +173,8 @@ article.projects:hover{
   border: 2px solid #e1e4e8;
 }
 .task{
-  margin: 8px 0;
+  line-height: 1em;
+  margin: 0.5em 0;
   white-space: normal;
   background-color: #fff;
   border: 1px solid #e1e4e8;

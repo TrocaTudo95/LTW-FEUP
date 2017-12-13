@@ -449,11 +449,9 @@ function createProjectsPreview(projects){
         tasks.forEach(task =>{
             let task_div = document.createElement("div");
             task_div.setAttribute("class","task");
-            let task_layout = document.createElement("div");
-            task_layout.setAttribute("class","task_layout");
-            let task_pri =document.createElement("div");
-            task_pri.setAttribute("class","task_priority_display");
-            task_pri.innerHTML=task.priority;
+            let task_priority =document.createElement("span");
+            task_priority.setAttribute("class","task_priority_display");
+            task_priority.innerHTML=task.priority;
             let task_info = document.createElement("span");
             task_info.innerHTML = task.information;
             if (task.isChecked == "1"){
@@ -461,9 +459,8 @@ function createProjectsPreview(projects){
             }else{
                 task_info.setAttribute("class","noDecoration");
             }
-            task_layout.appendChild(task_info);
-            task_layout.appendChild(task_pri);
-            task_div.appendChild(task_layout);
+            task_div.appendChild(task_priority);
+            task_div.appendChild(task_info);
             tasks_section.appendChild(task_div);
         });
         header.appendChild(deleteSymbol);
