@@ -31,6 +31,19 @@ function encodeForAjax(data) {
       return encodeURIComponent(k) + '=' + encodeURIComponent(data[k])
     }).join('&');
   }
+  let entityMap = {
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': '&quot;',
+    "'": '&#39;',
+    "/": '&#x2F;'
+  };
+  function escapeHtml(string) {
+    return String(string).replace(/[&<>"'\/]/g, function (s) {
+      return entityMap[s];
+    });
+  }
 
 if (add_todo_item_button != null){
     add_todo_item_button.addEventListener('click',(event)=>{
@@ -253,6 +266,25 @@ function getCreatorLink(username){
     return creatorLink;
 }
 
+function updateTask(taskId,projectId,newValue,columnName){
+    let query = {
+        taskid: taskId,
+        projectid: projectId,
+    };
+    query[columnName] = newValue;
+    let request = new XMLHttpRequest();
+    request.onload = handleTaskUpdate;
+    request.open("get", "action_update_task.php?" + encodeForAjax(query),true);
+    request.send();
+}
+
+function handleTaskUpdate(){
+    if (this.responseText != null){
+        console.log(this.responseText);
+        console.log("task updated");
+    }
+}
+
 function displayCurrentProject(){
     let project = currentDisplayingProject;
     let modal= document.createElement("div");
@@ -307,16 +339,15 @@ function displayCurrentProject(){
         let task_info = document.createElement("textarea");
         task_info.value = task.information;
         task_info.onchange = function(event){
-          task.information=task_info.value;
-          change_task(event,task,project.id);
+          //task.information=task_info.value;
+            updateTask(task.id,project.id,task_info.value,'information');
         }
         let task_date =document.createElement("input");
         task_date.setAttribute("class","date");
         task_date.setAttribute("type","date");
         task_date.value = year+"-"+month+"-"+day;
         task_date.onchange = function(event){
-          task.dateDue=task_date.value;
-        change_task(event,task,project.id);
+            updateTask(task.id,project.id,task_date.value,'dateDue');
         }
         let task_priority = document.createElement("input");
         task_priority.setAttribute("class","priority");
@@ -326,7 +357,7 @@ function displayCurrentProject(){
         task_priority.value = task.priority;
         task_priority.onchange = function(event){
         task.priority=task_priority.value;
-          change_task(event,task,project.id);
+            updateTask(task.id,project.id,task_priority.value,'priority');
         }
         let checkbox = document.createElement("input");
         checkbox.setAttribute("class","checkbox");
@@ -581,10 +612,4 @@ function handleCheckboxClick(event,taskid){
             next_deliveries_task.style.display = "none";
         }
     }
-}
-
-function change_task(event,task,project_id){
-  console.log(task);
-deleteTask(task.id);
-projectAddTask(project_id,task.information,task.priority,task.dateDue);
 }
