@@ -6,8 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/font-awesome.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet"  media="(min-width: 800px)" href="css/layout.css">
+    <link rel="stylesheet" media="(min-width: 700px)" href="css/style.css">
+    <link rel="stylesheet"  media="(min-width: 350px) and (max-width: 700px)" href="css/short_style.css ">
+    <link rel="stylesheet"  media="(min-width: 700px)" href="css/layout.css">
+    <link rel="stylesheet"  media="(min-width: 350px) and (max-width: 700px)" href="css/short_layout.css ">
     <link rel="stylesheet" href="css/profile_style.css">
     <script src="scripts/script.js" defer></script>
     <script src="scripts/next_tasks.js" defer></script>
