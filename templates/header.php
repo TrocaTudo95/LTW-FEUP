@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/font-awesome.css">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet"  media="(min-width: 600px)" href="css/layout.css">
     <link rel="stylesheet" href="css/profile_style.css">
     <script src="scripts/script.js" defer></script>
     <script src="scripts/next_tasks.js" defer></script>
@@ -15,7 +15,7 @@
   <body>
     <header>
       <a id="logo_link" href="index.php"><img src="assets/logo.png" width="177px" height="106px"></a>
-      
+
 
       <?php
       if(isset($_SESSION['is_logged']) && $_SESSION['is_logged'] == true){
