@@ -16,13 +16,11 @@ body > header {
   }
 
 #top_bar{
-  margin-top: none;
-  padding-top: none;
+  margin-top: 1em;
   grid-column: 1;
   display: flex;
   justify-content: space-around;
   align-content: center;
-  width: 100%;
   height:60%;
 
 }
@@ -153,7 +151,7 @@ section.tasks{
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
-  width:90%%;
+  width:90%;
   margin: 1em;
 }
 .date{
@@ -173,4 +171,14 @@ section.tasks{
   justify-content: flex-start;
   width:100%;
   margin: 1em;
+}
+#current_project_header{
+  display: flex;
+  flex-wrap: wrap;
+}
+.header_left{
+  margin: auto 0;
+}
+.auto_margin{
+  margin:auto;
 }
