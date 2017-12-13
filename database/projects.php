@@ -54,7 +54,7 @@
   function getAllTasks($dbh,$userid){
     $stmt = $dbh->prepare('SELECT * from tasks WHERE assignedTo = ?');
     $stmt->execute(array($userid));
-    return quick_sort_tasks($stmt->fetchAll());
+    return $stmt->fetchAll();
 
   }
 

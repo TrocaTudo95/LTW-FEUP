@@ -574,10 +574,12 @@ function handleCheckboxClick(event,taskid){
     request.open("get", "action_check_task.php"+queryString,true);
     request.send();
     let next_deliveries_task = document.getElementById("task"+taskid);
-    if (next_deliveries_task.style.display == "none"){
-        next_deliveries_task.style.display = "block";
-    }else{
-        next_deliveries_task.style.display = "none";
+    if (next_deliveries_task != null){
+        if (next_deliveries_task.style.display == "none"){
+            next_deliveries_task.style.display = "block";
+        }else{
+            next_deliveries_task.style.display = "none";
+        }
     }
 }
 

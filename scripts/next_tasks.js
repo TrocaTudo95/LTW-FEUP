@@ -42,16 +42,10 @@ function processTasks(){
   title.innerHTML = "Next Deliveries: ";
   header.appendChild(title);
   next_tasks_section.appendChild(header);
-  let alltasks = [];
   if (this.responseText.length > 0){
-    const projects = JSON.parse(this.responseText);
-    projects.forEach(project =>{
-      project.forEach(task =>{
-        alltasks.push(task);
-      });
-    });
-    alltasks.sort(ordertasks);
-    alltasks.forEach(task => {
+    const tasks = JSON.parse(this.responseText);
+    tasks.sort(ordertasks);
+    tasks.forEach(task => {
       let taskDiv = getTaskDiv(task);
       if (task.isChecked == "1" || time_left(task.dateDue) == null){
         taskDiv.style.display = "none";
