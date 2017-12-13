@@ -2,13 +2,6 @@
   include_once('database/projectUsers.php');
 
   function addTask($dbh,$projectref,$information,$priority,$datedue,$ischecked, $assignedTo){
-    $stmt = $dbh->prepare('SELECT id FROM tasks WHERE projectRef = ? AND information = ?');
-    $stmt->execute(array($projectref,$information));
-    $result = $stmt->fetch();
-    if ($result){
-      echo('Task duplicated');
-      return;
-    }
     $stmt = $dbh->prepare('INSERT INTO tasks VALUES (?,?,?,?,?,?,?)');
     $stmt->execute(array(NULL,$projectref,$information,$priority,$datedue,$ischecked,$assignedTo));
     return $dbh->lastInsertId();
