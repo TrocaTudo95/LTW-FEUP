@@ -123,6 +123,8 @@ article.projects{
 section.tasks{
     flex-grow: 3;
     padding: 1em;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
 }
 .round_corners{
     border-radius: 5px;
