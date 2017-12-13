@@ -16,7 +16,7 @@ try{
     $ischecked = 0;
     $user_id = getUserId($dbh,$_SESSION['username']);
     $assignedTo = $user_id;
-    
+
     $date =  strtotime($_GET['date']);
     $taskid = addTask($dbh,$projectref,$information,$priority,$date,$ischecked, $assignedTo);
     $task = getTask($dbh,$taskid);

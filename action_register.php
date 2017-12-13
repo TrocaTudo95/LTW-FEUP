@@ -6,6 +6,7 @@
 
   include_once('database/connection.php'); // connects to the database
   include_once('database/users.php');      // loads the functions responsible for the users table
+  include_once('script/login_script.js');
 
   if (!userExists($dbh,$_POST['username'])){  // test if user exists
     try{
@@ -15,6 +16,9 @@
     }
   }else{
     die("-2"); //user does not exist
+  }
+  if (!isset($_SESSION['csrf'])) {
+    $_SESSION['csrf']) = generate_random_token();
   }
   $_SESSION['username'] = $_POST['username'];
   $_SESSION['is_logged'] = true;
