@@ -5,9 +5,6 @@
   include_once('database/projects.php');
 
   if(isset($_SESSION['is_logged']) && isset($_SESSION['username'])){
-    if ($_SESSION['csrf'] !== $_POST['csrf']) {
-      die('-3');
-    }
     if($_SESSION['is_logged'] == true){
       $user_id = getUserId($dbh,$_SESSION['username']);
       $tasks = getAllTasks($dbh,$user_id);
