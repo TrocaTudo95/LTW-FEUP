@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/font-awesome.css">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet"  media="(min-width: 800px)" href="css/layout.css">
+    <link rel="stylesheet"  media="(min-width: 700px)" href="css/layout.css">
     <link rel="stylesheet" href="css/profile_style.css">
     <script src="scripts/script.js" defer></script>
     <script src="scripts/next_tasks.js" defer></script>
