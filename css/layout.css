@@ -142,13 +142,12 @@ section.tasks{
   display:grid;
   grid-template-columns:0.5fr 3fr 1fr;
   grid-template-rows: 1fr 1fr;
-  width: 90%;
-  margin: 1em;
+  width: 80%;
 }
 
 .checkbox{
   grid-column: 1/2;
-  grid-row: 1/3;
+  grid-row: 1/2;
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
@@ -191,4 +190,8 @@ section.tasks{
 }
 .auto_margin{
   margin:auto;
+}
+.fa-minus{
+  text-align: center;
+  margin-top: 0.5em;
 }
