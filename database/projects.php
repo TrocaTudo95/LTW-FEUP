@@ -95,13 +95,13 @@
   }
 
   function getProjectTasks($dbh,$project_id){
-    $stmt = $dbh->prepare('SELECT tasks.id, projectRef,dateDue,information,isChecked,priority from tasks INNER JOIN users ON tasks.assignedTo = users.id WHERE projectRef = ?');
+    $stmt = $dbh->prepare('SELECT * from tasks WHERE projectRef = ?');
     $stmt->execute(array($project_id));
     return $stmt->fetchAll();
   }
 
   function getTask($dbh,$task_id){
-    $stmt = $dbh->prepare('SELECT id, projectRef,dateDue,information,isChecked from tasks WHERE id = ?');
+    $stmt = $dbh->prepare('SELECT id, projectRef,dateDue,information,isChecked,priority from tasks WHERE id = ?');
     $stmt->execute(array($task_id));
     return $stmt->fetch();
   }
@@ -120,7 +120,6 @@
     $stmt = $dbh->prepare('SELECT creator from projects WHERE id = ?');
     $stmt->execute(array($project_id));
     return $stmt->fetch()['creator'];
-
   }
 
 

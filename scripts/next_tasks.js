@@ -30,6 +30,10 @@ function onload(){
     request.send();
   }
 }
+
+function ordertasks(taskA,taskB){
+  return taskA.dateDue - taskB.dateDue;
+}
 function processTasks(){
   let header = document.createElement("header");
   header.setAttribute("class","next_task_header");
@@ -38,15 +42,22 @@ function processTasks(){
   title.innerHTML = "Next Deliveries: ";
   header.appendChild(title);
   next_tasks_section.appendChild(header);
+  let alltasks = [];
   if (this.responseText.length > 0){
-  const tasks = JSON.parse(this.responseText);
-  tasks.forEach(task => {
-    let taskDiv = getTaskDiv(task);
-    if (task.isChecked == "1" || time_left(task.dateDue) == null){
-      taskDiv.style.display = "none";
-    }
-    next_tasks_section.appendChild(taskDiv);
-  });
+    const projects = JSON.parse(this.responseText);
+    projects.forEach(project =>{
+      project.forEach(task =>{
+        alltasks.push(task);
+      });
+    });
+    alltasks.sort(ordertasks);
+    alltasks.forEach(task => {
+      let taskDiv = getTaskDiv(task);
+      if (task.isChecked == "1" || time_left(task.dateDue) == null){
+        taskDiv.style.display = "none";
+      }
+      next_tasks_section.appendChild(taskDiv);
+    });
   }else{
   console.log("user not logged or no tasks defined");
   }

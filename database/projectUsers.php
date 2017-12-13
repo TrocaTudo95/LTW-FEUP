@@ -19,11 +19,11 @@ function getProjectUsers($dbh, $project_id){
     $stmt->execute(array($project_id));
     return $stmt->fetchAll();
 }
-// function getAllProjectsForUser($dbh, $user_id){
-//     $stmt = $dbh->prepare('SELECT projectRef from projectUsers WHERE userRef = ?');
-//     $stmt->execute(array($user_id));
-//     return $stmt->fetchAll();
-// }
+function getAllProjectIdsForUser($dbh, $user_id){
+    $stmt = $dbh->prepare('SELECT projectRef from projectUsers WHERE userRef = ?');
+    $stmt->execute(array($user_id));
+    return $stmt->fetchAll();
+}
 function filterProjectsbyColor($dbh,$user_id, $color){
   $stmt = $dbh->prepare('SELECT * from projectUsers,projects WHERE  projects.id=projectUsers.projectRef AND projectUsers.userRef=? AND projects.color = ?');
   $stmt->execute(array($user_id, $color));
