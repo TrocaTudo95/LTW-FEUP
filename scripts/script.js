@@ -245,6 +245,14 @@ function updateProjects(){
     request.send();
 }
 
+
+function getCreatorLink(username){
+    let creatorLink = document.createElement("a");
+    creatorLink.setAttribute("href","user_profile.php?username=" + username);
+    creatorLink.innerHTML = username;
+    return creatorLink;
+}
+
 function displayCurrentProject(){
     let project = currentDisplayingProject;
     let modal= document.createElement("div");
@@ -271,9 +279,12 @@ function displayCurrentProject(){
     let project_title =document.createElement("span");
     project_title.className = "project_title header_left";
     project_title.innerHTML=project.name;
-    let creator_project = document.createElement("span");
-    creator_project.className = "project_creator auto_margin";
-    creator_project.innerHTML="Creator: " + project.creator;
+    let creator_string = document.createElement("span");
+    creator_string.className = "project_creator";
+    creator_string.style.margin = "auto 0 auto auto";
+    creator_string.innerHTML="Creator: ";
+    let creator_link = getCreatorLink(project.creator);
+    creator_link.className = "header_left";
     let num_tasks = document.createElement("span");
     num_tasks.className = "num_tasks header_left";
     num_tasks.innerHTML= project.tasks.length;
@@ -295,16 +306,28 @@ function displayCurrentProject(){
         task_div.setAttribute("class","task_div_lay");
         let task_info = document.createElement("textarea");
         task_info.value = task.information;
+        task_info.onchange = function(event){
+          task.information=task_info.value;
+          change_task(event,task,project.id);
+        }
         let task_date =document.createElement("input");
         task_date.setAttribute("class","date");
         task_date.setAttribute("type","date");
         task_date.value = year+"-"+month+"-"+day;
+        task_date.onchange = function(event){
+          task.dateDue=task_date.value;
+        change_task(event,task,project.id);
+        }
         let task_priority = document.createElement("input");
         task_priority.setAttribute("class","priority");
         task_priority.setAttribute("type","number");
         task_priority.setAttribute("min",0);
-        task_priority.setAttribute("max",1000);
+        task_priority.setAttribute("max",999);
         task_priority.value = task.priority;
+        task_priority.onchange = function(event){
+        task.priority=task_priority.value;
+          change_task(event,task,project.id);
+        }
         let checkbox = document.createElement("input");
         checkbox.setAttribute("class","checkbox");
         checkbox.setAttribute("type","checkbox");
@@ -349,7 +372,8 @@ function displayCurrentProject(){
     header.appendChild(project_category);
     header.appendChild(project_title);
     header.appendChild(num_tasks);
-    header.appendChild(creator_project);
+    header.appendChild(creator_string);
+    header.appendChild(creator_link);
     header.appendChild(add_task_button);
     header.appendChild(deleteProjectSymbol);
     header.appendChild(close);
@@ -410,9 +434,9 @@ function createProjectsPreview(projects){
         let project_title =document.createElement("span");
         project_title.setAttribute("class","project_title");
         project_title.innerHTML=project.name;
-        let creator_project = document.createElement("span");
-        creator_project.setAttribute("class","project_creator");
-        creator_project.innerHTML="Creator: " + project.creator;
+        let creator_string = document.createElement("span");
+        creator_string.setAttribute("class","project_creator");
+        creator_string.innerHTML="Creator: " + project.creator;
         let num_tasks = document.createElement("span");
         num_tasks.setAttribute("class","num_tasks");
         num_tasks.innerHTML= project.tasks.length;
@@ -446,7 +470,7 @@ function createProjectsPreview(projects){
         header.appendChild(project_title);
         header.appendChild(num_tasks);
         header.appendChild(project_category);
-        header.appendChild(creator_project);
+        header.appendChild(creator_string);
         article.appendChild(header);
         article.appendChild(tasks_section);
 
@@ -507,6 +531,8 @@ function createTaskWindow(projectID){
     let information = inputInformation.value;
     let priority = inputPriority.value;
     let date = inputDate.value;
+    console.log(date);
+    console.log(typeof date);
     projectAddTask(projectID,information,priority,date);
     addForm.reset();
   })
@@ -556,4 +582,10 @@ function handleCheckboxClick(event,taskid){
     }else{
         next_deliveries_task.style.display = "none";
     }
+}
+
+function change_task(event,task,project_id){
+  console.log(task);
+deleteTask(task.id);
+projectAddTask(project_id,task.information,task.priority,task.dateDue);
 }
