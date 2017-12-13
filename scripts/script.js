@@ -425,11 +425,18 @@ function deleteProject(projectid){
         if (this.responseText == "0"){
             updateProjects();
         }else{
+            console.log(this.responseText);
             alert("You do not own the project");
         }
     }
-    request.open("get","action_delete_project.php/?projectid="+projectid,true);
-    request.send();
+    let csrfValue = document.getElementById("csrf").value;
+    let query = {
+        projectid: projectid,
+        csrf:csrfValue
+    }
+    request.open("post","action_delete_project.php",true);
+    request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    request.send(encodeForAjax(query));
 }
 
 function deleteTask(taskid){

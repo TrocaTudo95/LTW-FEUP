@@ -1,6 +1,8 @@
 <?php
 session_start();
 if(!isset($_SESSION['username'])) die('user is not set');
+if(!isset($_SESSION['csrf'])) die('csrf not set');
+if(!isset($_POST['csrf'])) die('csrf not posted');
 if ($_SESSION['csrf'] !== $_POST['csrf']) {
   die('-3');
 }
