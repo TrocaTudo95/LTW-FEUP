@@ -6,9 +6,6 @@ include_once('database/users.php');
 
 if(isset($_SESSION['is_logged']) && isset($_SESSION['username'])){
   if($_SESSION['is_logged'] == true){
-    if ($_SESSION['csrf'] !== $_POST['csrf']) {
-      die('-3');
-    }
     $user_id = getUserId($dbh,$_SESSION['username']);
     $projects = getAllProjectsForUser($dbh,$user_id);
     foreach($projects as &$project){

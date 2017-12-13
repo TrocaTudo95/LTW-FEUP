@@ -1,9 +1,6 @@
 <?php
 session_start();
 if(!isset($_SESSION['username'])) die('user is not set');
-if ($_SESSION['csrf'] !== $_POST['csrf']) {
-  die('-3');
-}
 if(!isset($_GET['taskid'])) die('task not defined');
 include_once('database/connection.php');
 include_once('database/projects.php');
