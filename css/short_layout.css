@@ -1,4 +1,4 @@
-  .next_tasks_display{
+  #next_tasks_display{
     display: none;
   }
 
@@ -8,6 +8,7 @@
       grid-template-columns: 1fr;
       grid-template-rows: [start] auto [header] auto [nav] auto [content] auto [end];
       width: 100%;
+      min-width: 350px;
   }
 
   body > header {
