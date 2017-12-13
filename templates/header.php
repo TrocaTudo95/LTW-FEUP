@@ -18,8 +18,6 @@
     <header>
       <input type="hidden" id="csrf" value=<?=$_SESSION['csrf']?>>
       <a id="logo_link" href="index.php"><img src="assets/logo.png" width="177px" height="106px"></a>
-
-
       <?php
       if(isset($_SESSION['is_logged']) && $_SESSION['is_logged'] == true){
         echo("<section class= 'dropdown' id='login'>");

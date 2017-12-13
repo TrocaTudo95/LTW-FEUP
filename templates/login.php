@@ -3,6 +3,12 @@ session_start();
 if (!isset($_SESSION['csrf'])) {
     $_SESSION['csrf'] = bin2hex(openssl_random_pseudo_bytes(32));
 }
+if (isset($_SESSION['username']) && isset($_SESSION['is_logged'])){
+    if ($_SESSION['is_logged'] == true){
+        header('Location: ../index.php');
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
