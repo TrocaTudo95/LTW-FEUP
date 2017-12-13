@@ -13,7 +13,13 @@
 
   if (!userExists($dbh,$_POST['username'])){  // test if user exists
     try{
-      register($dbh,$_POST['username'], $_POST['password'], $_POST['email']);
+      $username = $_POST['username'];
+      $password = $_POST['password'];
+      $email = $_POST['email'];
+      if (empty($username) || empty($password) || empty($email)){
+        die('nice try');
+      }
+      register($dbh,$username, $password, $email);
     }catch (PDOException $e) {
       die('-1'); //email repeated
     }
