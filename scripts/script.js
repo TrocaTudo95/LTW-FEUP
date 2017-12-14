@@ -490,7 +490,7 @@ function createProjectsPreview(projects){
             task_priority.setAttribute("class","task_priority_display");
             task_priority.innerHTML=task.priority;
             let task_info = document.createElement("span");
-            task_info.innerHTML = task.information;
+            task_info.innerHTML = escapeHtml(task.information);
             if (task.isChecked == "1"){
                 task_info.setAttribute("class","line-through");
             }else{
